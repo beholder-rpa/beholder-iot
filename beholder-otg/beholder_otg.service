@@ -1,0 +1,11 @@
+[Unit]
+Description=Beholder OTG
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/beholder_otg.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

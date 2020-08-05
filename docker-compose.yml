@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+  beholder-rabbitmq:
+    image: pi-beholder/rabbitmq
+    build:
+      context: ./beholder-rabbitmq
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+    
+  beholder-postgres:
+    image: postgres
+    container_name: pi-beholder/postgres
+    restart: always
+    environment:
+      POSTGRES_USER: beholder
+      POSTGRES_PASSWORD: beholder
+      POSTGRES_DB: beholder
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - backend
+    volumes:
+      - beholder_postgres_data:/var/lib/postgresql/data
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  beholder_postgres_data:
