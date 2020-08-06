@@ -5,9 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-
-    "build": "balena build --deviceType raspberrypi4 --arch aarch64 --emulated",
-    "push": "dotenv yarn balena-push --"
+    "build": "docker-compose build"
   },
   "dependencies": {
     "cross-env": "^7.0.2",

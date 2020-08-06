@@ -6,19 +6,19 @@ services:
     container_name: pi-beholder/adminer
     restart: always
     depends_on:
-      - postgres
+      - beholder-postgres
     ports:
       - 8082:8080
     networks:
       - backend
+  beholder-rabbitmq:
+    ports:
+      - 15672:15672 # RabbitMQ Management Port
+      - 1883:1883 # MQTT Port 
+      - 15675:15675 # MQTT Web Sockets Port
   beholder-grafana:
     ports:
       - 3001:3000
   beholder-postgres:
     ports:
       - 5432:5432
-  beholder-rabbitmq:
-    ports:
-      - 15672:15672 # RabbitMQ Management Port
-      - 1883:1883 # MQTT Port 
-      - 15675:15675 # MQTT Web Sockets Port

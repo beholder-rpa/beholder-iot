@@ -9,7 +9,11 @@ services:
     restart: always
     networks:
       - backend
-    
+  beholder-grafana:
+    image: grafana/grafana
+    restart: always
+    networks:
+      - backend
   beholder-postgres:
     image: postgres
     container_name: pi-beholder/postgres
