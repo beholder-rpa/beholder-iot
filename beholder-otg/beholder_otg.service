@@ -1,6 +1,7 @@
 [Unit]
 Description=Beholder OTG
-After=multi-user.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -9,4 +10,4 @@ ExecStart=beholder_otg.sh
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sysinit.target
