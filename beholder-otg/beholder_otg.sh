@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "# Executing Beholder IoT OTG script..."
+
 cd /sys/kernel/config/usb_gadget/
 mkdir -p beholder && cd beholder
 
@@ -102,3 +104,5 @@ udevadm settle -t 5 || :
 ls /sys/class/udc > UDC
 ifup usb0
 service dnsmasq restart
+
+echo "# Completed Beholder IoT OTG script."
