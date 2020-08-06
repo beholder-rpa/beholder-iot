@@ -1,6 +1,6 @@
 [Unit]
 Description=Beholder OTG
-After=network-online.target
+After=network-online.target beholder_boot.service
 Wants=network-online.target
 
 [Service]
