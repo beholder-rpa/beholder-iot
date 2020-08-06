@@ -6,9 +6,10 @@ After=docker.service beholder_otg.service
 [Service]
 Type=oneshot
 RemainAfterExit=true
-WorkingDirectory=/home/pi/beholder/
-ExecStart=/usr/local/bin/docker-compose up -d --remove-orphans
-ExecStop=/usr/local/bin/docker-compose down
+WorkingDirectory=/home/beholder/beholder/beholder-otg/
+ExecStart=beholder_docker.sh up
+ExecStop=beholder_docker.sh down
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
