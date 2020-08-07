@@ -1,9 +1,18 @@
-version: "2.1"
+version: "2.4"
 
 services:
+  beholder-cortex:
+    build:
+      context: ./beholder-cortex
+      dockerfile: Dockerfile.dev
+    volumes:
+      - './beholder-cortex:/srv/app'
+      - 'beholder_cortex_node_modules:/srv/app/node_modules'
+    ports:
+      - 3000:3000
   beholder-adminer:
     image: adminer
-    container_name: pi-beholder/adminer
+    container_name: beholder-adminer
     restart: always
     depends_on:
       - beholder-postgres
@@ -11,7 +20,7 @@ services:
       - 8082:8080
     networks:
       - backend
-  beholder-rabbitmq:
+  beholder-nexus:
     ports:
       - 15672:15672 # RabbitMQ Management Port
       - 1883:1883 # MQTT Port 
@@ -22,3 +31,15 @@ services:
   beholder-postgres:
     ports:
       - 5432:5432
+  beholder-nginx:
+    build:
+      context: ./beholder-nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:80
+    volumes:
+      - ./beholder-nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./beholder-nginx/api_conf.d:/etc/nginx/api_conf.d
+
+volumes:
+  'beholder_cortex_node_modules':

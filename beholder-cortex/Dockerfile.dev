@@ -1,0 +1,13 @@
+FROM node:12-alpine
+
+RUN mkdir /srv/app && chown 1000:1000 -R /srv/app
+
+WORKDIR /srv/app
+
+VOLUME /srv/app
+
+COPY docker-entrypoint-dev.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint-dev.sh"]
+
+# Running the app
+CMD [ "yarn", "dev" ]

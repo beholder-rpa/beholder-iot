@@ -9,7 +9,6 @@ RemainAfterExit=true
 WorkingDirectory=/home/beholder/beholder/beholder-otg/
 ExecStart=beholder_docker.sh up
 ExecStop=beholder_docker.sh down
-Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

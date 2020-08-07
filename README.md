@@ -20,7 +20,7 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 ## Backbone
 
 - PostgreSQL - DB
-- Envoy - L7 Proxy & Routing
+- Nginx - L7 Proxy & Routing
 - Grafna - Analytics
 
 ## Connectors:

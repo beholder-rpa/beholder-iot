@@ -1,32 +1,59 @@
-version: "2.1"
+version: "2.4"
 
 services:
-  beholder-rabbitmq:
-    image: pi-beholder/rabbitmq
-    build:
-      context: ./beholder-rabbitmq
-      dockerfile: Dockerfile
+  beholder-cortex:
+    image: beholder/cortex
+    container_name: beholder-cortex
     restart: always
+    build:
+      context: ./beholder-cortex
+      dockerfile: Dockerfile
     networks:
       - backend
+  beholder-nexus:
+    image: beholder/nexus
+    container_name: beholder-nexus
+    restart: always
+    build:
+      context: ./beholder-nexus
+      dockerfile: Dockerfile
+    networks:
+      - backend
+  # Foundational
   beholder-grafana:
     image: grafana/grafana
+    container_name: beholder-grafana
     restart: always
     networks:
       - backend
   beholder-postgres:
-    image: postgres
-    container_name: pi-beholder/postgres
+    image: beholder/postgres
+    container_name: beholder-postgres
     restart: always
+    build:
+      context: ./beholder-postgres
+      dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: beholder
-      POSTGRES_PASSWORD: beholder
-      POSTGRES_DB: beholder
       PGDATA: /var/lib/postgresql/data/pgdata
     networks:
       - backend
     volumes:
       - beholder_postgres_data:/var/lib/postgresql/data
+  beholder-nginx:
+    image: beholder/nginx
+    container_name: beholder-nginx
+    build:
+      context: ./beholder-nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - beholder-cortex
+      - beholder-nexus
 
 networks:
   frontend:

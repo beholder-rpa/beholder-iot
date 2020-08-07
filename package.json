@@ -5,7 +5,31 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "docker-compose build"
+    "dev:command": "docker-compose -f docker-compose.yml -f docker-compose.override.yml",
+    "dev:build": "yarn dev:command build",
+    "dev:up": "yarn dev:command up -d",
+    "dev:down": "yarn dev:command down",
+    "dev:restart": "yarn dev:command restart",
+    "dev:run": "yarn dev:command run",
+    "dev:clean-web-client": "docker volume rm stomp_poc_node_modules",
+    "dev:clean": "run-s dev:clean-**",
+    "dev:logs": "yarn dev:command logs -f",
+
+    "prod:command": "docker-compose -f docker-compose.yml",
+    "prod:build": "yarn prod:command build",
+    "prod:up": "yarn prod:command up -d",
+
+    "start": "yarn dev",
+    "stop": "yarn dev:down",
+    "dev": "run-s dev:build dev:up",
+    "up": "yarn dev",
+    "down": "yarn dev:down",
+    "build": "yarn dev:build",
+    "restart": "yarn dev:restart",
+    "clean": "yarn dev:clean",
+    "logs": "yarn dev:logs",
+    
+    "prod": "run-s prod:build prod:up"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
