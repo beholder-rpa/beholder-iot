@@ -5,6 +5,8 @@ After=docker.service beholder_otg.service beholder_boot.service
 
 [Service]
 Type=oneshot
+Restart=on-failure
+RestartSec=3
 RemainAfterExit=true
 WorkingDirectory=/home/beholder/beholder/beholder-otg/
 ExecStart=beholder_docker.sh up
