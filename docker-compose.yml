@@ -23,9 +23,16 @@ services:
   beholder-grafana:
     image: grafana/grafana
     container_name: beholder-grafana
+    build:
+      context: ./beholder-grafana
+      dockerfile: Dockerfile
     restart: always
+    environment:
+      GF_LOG_MODE: console
     networks:
       - backend
+    volumes:
+      - beholder_grafana_data:/var/lib/grafana
   beholder-postgres:
     image: beholder/postgres
     container_name: beholder-postgres
@@ -61,3 +68,4 @@ networks:
 
 volumes:
   beholder_postgres_data:
+  beholder_grafana_data:
