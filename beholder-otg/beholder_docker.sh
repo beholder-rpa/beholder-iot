@@ -3,9 +3,9 @@
 echo "# Executing Beholder IoT Docker script..."
 
 [ "$1" = up ] &&
-    yarn up
+    yarn prod-up
 
 [ "$1" = down ] &&
-    yarn down
+    yarn prod-down
 
 echo "# Completed Beholder IoT Docker script."

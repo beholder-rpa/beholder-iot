@@ -41,6 +41,8 @@ services:
       context: ./beholder-postgres
       dockerfile: Dockerfile
     environment:
+      POSTGRES_USER: beholder
+      POSTGRES_PASSWORD: beholder
       PGDATA: /var/lib/postgresql/data/pgdata
     networks:
       - backend

@@ -18,6 +18,7 @@
     "prod:command": "docker-compose -f docker-compose.yml",
     "prod:build": "yarn prod:command build",
     "prod:up": "yarn prod:command up -d --remove-orphans",
+    "prod:down": "yarn prod:command down",
 
     "start": "yarn dev",
     "stop": "yarn dev:down",
@@ -29,7 +30,8 @@
     "clean": "yarn dev:clean",
     "logs": "yarn dev:logs",
     
-    "prod": "run-s prod:build prod:up"
+    "prod-up": "run-s prod:build prod:up",
+    "prod-down": "run-s prod:down"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
