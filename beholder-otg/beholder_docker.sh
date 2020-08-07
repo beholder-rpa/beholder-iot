@@ -2,10 +2,15 @@
 
 echo "# Executing Beholder IoT Docker script..."
 
-[ "$1" = up ] &&
+if [ "$1" = up ]
+then
+    yarn
     yarn prod-up
+fi
 
-[ "$1" = down ] &&
+if [ "$1" = down ]
+then
     yarn prod-down
+fi
 
 echo "# Completed Beholder IoT Docker script."
