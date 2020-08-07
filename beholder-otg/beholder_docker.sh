@@ -3,9 +3,9 @@
 echo "# Executing Beholder IoT Docker script..."
 
 [ "$1" = up ] &&
-    docker-compose up -d --remove-orphans
+    yarn up
 
 [ "$1" = down ] &&
-    docker-compose down
+    yarn down
 
 echo "# Completed Beholder IoT Docker script."

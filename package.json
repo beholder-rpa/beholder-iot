@@ -17,7 +17,7 @@
 
     "prod:command": "docker-compose -f docker-compose.yml",
     "prod:build": "yarn prod:command build",
-    "prod:up": "yarn prod:command up -d",
+    "prod:up": "yarn prod:command up -d --remove-orphans",
 
     "start": "yarn dev",
     "stop": "yarn dev:down",
