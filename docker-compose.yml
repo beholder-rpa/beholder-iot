@@ -26,8 +26,6 @@ services:
     build:
       context: ./beholder-stalk
       dockerfile: Dockerfile
-    depends_on:
-      - beholder-nexus
     devices:
       - "/dev/hidg0:/dev/hidg0"
       - "/dev/hidg1:/dev/hidg1"
@@ -44,6 +42,10 @@ services:
       - beholder_nexus_password=guest
       - beholder_stalk_keymin=40
       - beholder_stalk_keymax=80
+    networks:
+      - backend
+    depends_on:
+      - beholder-nexus
   # Foundational
   beholder-grafana:
     image: grafana/grafana
