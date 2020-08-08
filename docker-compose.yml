@@ -19,6 +19,31 @@ services:
       dockerfile: Dockerfile
     networks:
       - backend
+  beholder-stalk:
+    image: beholder/stalk
+    container_name: beholder-stalk
+    restart: always
+    build:
+      context: ./beholder-stalk
+      dockerfile: Dockerfile
+    depends_on:
+      - beholder-nexus
+    devices:
+      - "/dev/hidg0:/dev/hidg0"
+      - "/dev/hidg1:/dev/hidg1"
+      - "/dev/hidg2:/dev/hidg2"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    environment:
+      - beholder_stalk_clientid=stalk-01
+      - beholder_nexus_url=ws://beholder-nexus:15675/ws
+      - beholder_nexus_username=guest
+      - beholder_nexus_password=guest
+      - beholder_stalk_keymin=40
+      - beholder_stalk_keymax=80
   # Foundational
   beholder-grafana:
     image: grafana/grafana
