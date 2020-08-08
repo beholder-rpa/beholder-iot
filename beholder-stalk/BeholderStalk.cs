@@ -67,6 +67,8 @@
             mqttClient.UseConnectedHandler(OnConnected);
             mqttClient.UseDisconnectedHandler(OnDisconnected);
             mqttClient.UseApplicationMessageReceivedHandler(OnApplicationMessageReceived);
+
+            MqttClient = MqttClient;
         }
 
         public IMqttClient MqttClient
