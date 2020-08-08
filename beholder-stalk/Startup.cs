@@ -19,7 +19,7 @@
             {
                 builder.AddConsole(o =>
                       {
-                          o.TimestampFormat = o.TimestampFormat = "[HH:mm:ss] ";
+                          o.TimestampFormat = o.TimestampFormat = "[HH:mm:ss.fff] ";
                       });
                 builder.AddDebug();
             });
