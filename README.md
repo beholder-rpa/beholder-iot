@@ -42,6 +42,10 @@ Once you've got the hardware in place, you'll need to create a base SD image tha
 will run on your IoT device. For the Raspberry Pi 4, this image creation process has been automated. See [this](https://github.com/beholder-rpa/beholder-iot-image-builder-rpi4) repository
 for instructions on how to create an image.
 
+### Updating
+
+```ssh`` into the device. cd into /beholder. Run ```git pull```. Then, ```sudo reboot now```.
+
 # Developing Beholder
  
 ### Software:
