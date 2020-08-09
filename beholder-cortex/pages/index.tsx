@@ -26,7 +26,7 @@ export default function Home() {
       username: "guest",
       password: "guest",
       reconnectPeriod: 5000,
-      keepalive: 10,
+      keepalive: 60,
     });
     
     let subscriptions: ISubscriptionGrant[];

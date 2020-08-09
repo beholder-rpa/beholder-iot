@@ -33,11 +33,14 @@ The following is required:
 
 ### Hardware:
  - Raspberry Pi 4 (Rev 1.2 4GB model recommended)
- - USB C to A Cable
+
+In order to act as a USB device, you'll need a USB C to A Cable
 
 ### Initial Raspberry Pi 4 Setup:
 
-See ./beholder-image-builder-rpi4/README.md for instructions on building a SD image pre-configured to run Pi-Beholder
+Once you've got the hardware in place, you'll need to create a base SD image that contains the Beholder software that
+will run on your IoT device. For the Raspberry Pi 4, this image creation process has been automated. See [this](https://github.com/beholder-rpa/beholder-iot-image-builder-rpi4) repository
+for instructions on how to create an image.
 
 # Developing Beholder
  
@@ -50,3 +53,6 @@ See ./beholder-image-builder-rpi4/README.md for instructions on building a SD im
  - VSCode (or your favorite editor)
    - VSCode Remote extension
 
+It is recommended that front-end (Beholder Cortex) development occur via remotely connecting to a running Raspberry Pi instance via the Visual Studio Code Remote Remote - SSH plugin.
+
+By default the environment that runs from the image is a production build, to utilize a dev build, ssh to the Beholder IoT device, cd into the beholder directory and run yarn prod-down, then run yarn up. Now, utilize the VSCode Remote SSH extension to connect to the Beholder IoT device and make changes to the Beholder Cortex files as desired.
