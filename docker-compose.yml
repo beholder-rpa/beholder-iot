@@ -90,6 +90,12 @@ services:
     depends_on:
       - beholder-cortex
       - beholder-nexus
+  watchtower:
+    image: containrrr/watchtower
+    container_name: beholder-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   frontend:
