@@ -2,7 +2,7 @@ version: "2.4"
 
 services:
   beholder-cortex:
-    image: beholder/cortex
+    image: beholderrpa/cortex:production
     container_name: beholder-cortex
     restart: always
     build:
@@ -11,7 +11,7 @@ services:
     networks:
       - backend
   beholder-nexus:
-    image: beholder/nexus
+    image: beholderrpa/nexus:production
     container_name: beholder-nexus
     restart: always
     build:
@@ -20,7 +20,7 @@ services:
     networks:
       - backend
   beholder-stalk:
-    image: beholder/stalk
+    image: beholderrpa/stalk:production
     container_name: beholder-stalk
     restart: always
     build:
@@ -48,7 +48,7 @@ services:
       - beholder-nexus
   # Foundational
   beholder-grafana:
-    image: grafana/grafana
+    image: beholderrpa/grafana:production
     container_name: beholder-grafana
     build:
       context: ./beholder-grafana
@@ -61,7 +61,7 @@ services:
     volumes:
       - beholder_grafana_data:/var/lib/grafana
   beholder-postgres:
-    image: beholder/postgres
+    image: beholderrpa/postgres:production
     container_name: beholder-postgres
     restart: always
     build:
@@ -76,7 +76,7 @@ services:
     volumes:
       - beholder_postgres_data:/var/lib/postgresql/data
   beholder-nginx:
-    image: beholder/nginx
+    image: beholderrpa/nginx:production
     container_name: beholder-nginx
     build:
       context: ./beholder-nginx
@@ -90,6 +90,7 @@ services:
     depends_on:
       - beholder-cortex
       - beholder-nexus
+  # Utility/Orchestration
   watchtower:
     image: containrrr/watchtower
     container_name: beholder-watchtower

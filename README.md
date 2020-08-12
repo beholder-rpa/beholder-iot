@@ -46,8 +46,6 @@ for instructions on how to create an image.
 
 ```ssh`` into the device. cd into /beholder. Run ```git pull```. Then, ```sudo reboot now```.
 
-> FIXME: Currently requires two reboots to pickup changes. Workaround is to manually yarn prod-down yarn prod-up without a reboot, but the beholder-boot should copy files on shutdown to resolve.
-
 > TODO: Beholder should pull pre-built images in the non-developer mode to reduce initial startup time. As part of this, watchtower can auto-update (using a :prod tag or something similar)
 
 # Developing Beholder

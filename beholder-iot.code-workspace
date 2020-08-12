@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "beholder-cortex"
+		},
+		{
+			"path": "beholder-stalk"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

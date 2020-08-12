@@ -19,6 +19,7 @@
     "prod:build": "yarn prod:command build",
     "prod:up": "yarn prod:command up -d --remove-orphans",
     "prod:down": "yarn prod:command down",
+    "prod:logs": "yarn prod:command logs",
 
     "start": "yarn dev",
     "stop": "yarn dev:down",
@@ -31,7 +32,9 @@
     "logs": "yarn dev:logs",
     
     "prod-up": "run-s prod:build prod:up",
-    "prod-down": "run-s prod:down"
+    "prod-down": "run-s prod:down",
+    "prod-logs": "run-s prod:logs",
+    "prod-push": "run-s prod:push"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
