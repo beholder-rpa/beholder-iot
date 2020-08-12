@@ -1,0 +1,118 @@
+@import '../public/vendor/material-design-icon/css/material-design-iconic-font.min.css';
+
+:root {
+    --light: Gilroy-Light;
+    --regular: Gilroy-Regular;
+    --medium: Gilroy-Medium;
+    --bold: Gilroy-Bold;
+    --extra-bold: Gilroy-ExtraBold;
+    font-weight: normal;
+    font-style: normal;
+}
+
+#root {
+    z-index: 100000;
+}
+
+body {
+    line-height: 1.35 !important;
+}
+
+.beholder-loader-bg {
+    flex: 1;
+    display: flex;
+    position: relative;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.beholder-loader {
+    position: relative;
+    margin: 0 auto;
+    width: 40px;
+}
+
+.circular {
+    animation: rotate 2s linear infinite;
+    height: 40px;
+    transform-origin: center center;
+    width: 40px;
+    margin: auto;
+}
+
+.path {
+    stroke-dasharray: 5, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+
+@keyframes color {
+    100%,
+    0% {
+        stroke: #0a8fdc;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 16px;
+}

@@ -13,6 +13,6 @@ ENV NODE_ENV production
 
 EXPOSE 3000
 
-RUN chmod a+x /srv/app/docker-entrypoint-run.sh
+RUN yarn build
 
-CMD ["/srv/app/docker-entrypoint-run.sh"]
+ENTRYPOINT ["/usr/local/bin/yarn", "start"]
