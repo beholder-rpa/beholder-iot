@@ -16,7 +16,6 @@ services:
   ###############################################
   # Beholder Nexus
   beholder-nexus:
-    image: beholderrpa/nexus:latest
     ports:
       - 15672:15672 # RabbitMQ Management Port
       - 1883:1883 # MQTT Port 
@@ -62,7 +61,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.dashboard.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)
       - traefik.http.routers.dashboard.entrypoints=web,websecure
-      - traefik.http.routers.dashboard.rule=Host(`traefik.beholder.localhost`)
+      - traefik.http.routers.dashboard.rule=Host(`${BEHOLDER_TRAEFIK_HOSTNAME}`)
       - traefik.http.routers.dashboard.service=api@internal
 volumes:
   'beholder_cortex_node_modules':
