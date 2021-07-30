@@ -1,0 +1,9 @@
+# Default TLS Certs
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/nexus.beholder.localhost.crt
+      keyFile: /etc/traefik/certs/nexus.beholder.localhost.key
+    - certFile: /etc/traefik/certs/cortex.beholder.localhost.crt
+      keyFile: /etc/traefik/certs/cortex.beholder.localhost.key
+    - certFile: /etc/traefik/certs/graphana.beholder.localhost.crt
+      keyFile: /etc/traefik/certs/graphana.beholder.localhost.key

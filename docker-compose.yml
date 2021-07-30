@@ -1,8 +1,10 @@
 version: "2.4"
 
 services:
+  ###############################################
+  # Beholder Cortex
   beholder-cortex:
-    image: beholderrpa/cortex:production
+    image: beholderrpa/cortex:rpi
     container_name: beholder-cortex
     restart: always
     build:
@@ -10,26 +12,33 @@ services:
       dockerfile: Dockerfile
     networks:
       - backend
+  ###############################################
+  # Beholder Nexus
   beholder-nexus:
-    image: beholderrpa/nexus:production
+    image: beholderrpa/nexus:rpi
     container_name: beholder-nexus
     restart: always
-    build:
-      context: ./beholder-nexus
-      dockerfile: Dockerfile
+    command: 
+        - "rabbitmq-server"
+        - "rabbitmq-plugins enable --offline rabbitmq_mqtt rabbitmq_web_mqtt"
+    expose: 
+      # Management Port
+      - 15672
+      # MQTT Port
+      - 1883
+      # MQTT Web Port
+      - 15675  
     networks:
       - backend
+  ###############################################
+  # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/stalk:production
+    image: beholderrpa/stalk:rpi
     container_name: beholder-stalk
     restart: always
     build:
       context: ./beholder-stalk
       dockerfile: Dockerfile
-    devices:
-      - "/dev/hidg0:/dev/hidg0"
-      - "/dev/hidg1:/dev/hidg1"
-      - "/dev/hidg2:/dev/hidg2"
     logging:
       driver: "json-file"
       options:
@@ -46,9 +55,10 @@ services:
       - backend
     depends_on:
       - beholder-nexus
-  # Foundational
+  ###############################################
+  # Beholder Grafana
   beholder-grafana:
-    image: beholderrpa/grafana:production
+    image: beholderrpa/grafana:rpi
     container_name: beholder-grafana
     build:
       context: ./beholder-grafana
@@ -60,8 +70,10 @@ services:
       - backend
     volumes:
       - beholder_grafana_data:/var/lib/grafana
+  ###############################################
+  # Beholder Postgres
   beholder-postgres:
-    image: beholderrpa/postgres:production
+    image: beholderrpa/postgres:rpi
     container_name: beholder-postgres
     restart: always
     build:
@@ -75,28 +87,24 @@ services:
       - backend
     volumes:
       - beholder_postgres_data:/var/lib/postgresql/data
-  beholder-nginx:
-    image: beholderrpa/nginx:production
-    container_name: beholder-nginx
-    build:
-      context: ./beholder-nginx
-      dockerfile: Dockerfile
+  ###############################################
+  # Beholder Reverse Proxy
+  beholder-traefik:
+    image: traefik:v2.4
+    container_name: beholder-traefik
     restart: always
     ports:
       - 80:80
+      - 443:443
     networks:
       - frontend
       - backend
-    depends_on:
-      - beholder-cortex
-      - beholder-nexus
-  # Utility/Orchestration
-  watchtower:
-    image: containrrr/watchtower
-    container_name: beholder-watchtower
-    restart: unless-stopped
+    labels:
+      - traefik.http.middlewares.redirect_to_ssl.redirectscheme.scheme=https
+      - traefik.http.middlewares.redirect_to_ssl.redirectscheme.permanent=true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    - ./beholder-traefik:/etc/traefik/
+    - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   frontend:

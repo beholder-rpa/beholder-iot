@@ -1,0 +1,19 @@
+version: "2.4"
+
+services:
+  ###############################################
+  # Beholder Stalk
+  beholder-stalk:
+    devices:
+      - "/dev/hidg0:/dev/hidg0"
+      - "/dev/hidg1:/dev/hidg1"
+      - "/dev/hidg2:/dev/hidg2"
+  ###############################################
+  # Watchtower
+  watchtower:
+    image: containrrr/watchtower
+    container_name: beholder-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  

@@ -1,0 +1,68 @@
+version: "2.4"
+
+services:
+  ###############################################
+  # Beholder Cortex
+  beholder-cortex:
+    image: beholderrpa/cortex:latest
+    build:
+      context: ./beholder-cortex
+      dockerfile: Dockerfile.dev
+    volumes:
+      - './beholder-cortex:/srv/app'
+      - 'beholder_cortex_node_modules:/srv/app/node_modules'
+    ports:
+      - 3000:3000
+  ###############################################
+  # Beholder Nexus
+  beholder-nexus:
+    image: beholderrpa/nexus:latest
+    ports:
+      - 15672:15672 # RabbitMQ Management Port
+      - 1883:1883 # MQTT Port 
+      - 15675:15675 # MQTT Web Sockets Port
+  ###############################################
+  # Beholder Stalk
+  beholder-stalk:
+    image: beholderrpa/stalk:latest
+    build:
+      context: ./beholder-stalk
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./usb-dev/hidg0:/dev/hidg0
+      - ./usb-dev/hidg1:/dev/hidg1
+      - ./usb-dev/hidg2:/dev/hidg2
+  beholder-grafana:
+    image: beholderrpa/grafana:latest
+    ports:
+      - 3001:3000
+  ###############################################
+  # Beholder Postgres
+  beholder-postgres:
+    image: beholderrpa/postgres:latest
+    ports:
+      - 5432:5432
+  ###############################################
+  # Beholder Adminer
+  beholder-adminer:
+    image: adminer
+    container_name: beholder-adminer
+    restart: always
+    depends_on:
+      - beholder-postgres
+    ports:
+      - 8082:8080
+    networks:
+      - backend
+  ###############################################
+  # Beholder Reverse Proxy
+  beholder-traefik:
+    image: traefik:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)
+      - traefik.http.routers.dashboard.entrypoints=web,websecure
+      - traefik.http.routers.dashboard.rule=Host(`traefik.beholder.localhost`)
+      - traefik.http.routers.dashboard.service=api@internal
+volumes:
+  'beholder_cortex_node_modules':

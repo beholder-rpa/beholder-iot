@@ -1,4 +1,4 @@
-# pi-beholder
+# Beholder RPA
 
 A multi-faceted approach to robotic process automation.
 
@@ -20,7 +20,7 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 ## Backbone
 
 - PostgreSQL - DB
-- Nginx - L7 Proxy & Routing
+- Traefik - L7 Proxy & Routing
 - Grafna - Analytics
 
 ## Connectors:
@@ -29,10 +29,8 @@ Beholder Addon - WoW Addon that provides visual data for the Beholder to see and
 
 # Getting Started
 
-The following is required:
-
-### Hardware:
- - Raspberry Pi 4 (Rev 1.2 4GB model recommended)
+ ### Hardware:
+ - Raspberry Pi 4 (Rev 1.2 4GB+ model recommended)
 
 In order to act as a USB device, you'll need a USB C to A Cable
 
@@ -55,9 +53,9 @@ for instructions on how to create an image.
  - Yarn
  - Git
  - Docker
- - dotNet Core 3.1
+ - dotNet Core 5
  - VSCode (or your favorite editor)
-   - VSCode Remote extension
+ - VSCode Remote extension
 
 It is recommended that front-end (Beholder Cortex) development occur via remotely connecting to a running Raspberry Pi instance via the Visual Studio Code Remote Remote - SSH plugin.
 
