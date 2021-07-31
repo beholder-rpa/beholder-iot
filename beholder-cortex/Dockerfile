@@ -2,7 +2,7 @@ FROM node:14-alpine as build
 
 WORKDIR /srv/app
 
-COPY ./.npmrc ./
+# COPY ./.npmrc ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./next.config.js ./
