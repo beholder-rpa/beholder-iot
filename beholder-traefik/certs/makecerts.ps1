@@ -15,7 +15,7 @@ $localDomainsList = @(
     )
 
 # If openssl is available, this will be used to generate the certificate.
-if (Get-Command "openssl" -ErrorAction SilentlyContinue -or) 
+if (Get-Command "openssl" -ErrorAction SilentlyContinue) 
 {
     Write-Host "Using OpenSSL..."
 
