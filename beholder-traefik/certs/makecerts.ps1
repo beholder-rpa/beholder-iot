@@ -15,7 +15,7 @@ $localDomainsList = @(
     )
 
 # If openssl is available, this will be used to generate the certificate.
-if (Get-Command "/usr/local/opt/openssl/bin/openssl" -ErrorAction SilentlyContinue) 
+if (Get-Command "openssl" -ErrorAction SilentlyContinue -or) 
 {
     Write-Host "Using OpenSSL..."
 
@@ -28,7 +28,7 @@ if (Get-Command "/usr/local/opt/openssl/bin/openssl" -ErrorAction SilentlyContin
 
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
-            & /usr/local/opt/openssl/bin/openssl req -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
+            & openssl req -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
                 -subj "/C=US/ST=Oregon/L=Portland/O=PDP/OU=Beholder/CN=$domain" `
                 -addext "subjectAltName=DNS:$domain,DNS:$domain,IP:127.0.0.1" `
                 -keyout "$outputPath/$domain.key" `
