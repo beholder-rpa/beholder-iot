@@ -36,8 +36,17 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
                 -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
                 -passout $passOut
+            if ($IsMacOS) {
+                & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
+            }
 
-            & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
+            if ($IsLinux) {
+                cp "$outputPath/$domain.crt" /usr/local/share/ca-certificates/
+            }
+        }
+
+        if ($IsLinux) {
+            sudo update-ca-certificates --fresh
         }
     }
 } else {
