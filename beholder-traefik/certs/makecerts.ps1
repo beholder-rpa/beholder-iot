@@ -41,7 +41,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
             }
 
             if ($IsLinux) {
-                cp "$outputPath/$domain.crt" /usr/local/share/ca-certificates/
+                & sudo cp "$outputPath/$domain.crt" /usr/local/share/ca-certificates/
             }
         }
     }
