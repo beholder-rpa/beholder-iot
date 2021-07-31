@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  input[type='text'] {
+    @apply mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md;
+  }
+
+  select {
+    @apply mt-1 block py-2 px-3 border border-gray-300 bg-white text-gray-600 rounded-md shadow-sm focus:outline-none sm:text-sm;
+  }
+}
+
+@layer base {
+  :root {
+    /* --base-color: 213, 68%; */
+    --base-color: 0, 0%;
+    --skin-color-950: var(--base-color), 5%;
+    --skin-color-900: var(--base-color), 10%;
+    --skin-color-800: var(--base-color), 20%;
+    --skin-color-700: var(--base-color), 30%;
+    --skin-color-600: var(--base-color), 40%;
+    --skin-color-500: var(--base-color), 50%;
+    --skin-color-400: var(--base-color), 60%;
+    --skin-color-300: var(--base-color), 70%;
+    --skin-color-200: var(--base-color), 80%;
+    --skin-color-100: var(--base-color), 90%;
+    --skin-color-50: var(--base-color), 95%;
+  }
+}

@@ -25,3 +25,6 @@ LICENSE
 README.md
 
 **/.next
+**/.eslintcache
+**/certificates
+**/teams-app-manifest
