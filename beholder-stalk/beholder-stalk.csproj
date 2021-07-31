@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <RootNamespace>beholder_stalk</RootNamespace>
     <PublishTrimmed>false</PublishTrimmed>
     <PublishReadyToRun>false</PublishReadyToRun>
     <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
     <PublishSingleFile>false</PublishSingleFile>
-    <RuntimeIdentifier>linux-arm</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,13 +1,19 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 RUN mkdir /srv/app && chown 1000:1000 -R /srv/app
 
 WORKDIR /srv/app
 
+RUN yarn global add pm2
+
+COPY ./.npmrc ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
+
+RUN yarn install
+
 VOLUME /srv/app
 
 COPY docker-entrypoint-dev.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint-dev.sh
 ENTRYPOINT ["docker-entrypoint-dev.sh"]
-
-# Running the app
-CMD [ "yarn", "dev" ]
