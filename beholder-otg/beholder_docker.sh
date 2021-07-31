@@ -4,13 +4,17 @@ echo "# Executing Beholder IoT Docker script..."
 
 if [ "$1" = up ]
 then
-    /home/beholder/beholder/beholder.ps1 build rpi
-    /home/beholder/beholder/beholder.ps1 up rpi
+    pushd /home/beholder/beholder/
+    ./beholder.ps1 build rpi
+    ./beholder.ps1 up rpi
+    popd
 fi
 
 if [ "$1" = down ]
 then
-    /home/beholder/beholder/beholder.ps1 down rpi
+    pushd /home/beholder/beholder/
+    ./beholder.ps1 down rpi
+    popd
 fi
 
 echo "# Completed Beholder IoT Docker script."
