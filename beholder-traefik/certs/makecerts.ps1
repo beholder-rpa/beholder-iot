@@ -44,10 +44,10 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
                 cp "$outputPath/$domain.crt" /usr/local/share/ca-certificates/
             }
         }
+    }
 
-        if ($IsLinux) {
-            sudo update-ca-certificates --fresh
-        }
+    if ($IsLinux) {
+        sudo update-ca-certificates --fresh
     }
 } else {
 
