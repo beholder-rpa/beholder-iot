@@ -21,6 +21,8 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 
 - PostgreSQL - DB
 - Traefik - L7 Proxy & Routing
+- Dapr - service invocation, state, and pub/sub blocks.
+- Redis - Cache/State Store
 - Grafna - Analytics
 
 ## Connectors:
@@ -49,8 +51,7 @@ for instructions on how to create an image.
 # Developing Beholder
  
 ### Software:
- - NodeJS
- - Yarn
+ - PowerShell
  - Git
  - Docker
  - dotNet Core 5
