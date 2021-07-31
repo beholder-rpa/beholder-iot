@@ -15,6 +15,12 @@ if ($environment -eq "rpi") {
   $dockerComposeFiles = @("docker-compose.yml", "docker-compose.rpi.yml")
 }
 
+if ($environment -eq "rpi") {
+  $hostName = [System.Net.Dns]::GetHostName()
+  $env.BEHOLDER_CORTEX_HOSTNAME = $hostName
+  $env.BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
+}
+
 switch ($command)
 {
     'build'

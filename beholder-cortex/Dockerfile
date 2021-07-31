@@ -1,18 +1,33 @@
-FROM node:12-alpine
+FROM node:14-alpine as build
 
 WORKDIR /srv/app
 
+COPY ./.npmrc ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
+COPY ./next.config.js ./
 
-RUN yarn install
+RUN yarn --non-interactive --frozen-lockfile --prefer-offline
 
 COPY . .
 
 ENV NODE_ENV production
 
-EXPOSE 3000
-
 RUN yarn build
 
-ENTRYPOINT ["/usr/local/bin/yarn", "start"]
+FROM node:14-alpine as final
+ENV NODE_ENV production
+WORKDIR /srv/app
+
+COPY --from=build /srv/app/package.json ./
+COPY --from=build /srv/app/yarn.lock ./
+COPY --from=build /srv/app/next.config.js ./
+COPY --from=build /srv/app/ecosystem.config.yml ./
+COPY --from=build /srv/app/node_modules/ ./node_modules/
+COPY --from=build /srv/app/.next/ ./.next/
+COPY --from=build /srv/app/public/ ./public/
+
+RUN yarn global add pm2
+
+EXPOSE 3000
+ENTRYPOINT ["pm2-runtime", "/srv/app/ecosystem.config.yml"]

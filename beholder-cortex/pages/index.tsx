@@ -19,10 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     let host = window.location.host;
-    if (process.env.NODE_ENV !== 'production') {
-      host = 'localhost:8080'
-    }
-    client = mqtt.connect(`ws://${host}/nexus/ws`, {
+    client = mqtt.connect(`wss://${host}/nexus/ws`, {
       username: "guest",
       password: "guest",
       reconnectPeriod: 5000,

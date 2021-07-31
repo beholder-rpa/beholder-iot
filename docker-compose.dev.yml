@@ -11,15 +11,7 @@ services:
     volumes:
       - './beholder-cortex:/srv/app'
       - 'beholder_cortex_node_modules:/srv/app/node_modules'
-    ports:
-      - 3000:3000
-  ###############################################
-  # Beholder Nexus
-  beholder-nexus:
-    ports:
-      - 15672:15672 # RabbitMQ Management Port
-      - 1883:1883 # MQTT Port 
-      - 15675:15675 # MQTT Web Sockets Port
+      - 'beholder_cortex_next:/srv/app/.next'
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -31,10 +23,10 @@ services:
       - ./usb-dev/hidg0:/dev/hidg0
       - ./usb-dev/hidg1:/dev/hidg1
       - ./usb-dev/hidg2:/dev/hidg2
+  ###############################################
+  # Beholder Grafana
   beholder-grafana:
     image: beholderrpa/grafana:latest
-    ports:
-      - 3001:3000
   ###############################################
   # Beholder Postgres
   beholder-postgres:
@@ -64,4 +56,5 @@ services:
       - traefik.http.routers.dashboard.rule=Host(`${BEHOLDER_TRAEFIK_HOSTNAME}`)
       - traefik.http.routers.dashboard.service=api@internal
 volumes:
-  'beholder_cortex_node_modules':
+  beholder_cortex_node_modules:
+  beholder_cortex_next:

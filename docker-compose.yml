@@ -12,6 +12,29 @@ services:
       dockerfile: Dockerfile
     networks:
       - backend
+    labels: 
+      - traefik.enable=true
+      - traefik.http.routers.cortex.rule=Host(`${BEHOLDER_CORTEX_HOSTNAME}`)
+      - traefik.http.routers.cortex.entrypoints=websecure
+      - traefik.http.routers.cortex.tls=true
+      - traefik.http.services.cortex.loadbalancer.server.port=3000
+  # Dapr Sidecar
+  beholder-cortex-dapr:
+    image: daprio/daprd:edge
+    container_name: beholder-cortex-dapr
+    restart: always
+    command: ["./daprd",
+    "-app-id", "cortex",
+    "-app-port", "3000",
+    "-dapr-http-max-request-size", "16",
+    "-placement-host-address", "beholder-dapr-placement:50006",
+    "-components-path", "/dapr/components",
+    "-config", "/dapr/config.yaml"]
+    volumes:
+      - "./beholder-dapr/:/dapr"
+    depends_on:
+      - beholder-cortex
+    network_mode: "service:beholder-cortex"
   ###############################################
   # Beholder Nexus
   beholder-nexus:
@@ -21,6 +44,8 @@ services:
     expose: 
       # Management Port
       - 15672
+      # Amqp Port
+      - 5672
       # MQTT Port
       - 1883
       # MQTT Web Port
@@ -29,15 +54,20 @@ services:
       - backend
     labels:
       - traefik.enable=true
-      # Redirect to TLS from non-tls
-      - traefik.http.routers.beholder_nexus_redirect.rule=Host(`${BEHOLDER_NEXUS_HOSTNAME}`)
-      - traefik.http.routers.beholder_nexus_redirect.entrypoints=web
-      - traefik.http.routers.beholder_nexus_redirect.middlewares=redirect_to_ssl
       # Proxy to authenticated content
       - traefik.http.routers.beholder_nexus.rule=Host(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.http.routers.beholder_nexus.entrypoints=websecure
       - traefik.http.routers.beholder_nexus.tls=true
+      - traefik.http.routers.beholder_nexus.service=beholder_nexus
       - traefik.http.services.beholder_nexus.loadbalancer.server.port=15672
+      # Proxy mqtt web sockets
+      - traefik.http.middlewares.beholder_nexus_mqtt_ws_stripprefixregex.stripprefixregex.regex=/nexus/
+      - traefik.http.routers.beholder_nexus_mqtt_ws.rule=Host(`${BEHOLDER_CORTEX_HOSTNAME}`) && PathPrefix(`/nexus`)
+      - traefik.http.routers.beholder_nexus_mqtt_ws.entrypoints=websecure
+      - traefik.http.routers.beholder_nexus_mqtt_ws.tls=true
+      - traefik.http.routers.beholder_nexus_mqtt_ws.middlewares=beholder_nexus_mqtt_ws_stripprefixregex
+      - traefik.http.routers.beholder_nexus_mqtt_ws.service=beholder_nexus_mqtt_ws
+      - traefik.http.services.beholder_nexus_mqtt_ws.loadbalancer.server.port=15675
       # Proxy mqtt
       - traefik.tcp.routers.beholder_nexus_mqtt.rule=HostSNI(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.tcp.routers.beholder_nexus_mqtt.entrypoints=mqtt
@@ -118,6 +148,15 @@ services:
       - traefik.tcp.routers.beholder_redis.entrypoints=redis
       - traefik.tcp.services.beholder_redis.loadbalancer.server.port=6379
   ###############################################
+  # Dapr placement service
+  beholder-dapr-placement:
+    image: daprio/dapr
+    container_name: dapr_placement
+    restart: always
+    command: ["./placement", "-port", "50006"]
+    networks:
+      - backend
+  ###############################################
   # Beholder Reverse Proxy
   beholder-traefik:
     image: traefik:v2.4
@@ -132,6 +171,10 @@ services:
     labels:
       - traefik.http.middlewares.redirect_to_ssl.redirectscheme.scheme=https
       - traefik.http.middlewares.redirect_to_ssl.redirectscheme.permanent=true
+      # Redirect to TLS from non-tls
+      - traefik.http.routers.wildcard_redirect.rule=Host(`*`)
+      - traefik.http.routers.wildcard_redirect.entrypoints=web
+      - traefik.http.routers.wildcard_redirect.middlewares=redirect_to_ssl
     volumes:
     - ./beholder-traefik:/etc/traefik/:ro
     - /var/run/docker.sock:/var/run/docker.sock:ro

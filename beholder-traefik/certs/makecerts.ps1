@@ -9,8 +9,8 @@ param(
 Write-Host "Generating certificates..."
 
 $localDomainsList = @(
+    "beholder.localhost",
     "nexus.beholder.localhost",
-    "cortex.beholder.localhost",
     "graphana.beholder.localhost"
     )
 
