@@ -17,8 +17,8 @@ if ($environment -eq "rpi") {
 
 if ($environment -eq "rpi") {
   $hostName = [System.Net.Dns]::GetHostName()
-  $env.BEHOLDER_CORTEX_HOSTNAME = $hostName
-  $env.BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
+  $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
+  $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
 }
 
 switch ($command)
@@ -26,11 +26,11 @@ switch ($command)
     'build'
     {
       ## Create the self-signed certificates if they don't already exist
-      Push-Location ./beholder-traefik/certs
+      Push-Location $PWD/beholder-traefik/certs
       if ($PSVersionTable.Platform -eq "Windows") {
         Set-ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ./makecerts.ps1;
       } else {
-        & ./makecerts.ps1;
+        & $PWD/makecerts.ps1;
       }
       Pop-Location
 
@@ -46,5 +46,9 @@ switch ($command)
     {
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
+    }
+    'logs'
+    {
+      & journalctl -u beholder_docker.service
     }
 }
