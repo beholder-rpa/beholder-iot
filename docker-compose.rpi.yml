@@ -17,7 +17,7 @@ services:
   # Beholder Reverse Proxy
   beholder-traefik:
     environment: 
-      - rpi_hostname=${HOSTNAME}
+      - beholder_hostname=${BEHOLDER_HOSTNAME}
     command:
       - "--api.dashboard=true"
       - "--entrypoints.web.address=:80"
