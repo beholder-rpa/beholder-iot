@@ -31,6 +31,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
     volumes: 
       - ./beholder-traefik/conf:/etc/traefik/conf/:ro
+      - ./beholder-traefik/certs:/etc/traefik/certs/:ro
   ###############################################
   # Watchtower
   watchtower:
