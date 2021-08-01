@@ -24,10 +24,6 @@ services:
       - ./usb-dev/hidg1:/dev/hidg1
       - ./usb-dev/hidg2:/dev/hidg2
   ###############################################
-  # Beholder Grafana
-  beholder-grafana:
-    image: beholderrpa/grafana:latest
-  ###############################################
   # Beholder Postgres
   beholder-postgres:
     image: beholderrpa/postgres:latest

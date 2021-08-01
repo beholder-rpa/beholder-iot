@@ -102,18 +102,23 @@ services:
   ###############################################
   # Beholder Grafana
   beholder-grafana:
-    image: beholderrpa/grafana:rpi
+    image: grafana/grafana
     container_name: beholder-grafana
-    build:
-      context: ./beholder-grafana
-      dockerfile: Dockerfile
     restart: always
     environment:
       GF_LOG_MODE: console
     networks:
       - backend
     volumes:
+      - ./beholder-grafana:/etc/grafana/:ro
       - beholder_grafana_data:/var/lib/grafana
+    labels: 
+      - traefik.enable=true
+      # Proxy to authenticated content
+      - traefik.http.routers.beholder_grafana.rule=Host(`${BEHOLDER_GRAFANA_HOSTNAME}`)
+      - traefik.http.routers.beholder_grafana.entrypoints=websecure
+      - traefik.http.routers.beholder_grafana.tls=true
+      - traefik.http.services.beholder_grafana.loadbalancer.server.port=3000
   ###############################################
   # Beholder Postgres
   beholder-postgres:
