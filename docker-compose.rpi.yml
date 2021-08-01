@@ -5,9 +5,6 @@ services:
   # Beholder Cortex
   beholder-cortex:
     image: beholderrpa/iot-cortex:master
-    build:
-      context: ./beholder-cortex
-      dockerfile: Dockerfile
   ###############################################
   # Beholder Stalk
   beholder-stalk:
