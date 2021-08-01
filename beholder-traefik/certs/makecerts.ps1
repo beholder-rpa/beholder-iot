@@ -22,14 +22,16 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
-        -subj "/CN=BEHOLDER DEFAULT CERT" `
-        -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
-        -addext "extendedKeyUsage=serverAuth" `
-        -addext "subjectAltName=DNS:$($domainsList -join ",DNS:")" `
-        -keyout "$outputPath/server.key" `
-        -out "$outputPath/server.crt" `
-        -passout $passOut
+    if (-not(Test-Path -Path "$outputPath/server.crt" -PathType Leaf)) {
+        & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
+            -subj "/CN=BEHOLDER DEFAULT CERT" `
+            -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
+            -addext "extendedKeyUsage=serverAuth" `
+            -addext "subjectAltName=DNS:$($domainsList -join ",DNS:")" `
+            -keyout "$outputPath/server.key" `
+            -out "$outputPath/server.crt" `
+            -passout $passOut
+    }
 
     foreach ($domain in $domainsList) {
 
