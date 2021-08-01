@@ -22,7 +22,7 @@ const Sidebar = () => {
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="relative flex flex-row w-full">
-                      <span className="w-full flex flex-row items-center h-11 hover:bg-skin-600 dark:hover:bg-skin-700 text-gray-200 hover:text-gray-100 border-l-4 border-transparent hover:border-skin-200 dark:hover:border-skin-400 pr-6">
+                      <span className="w-full flex flex-row items-center h-11 hover:bg-base-300 text-base-content hover:text-base-content border-l-4 border-transparent hover:border-accent-focus pr-6">
                         <span className="flex-none justify-center items-center ml-3">{item.icon}</span>
                         <span className="ml-2 text-sm flex-grow text-left tracking-wide truncate">{item.title}</span>
                         <span className="flex-none">
