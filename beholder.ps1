@@ -54,6 +54,7 @@ switch ($command)
     }
     'rpi-start'
     {
+      sudo systemctl daemon-reload
       sudo systemctl start beholder_docker.service
     }
     'rpi-logs'
