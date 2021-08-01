@@ -36,7 +36,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: beholderrpa/cortex:rpi
+          images: beholderrpa/iot-cortex
           tag-sha: true
       -
         name: Cache Docker layers
