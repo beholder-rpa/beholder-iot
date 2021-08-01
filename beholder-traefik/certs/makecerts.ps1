@@ -22,20 +22,21 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    foreach ($domain in $domainsList) {
+    & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
+        -subj "/CN=BEHOLDER DEFAULT CERT" `
+        -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
+        -addext "extendedKeyUsage=serverAuth" `
+        -addext "subjectAltName=DNS:$($domainsList -join ",DNS:")" `
+        -keyout "$outputPath/server.key" `
+        -out "$outputPath/server.crt" `
+        -passout $passOut
 
-        $firstSegment = $domain.Split('.')[0]
+    foreach ($domain in $domainsList) {
 
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
-            & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
-                -subj "/CN=BEHOLDER DEFAULT CERT" `
-                -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
-                -addext "extendedKeyUsage=serverAuth" `
-                -addext "subjectAltName=DNS:$domain" `
-                -keyout "$outputPath/$domain.key" `
-                -out "$outputPath/$domain.crt" `
-                -passout $passOut
+            cp "$outputPath/server.crt" "$outputPath/$domain.crt"
+            cp "$outputPath/server.key" "$outputPath/$domain.key"
 
             if ($IsMacOS) {
                 & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
