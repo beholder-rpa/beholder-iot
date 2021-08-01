@@ -14,6 +14,20 @@ services:
     # If this is not present, clock_gettime fails
     privileged: true
   ###############################################
+  # Beholder Reverse Proxy
+  beholder-traefik:
+    command:
+      - "--api.dashboard=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.amqp.address=:5672"
+      - "--entrypoints.mqtt.address=:1883"
+      - "--entrypoints.redis.address=:6379"
+      - "--providers.file.filename=/etc/traefik/conf/dynamic_conf_rpi.yml"
+      - "--providers.docker.exposedbydefault=false"
+  ###############################################
   # Watchtower
   watchtower:
     image: containrrr/watchtower

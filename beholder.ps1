@@ -30,7 +30,17 @@ switch ($command)
       if ($IsWindows) {
         Set-ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ./makecerts.ps1;
       } else {
-        & $PWD/makecerts.ps1;
+        switch ($environment)
+        {
+          'dev'
+          {
+            & $PWD/makecerts.ps1;
+          }
+          'rpi'
+          {
+            & $PWD/makecerts.ps1 --domainsList @("$env:HOSTNAME", ,"nexus.$env:HOSTNAME","graphana.$env:HOSTNAME");
+          }
+        }
       }
       Pop-Location
 

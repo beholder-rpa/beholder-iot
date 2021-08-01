@@ -1,0 +1,9 @@
+# Default TLS Certs
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/{{ .Env.HOSTNAME }}.crt
+      keyFile: /etc/traefik/certs/{{ .Env.HOSTNAME }}.key
+    - certFile: /etc/traefik/certs/nexus.{{ .Env.HOSTNAME }}.crt
+      keyFile: /etc/traefik/certs/nexus.{{ .Env.HOSTNAME }}.key
+    - certFile: /etc/traefik/certs/graphana.{{ .Env.HOSTNAME }}.crt
+      keyFile: /etc/traefik/certs/graphana.{{ .Env.HOSTNAME }}.key

@@ -5,16 +5,12 @@ param(
     [Parameter()]
     [SecureString] $certificatePassword = (ConvertTo-SecureString -String "mUSn4LwfTb2jOXM3ftw4VKck4XGlRMLf" -AsPlainText -Force),
     [Parameter()]
-    [string] $outputPath = $pwd
+    [string] $outputPath = $pwd,
+    [Parameter()]
+    [string[]] $domainsList = @("beholder.localhost","nexus.beholder.localhost","graphana.beholder.localhost")
 )
 
 Write-Host "Generating certificates..."
-
-$localDomainsList = @(
-    "beholder.localhost",
-    "nexus.beholder.localhost",
-    "graphana.beholder.localhost"
-    )
 
 # If openssl is available, this will be used to generate the certificate.
 if (Get-Command "openssl" -ErrorAction SilentlyContinue) 
@@ -26,7 +22,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    foreach ($domain in $localDomainsList) {
+    foreach ($domain in $domainsList) {
 
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
@@ -70,7 +66,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         Write-Host "Generating Traefik TLS certificates..." -ForegroundColor Green
         & $mkcert -install
 
-        foreach ($domain in $localDomainsList) {
+        foreach ($domain in $domainsList) {
             if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
                 & $mkcert -cert-file $outputPath/$domain.crt -key-file $outputPath/$domain.key "$domain"
             }
@@ -80,6 +76,3 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         Write-Host "An error occurred while attempting to generate TLS certificates: $_" -ForegroundColor Red
     }
 }
-
-
-
