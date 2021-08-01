@@ -36,6 +36,10 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
                 -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
                 -passout $passOut
+
+            cp "$outputPath/$domain.crt" "$outputPath/$domain.crt.orig"
+            cat "$outputPath/server.key" "$outputPath/$domain.crt.orig" > "$outputPath/$domain.crt"
+            
             if ($IsMacOS) {
                 & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
             }
