@@ -12,8 +12,17 @@ param(
 
 Write-Host "Generating certificates..."
 
+$openSSLPath
+if ($IsWindows) {
+    $openSSLPath = "openssl"
+} ElseIf ($IsLinux) {
+    $openSSLPath = "openssl"
+} ElseIf ($IsMacOS) {
+    $openSSLPath = "/usr/local/opt/openssl/bin/openssl"
+}
+
 # If openssl is available, this will be used to generate the certificate.
-if (Get-Command "openssl" -ErrorAction SilentlyContinue) 
+if (Get-Command $openSSLPath -ErrorAction SilentlyContinue) 
 {
     Write-Host "Using OpenSSL..."
 
@@ -22,7 +31,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
+    & $openSSLPath req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
         -subj "/CN=BEHOLDER DEFAULT CERT" `
         -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
         -addext "extendedKeyUsage=serverAuth" `

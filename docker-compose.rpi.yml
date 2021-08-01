@@ -2,8 +2,16 @@ version: "2.4"
 
 services:
   ###############################################
+  # Beholder Cortex
+  beholder-cortex:
+    image: beholderrpa/iot-cortex:latest
+    build:
+      context: ./beholder-cortex
+      dockerfile: Dockerfile
+  ###############################################
   # Beholder Stalk
   beholder-stalk:
+    image: beholderrpa/iot-stalk:latest
     devices:
       - "/dev/hidg0:/dev/hidg0"
       - "/dev/hidg1:/dev/hidg1"

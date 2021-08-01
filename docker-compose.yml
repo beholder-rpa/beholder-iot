@@ -4,12 +4,9 @@ services:
   ###############################################
   # Beholder Cortex
   beholder-cortex:
-    image: beholderrpa/cortex:rpi
+    image: beholderrpa/iot-cortex
     container_name: beholder-cortex
     restart: always
-    build:
-      context: ./beholder-cortex
-      dockerfile: Dockerfile
     networks:
       - backend
     labels: 
@@ -77,12 +74,9 @@ services:
   ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/stalk:rpi
+    image: beholderrpa/iot-stalk
     container_name: beholder-stalk
     restart: always
-    build:
-      context: ./beholder-stalk
-      dockerfile: Dockerfile
     logging:
       driver: "json-file"
       options:
@@ -122,12 +116,9 @@ services:
   ###############################################
   # Beholder Postgres
   beholder-postgres:
-    image: beholderrpa/postgres:rpi
+    image: postgres
     container_name: beholder-postgres
     restart: always
-    build:
-      context: ./beholder-postgres
-      dockerfile: Dockerfile
     environment:
       POSTGRES_USER: beholder
       POSTGRES_PASSWORD: beholder
@@ -135,6 +126,7 @@ services:
     networks:
       - backend
     volumes:
+      - ./beholder-postgres/initdb/:/docker-entrypoint-initdb.d/:ro
       - beholder_postgres_data:/var/lib/postgresql/data
   ###############################################
   # Beholder Redis

@@ -59,6 +59,15 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
     }
+    'clean'
+    {
+      $currentFolderName = (Split-Path -Path $pwd -Leaf).ToLower()
+      docker volume rm "$currentFolderName`_beholder_cortex_node_modules"
+      docker volume rm "$currentFolderName`_beholder_cortex_next"
+      docker volume rm "$currentFolderName`_beholder_redis_data"
+      docker volume rm "$currentFolderName`_beholder_grafana_data"
+      docker volume rm "$currentFolderName`_beholder_postgres_data"
+    }
     'stop'
     {
       sudo systemctl stop beholder_docker.service
