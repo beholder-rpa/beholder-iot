@@ -7,7 +7,7 @@ elif [ "${TARGETPLATFORM}" = "linux/arm/v7" ]; then
 elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then
     echo "Targeting linux/amd64";
     dotnet restore "./beholder-stalk.csproj" --runtime linux-x64
-else then
+else 
     echo "Targeting generic platform";
     dotnet restore "./beholder-stalk.csproj" -o /app/build
 fi
