@@ -38,7 +38,7 @@ switch ($command)
           }
           'rpi'
           {
-            & $PWD/makecerts.ps1 --domainsList @("$env:HOSTNAME", ,"nexus.$env:HOSTNAME","graphana.$env:HOSTNAME");
+            & $PWD/makecerts.ps1 -domainsList @("$env:HOSTNAME", ,"nexus.$env:HOSTNAME","graphana.$env:HOSTNAME");
           }
         }
       }
