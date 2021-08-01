@@ -1,7 +1,7 @@
 import React, { useRef, useContext } from 'react';
 import { observer } from 'mobx-react';
 
-import CortexLayout from '@layouts/CortexLayout';
+import CortexLayout from '../../layouts/CortexLayout';
 import { AppStoreContext } from '@stores/AppStore';
 import { BeholderClientContext } from '@services/BeholderClient';
 import mapKeyToKeypress from '@src/models/kinesis/mapKeyToKeypress';
