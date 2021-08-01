@@ -168,13 +168,6 @@ services:
     networks:
       - frontend
       - backend
-    labels:
-      - traefik.http.middlewares.redirect_to_ssl.redirectscheme.scheme=https
-      - traefik.http.middlewares.redirect_to_ssl.redirectscheme.permanent=true
-      # Redirect to TLS from non-tls
-      - traefik.http.routers.wildcard_redirect.rule=Host(`*`)
-      - traefik.http.routers.wildcard_redirect.entrypoints=web
-      - traefik.http.routers.wildcard_redirect.middlewares=redirect_to_ssl
     volumes:
     - ./beholder-traefik:/etc/traefik/:ro
     - /var/run/docker.sock:/var/run/docker.sock:ro
