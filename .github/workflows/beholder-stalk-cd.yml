@@ -34,10 +34,39 @@ jobs:
       -
         name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: beholderrpa/iot-stalk
-          tag-sha: true
+          flavor: |
+            latest=auto
+            prefix=
+            suffix=
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+      -
+        name: Docker meta arm32v7
+        id: docker_meta_arm32v7
+        uses: docker/metadata-action@v3
+        with:
+          images: beholderrpa/iot-stalk-arm32v7
+          flavor: |
+            latest=auto
+            prefix=
+            suffix=
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
       -
         name: Cache Docker layers
         uses: actions/cache@v2
@@ -74,8 +103,8 @@ jobs:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile.arm32v7
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
+          tags: ${{ steps.docker_meta_arm32v7.outputs.tags }}
+          labels: ${{ steps.docker_meta_arm32v7.outputs.labels }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

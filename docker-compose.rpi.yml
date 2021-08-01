@@ -8,7 +8,7 @@ services:
   ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/iot-stalk:master
+    image: beholderrpa/iot-stalk-arm32v7:master
     devices:
       - "/dev/hidg0:/dev/hidg0"
       - "/dev/hidg1:/dev/hidg1"
