@@ -27,7 +27,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
             & openssl req -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
-                -subj "/C=US/ST=Oregon/L=Portland/O=PDP/OU=Beholder/CN=$domain" `
+                -subj "/C=US/ST=Oregon/L=Portland/O=Beholder/OU=Beholder/CN=$domain" `
                 -addext "subjectAltName=DNS:$domain,DNS:$domain,IP:127.0.0.1" `
                 -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
