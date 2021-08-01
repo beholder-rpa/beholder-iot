@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["./beholder-stalk.csproj", "."]
-RUN dotnet restore "./beholder-stalk.csproj"
+COPY ./docker-publish-xplat.sh .
+RUN ./docker-publish-xplat.sh
 COPY . .
 RUN ./docker-build-xplat.sh
 

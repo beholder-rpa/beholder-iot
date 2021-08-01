@@ -4,14 +4,14 @@ services:
   ###############################################
   # Beholder Cortex
   beholder-cortex:
-    image: beholderrpa/iot-cortex:latest
+    image: beholderrpa/iot-cortex:master
     build:
       context: ./beholder-cortex
       dockerfile: Dockerfile
   ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/iot-stalk:latest
+    image: beholderrpa/iot-stalk:master
     devices:
       - "/dev/hidg0:/dev/hidg0"
       - "/dev/hidg1:/dev/hidg1"
