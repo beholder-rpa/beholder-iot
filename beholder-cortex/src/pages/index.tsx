@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
-import CortexLayout from '@layouts/CortexLayout';
 
+import CortexLayout from '@layouts/CortexLayout';
 import { FormInput } from '@modules/Shared/FormInput';
 import { BeholderClientContext } from '@services/BeholderClient';
 
