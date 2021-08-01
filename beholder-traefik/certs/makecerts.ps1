@@ -28,6 +28,7 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
 
             & openssl req -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
                 -subj "/C=US/ST=Oregon/L=Portland/O=Beholder/OU=Beholder/CN=$domain" `
+                -addext "subjectAltName=DNS:$domain" `
                 -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
                 -passout $passOut
