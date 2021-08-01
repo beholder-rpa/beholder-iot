@@ -47,17 +47,21 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
     }
-    'rpi-stop'
+    'stop'
     {
       sudo systemctl stop beholder_docker.service
     }
-    'rpi-start'
+    'start'
     {
       sudo systemctl daemon-reload
       sudo systemctl start beholder_docker.service
     }
-    'rpi-logs'
+    'logs'
     {
       & journalctl -u beholder_docker.service
+    }
+    default
+    {
+      throw "Unknown command: $command"
     }
 }
