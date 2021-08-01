@@ -20,7 +20,7 @@ services:
       - traefik.http.services.cortex.loadbalancer.server.port=3000
   # Dapr Sidecar
   beholder-cortex-dapr:
-    image: daprio/daprd:edge
+    image: daprio/daprd
     container_name: beholder-cortex-dapr
     restart: always
     command: ["./daprd",
