@@ -27,7 +27,7 @@ switch ($command)
     {
       ## Create the self-signed certificates if they don't already exist
       Push-Location $PWD/beholder-traefik/certs
-      if ($PSVersionTable.Platform -eq "Windows") {
+      if ($IsWindows) {
         Set-ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; & ./makecerts.ps1;
       } else {
         & $PWD/makecerts.ps1;
