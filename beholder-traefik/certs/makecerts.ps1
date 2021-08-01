@@ -28,11 +28,13 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
 
     foreach ($domain in $domainsList) {
 
+        $firstSegment = $domain.Split('.')[0]
+
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
             & openssl req -key "$outputPath/server.key" -x509 -sha256 -nodes -new -days 1825 `
-                -subj "/C=US/ST=Oregon/L=Portland/emailAddress=root@$domain/O=Beholder/OU=Beholder/CN=$domain" `
-                -addext "subjectAltName=DNS:$domain" `
+                -subj "/C=US/ST=Oregon/L=Portland/emailAddress=root@$domain/O=Beholder/OU=Beholder/CN=root.beholder.local" `
+                -addext "subjectAltName=DNS:root,DNS:$firstSegment,DNS:root.beholder.local,DNS:$domain" `
                 -out "$outputPath/$domain.crt" `
                 -passout $passOut
 
