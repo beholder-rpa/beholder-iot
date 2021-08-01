@@ -5,5 +5,5 @@ tls:
       keyFile: /etc/traefik/certs/beholder.localhost.key
     - certFile: /etc/traefik/certs/nexus.beholder.localhost.crt
       keyFile: /etc/traefik/certs/nexus.beholder.localhost.key
-    - certFile: /etc/traefik/certs/graphana.beholder.localhost.crt
-      keyFile: /etc/traefik/certs/graphana.beholder.localhost.key
+    - certFile: /etc/traefik/certs/grafana.beholder.localhost.crt
+      keyFile: /etc/traefik/certs/grafana.beholder.localhost.key

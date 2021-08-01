@@ -40,7 +40,7 @@ switch ($command)
           }
           'rpi'
           {
-            & $PWD/makecerts.ps1 -domainsList @("$hostName", ,"nexus.$hostName","graphana.$hostName");
+            & $PWD/makecerts.ps1 -domainsList @("$hostName", ,"nexus.$hostName","grafana.$hostName");
           }
         }
       }
