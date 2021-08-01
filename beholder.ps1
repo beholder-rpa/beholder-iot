@@ -17,7 +17,6 @@ if ($environment -eq "rpi") {
 
 if ($environment -eq "rpi") {
   $hostName = [System.Net.Dns]::GetHostName()
-  $hostName = $hostName.Split(".")[0]
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
 }
