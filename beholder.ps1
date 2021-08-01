@@ -17,6 +17,7 @@ if ($environment -eq "rpi") {
 
 if ($environment -eq "rpi") {
   $hostName = [System.Net.Dns]::GetHostName()
+  $hostName = $hostName.Split(".")[0]
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
 }
@@ -47,7 +48,15 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
     }
-    'logs'
+    'rpi-stop'
+    {
+      sudo systemctl stop beholder_docker.service
+    }
+    'rpi-start'
+    {
+      sudo systemctl start beholder_docker.service
+    }
+    'rpi-logs'
     {
       & journalctl -u beholder_docker.service
     }

@@ -151,7 +151,7 @@ services:
   # Dapr placement service
   beholder-dapr-placement:
     image: daprio/dapr
-    container_name: dapr_placement
+    container_name: beholder-dapr-placement
     restart: always
     command: ["./placement", "-port", "50006"]
     networks:
