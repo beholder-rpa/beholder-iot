@@ -27,6 +27,8 @@ services:
       - "--entrypoints.redis.address=:6379"
       - "--providers.file.filename=/etc/traefik/conf/dynamic_conf_rpi.yml"
       - "--providers.docker.exposedbydefault=false"
+    volumes: 
+      - ./beholder-traefik/conf:/etc/traefik/conf/:ro
   ###############################################
   # Watchtower
   watchtower:
