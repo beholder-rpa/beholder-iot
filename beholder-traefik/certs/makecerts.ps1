@@ -22,23 +22,21 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    if (-not(Test-Path -Path "$outputPath/server.key" -PathType Leaf)) {
-        openssl genrsa -out "$outputPath/server.key" 2048
-    }
-
     foreach ($domain in $domainsList) {
 
         $firstSegment = $domain.Split('.')[0]
 
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
-            & openssl req -key "$outputPath/server.key" -x509 -sha256 -nodes -new -days 1825 `
-                -subj "/C=US/ST=Oregon/L=Portland/emailAddress=root@$domain/O=Beholder/OU=Beholder/CN=root.beholder.local" `
-                -addext "subjectAltName=DNS:root,DNS:$firstSegment,DNS:root.beholder.local,DNS:$domain" `
+            & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
+                -subj "/CN=BEHOLDER DEFAULT CERT" `
+                -addext "keyUsage=digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
+                -addext "extendedKeyUsage=serverAuth" `
+                -addext "basicConstraints=critical,CA:FALSE" `
+                -addext "subjectAltName=DNS:$domain" `
+                -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
                 -passout $passOut
-
-            # cp "$outputPath/server.key" "$outputPath/$domain.key"
 
             if ($IsMacOS) {
                 & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
