@@ -59,6 +59,11 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
     }
+    'pull'
+    {
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") pull"
+      Invoke-Expression $dockerComposeCommand
+    }
     'clean'
     {
       $currentFolderName = (Split-Path -Path $pwd -Leaf).ToLower()
