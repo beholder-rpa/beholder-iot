@@ -3,10 +3,10 @@ WORKDIR /src
 COPY ["./beholder-stalk.csproj", "."]
 RUN dotnet restore "./beholder-stalk.csproj"
 COPY . .
-RUN dotnet build "beholder-stalk.csproj" -c Release -o /app/build --runtime linux-arm
+RUN ./docker-build-xplat.sh
 
 FROM build AS publish
-RUN dotnet publish "beholder-stalk.csproj" -c Release -o /app/publish --runtime linux-arm
+RUN ./docker-publish-xplat.sh
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
 WORKDIR /app
