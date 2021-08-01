@@ -22,11 +22,15 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
+    if (-not(Test-Path -Path "$outputPath/server.key" -PathType Leaf)) {
+        openssl genrsa -out "$outputPath/server.key" 2048
+    }
+
     foreach ($domain in $domainsList) {
 
         if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
 
-            & openssl req -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
+            & openssl req -key "$outputPath/server.key" -x509 -sha256 -nodes -days 1825 -newkey rsa:2048 `
                 -subj "/C=US/ST=Oregon/L=Portland/O=Beholder/OU=Beholder/CN=$domain" `
                 -addext "subjectAltName=DNS:$domain" `
                 -keyout "$outputPath/$domain.key" `
