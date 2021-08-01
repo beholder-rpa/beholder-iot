@@ -30,9 +30,8 @@ if (Get-Command "openssl" -ErrorAction SilentlyContinue)
 
             & openssl req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
                 -subj "/CN=BEHOLDER DEFAULT CERT" `
-                -addext "keyUsage=digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
+                -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
                 -addext "extendedKeyUsage=serverAuth" `
-                -addext "basicConstraints=critical,CA:FALSE" `
                 -addext "subjectAltName=DNS:$domain" `
                 -keyout "$outputPath/$domain.key" `
                 -out "$outputPath/$domain.crt" `
