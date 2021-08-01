@@ -49,6 +49,8 @@ services:
   # Beholder Reverse Proxy
   beholder-traefik:
     image: traefik:latest
+    volumes: 
+      - ./beholder-traefik:/etc/traefik/:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.dashboard.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)

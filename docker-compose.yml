@@ -169,8 +169,7 @@ services:
       - frontend
       - backend
     volumes:
-    - ./beholder-traefik:/etc/traefik/:ro
-    - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   frontend:
