@@ -1,9 +1,9 @@
 # Default TLS Certs
 tls:
   certificates:
-    - certFile: /etc/traefik/certs/{{ env "HOSTNAME" }}.crt
-      keyFile: /etc/traefik/certs/{{ env "HOSTNAME" }}.key
-    - certFile: /etc/traefik/certs/nexus.{{ env "HOSTNAME" }}.crt
-      keyFile: /etc/traefik/certs/nexus.{{ env "HOSTNAME" }}.key
-    - certFile: /etc/traefik/certs/graphana.{{ env "HOSTNAME" }}.crt
-      keyFile: /etc/traefik/certs/graphana.{{ env "HOSTNAME" }}.key
+    - certFile: /etc/traefik/certs/{{ env "rpi_hostname" }}.crt
+      keyFile: /etc/traefik/certs/{{ env "rpi_hostname" }}.key
+    - certFile: /etc/traefik/certs/nexus.{{ env "rpi_hostname" }}.crt
+      keyFile: /etc/traefik/certs/nexus.{{ env "rpi_hostname" }}.key
+    - certFile: /etc/traefik/certs/graphana.{{ env "rpi_hostname" }}.crt
+      keyFile: /etc/traefik/certs/graphana.{{ env "rpi_hostname" }}.key
