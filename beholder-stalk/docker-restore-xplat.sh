@@ -13,6 +13,10 @@ elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then
     tar -xvf dotnet-sdk-5.0.302-linux-arm.tar.gz -C /usr/share/dotnet
     tar -xvf aspnetcore-runtime-5.0.8-linux-arm.tar.gz -C /usr/share/dotnet
     ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+    export DOTNET_ROOT=/usr/share/dotnet/
+    ls -l /usr/share/dotnet/host/fxr
+    ls -l /usr/share/dotnet/host/fxr/5.0.8
+    dotnet --version
     dotnet restore "./beholder-stalk.csproj" --runtime linux-arm
 elif [ "$TARGETPLATFORM" = "linux/amd64" ]; then
     echo "Targeting linux/amd64";
