@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import dynamic from 'next/dynamic';
-import mqtt, { IMqttClient } from 'async-mqtt';
 import { useForm } from 'react-hook-form';
 
-import CortexLayout from '@src/Layouts/CortexLayout';
+import CortexLayout from '@layouts/CortexLayout';
 import { FormInput } from '@modules/Shared/FormInput';
+import { BeholderClientContext } from '@services/BeholderClient';
 
 const Logs = dynamic(() => import('../components/LogsContainer'), { ssr: false });
 
@@ -13,40 +13,15 @@ interface TestFormInputs {
 }
 
 export default function Home() {
+  const beholderClient = useContext(BeholderClientContext);
   const {
     register,
     handleSubmit,
     formState: {},
   } = useForm<TestFormInputs>();
-  const client = useRef<IMqttClient>();
-
-  useEffect(() => {
-    const host = window.location.host;
-    client.current = mqtt.connect(`wss://${host}/nexus/ws`, {
-      username: 'guest',
-      password: 'guest',
-      reconnectPeriod: 5000,
-      keepalive: 60,
-    });
-
-    client.current.on('connect', (_packet) => {
-      console.log('%c connected!!', 'background: green; color: white; display: block;');
-      client.current.subscribe('/topic/hello-from-dot-net');
-    });
-
-    client.current.on('error', (err) => {
-      console.log('Broker reported error: ' + err.message);
-      console.log('Additional details: ' + err.stack);
-    });
-
-    return () => {
-      client.current?.unsubscribe('/topic/hello-from-dot-net');
-      client.current?.end();
-    };
-  }, []);
 
   const onSubmit = (data: TestFormInputs) => {
-    client.current?.publish('asdf', data.message);
+    beholderClient.mqtt.publish('asdf', data.message);
   };
 
   return (
@@ -65,7 +40,7 @@ export default function Home() {
         </button>{' '}
         <br />
       </form>
-      <div className="p-10 card bg-neutral-focus h-96">
+      <div className="p-10 card bg-neutral-focus h-96 overflow-y-auto">
         <Logs />
       </div>
     </CortexLayout>

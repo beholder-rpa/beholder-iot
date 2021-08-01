@@ -3,6 +3,7 @@ import { action, makeAutoObservable, observable } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
 
 import UIStore from './UIStore';
+import BeholderStore from './BeholderStore';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === 'undefined');
@@ -10,9 +11,11 @@ let appStore: AppStore;
 
 export class AppStore {
   @observable lastUpdate: Date;
+  @observable beholderStore: BeholderStore;
   @observable uiStore: UIStore;
 
   constructor() {
+    this.beholderStore = new BeholderStore(this);
     this.uiStore = new UIStore(this);
     makeAutoObservable(this);
   }

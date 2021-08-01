@@ -3,9 +3,9 @@ import Image from 'next/image';
 import { observer } from 'mobx-react';
 
 import BeholderLogo from '@public/beholder.svg';
-import Alerts from '@src/Layouts/CortexLayout/Alerts';
-import Reminders from '@src/Layouts/CortexLayout/Reminders';
-import UserWidget from '@src/Layouts/CortexLayout/UserProfile';
+import Alerts from '@layouts/CortexLayout/Alerts';
+import Reminders from '@layouts/CortexLayout/Reminders';
+import UserWidget from '@layouts/CortexLayout/UserProfile';
 import { toBase64 } from '@utils/toBase64';
 import { shimmer } from '@utils/shimmer';
 
