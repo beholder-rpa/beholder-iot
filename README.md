@@ -1,4 +1,4 @@
-# Beholder RPA
+# Beholder RPA IoT
 
 A multi-faceted approach to robotic process automation.
 
@@ -6,16 +6,13 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 
 ## Comprised of the following skeuomorphic parts:
 
-- Eye - High-Speed Screen Capture and image processor (Windows Desktop/dotnet core)
-- Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core)
-- Cortex - Browser-based admin/orchestration interface (NextJS)
-- Telekinesis - Obtain and interact with processes on the OS (Windows Desktop/.Net Core)
+- Cortex - Browser-based admin/orchestration interface (NextJS) [![Beholder - Build and Push Beholder Cortex Docker Image](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml)
+- Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core) [![Beholder - Build and Push Beholder Stalk Docker Image](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml)
 
-## Foundational
+## Foundational Components
 
+- Nexus - Message Broker (RabbitMQ AMQP, MQTT, MQTT-WS)
 - Cerebrum - Functions-as-a-Service that allows runtime business logic (EspressoV8)
-- Medial - Event Sourcing (Generic event subscriber)
-- Nexus - Message Broker (RabbitMQ MQTT)
 
 ## Backbone
 
@@ -24,6 +21,7 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 - Dapr - service invocation, state, and pub/sub blocks.
 - Redis - Cache/State Store
 - Grafna - Analytics
+- Jaeger - Tracing
 
 ## Connectors:
 
@@ -44,9 +42,10 @@ for instructions on how to create an image.
 
 ### Updating
 
-```ssh`` into the device. cd into /beholder. Run ```git pull```. Then, ```sudo reboot now```.
+Beholder will auto-update when new containers become available. Additionally, the it will pull git changes on startup.
 
-> TODO: Beholder should pull pre-built images in the non-developer mode to reduce initial startup time. As part of this, watchtower can auto-update (using a :prod tag or something similar)
+To manually update, ```ssh``` into the device. cd into /beholder. Run ```git pull```. Then, ```sudo reboot now```.
+
 
 # Developing Beholder
  
