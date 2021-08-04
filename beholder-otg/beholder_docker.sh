@@ -5,7 +5,7 @@ echo "# Executing Beholder IoT Docker script..."
 if [ "$1" = up ]
 then
     pushd /home/beholder/beholder/
-    git pull
+    git pull --depth 1
     ./beholder.ps1 pull rpi
     ./beholder.ps1 build rpi
     ./beholder.ps1 up rpi
