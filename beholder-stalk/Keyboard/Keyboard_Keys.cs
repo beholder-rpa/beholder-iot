@@ -1,18 +1,18 @@
 namespace beholder_stalk
 {
-    using System;
-    using System.Collections.Generic;
+  using System;
+  using System.Collections.Generic;
 
-    public partial class Keyboard
-    {
-        public static byte[] ClearReport = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+  public partial class Keyboard
+  {
+    public static byte[] ClearReport = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-        // See:
-        // https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
-        // https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
-        // https://github.com/Oceanswave/pi-as-keyboard/blob/master/hid-gadget-test.c
-        // Replace: \{\.opt\s*=\s*"([^"]+)",\s+\.val\s+=\s+([^}]+)\}, With: { "$1", $2 },
-        public static IDictionary<string, (byte, KeyModifier?)> Keys = new Dictionary<string, (byte, KeyModifier?)>() {
+    // See:
+    // https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
+    // https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
+    // https://github.com/Oceanswave/pi-as-keyboard/blob/master/hid-gadget-test.c
+    // Replace: \{\.opt\s*=\s*"([^"]+)",\s+\.val\s+=\s+([^}]+)\}, With: { "$1", $2 },
+    public static IDictionary<string, (byte, KeyModifier?)> Keys = new Dictionary<string, (byte, KeyModifier?)>() {
             { "a", (0x04, null) }, // Keyboard a and A
             { "A", (0x04, KeyModifier.LeftShift) },
             { "b", (0x05, null) }, // Keyboard b and B
@@ -253,7 +253,7 @@ namespace beholder_stalk
             { "open", (0x74, null) },
             { "help", (0x75, null) }, // Keyboard Help
             { "menu", (0x76, null) }, // Keyboard Menu
-            { "props", (0x76, null) }, 
+            { "props", (0x76, null) },
             { "select", (0x77, null) }, // Keyboard Select
             { "front", (0x77, null) },
             { "cancel", (0x78, null) }, // Keyboard Stop
@@ -311,7 +311,7 @@ namespace beholder_stalk
             { "rwin", (0x00, KeyModifier.RightMeta) },
         };
 
-        public static IDictionary<string, byte> Modifiers = new Dictionary<string, byte>(StringComparer.OrdinalIgnoreCase) {
+    public static IDictionary<string, byte> Modifiers = new Dictionary<string, byte>(StringComparer.OrdinalIgnoreCase) {
             { "left-ctrl", 0x01 },
             { "right-ctrl", 0x10 },
             { "left-shift", 0x02 },
@@ -321,5 +321,5 @@ namespace beholder_stalk
             { "left-meta", 0x08 },
             { "right-meta", 0x80 },
         };
-    }
+  }
 }

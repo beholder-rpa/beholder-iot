@@ -1,14 +1,14 @@
 ﻿namespace beholder_stalk
 {
-    using Newtonsoft.Json;
+  using Newtonsoft.Json;
 
-    public class JoystickThrottle : IJoystickAction
+  public class JoystickThrottle : IJoystickAction
+  {
+    [JsonProperty("amount")]
+    public sbyte Amount
     {
-        [JsonProperty("amount")]
-        public sbyte Amount
-        {
-            get;
-            set;
-        }
+      get;
+      set;
     }
+  }
 }

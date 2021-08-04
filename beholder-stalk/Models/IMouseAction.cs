@@ -1,6 +1,6 @@
 ﻿namespace beholder_stalk
 {
-    public interface IMouseAction
-    {
-    }
+  public interface IMouseAction
+  {
+  }
 }

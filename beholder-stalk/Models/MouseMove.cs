@@ -1,21 +1,21 @@
 ﻿namespace beholder_stalk
 {
-    using Newtonsoft.Json;
+  using Newtonsoft.Json;
 
-    public class MouseMove : IMouseAction
+  public class MouseMove : IMouseAction
+  {
+    [JsonProperty("x")]
+    public short X
     {
-        [JsonProperty("x")]
-        public short X
-        {
-            get;
-            set;
-        }
-
-        [JsonProperty("y")]
-        public short Y
-        {
-            get;
-            set;
-        }
+      get;
+      set;
     }
+
+    [JsonProperty("y")]
+    public short Y
+    {
+      get;
+      set;
+    }
+  }
 }

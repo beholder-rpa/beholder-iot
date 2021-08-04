@@ -1,6 +1,6 @@
 ﻿namespace beholder_stalk
 {
-    public interface IJoystickAction
-    {
-    }
+  public interface IJoystickAction
+  {
+  }
 }
