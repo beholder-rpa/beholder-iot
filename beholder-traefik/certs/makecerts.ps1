@@ -43,7 +43,7 @@ if (Get-Command $makeCertPath -ErrorAction SilentlyContinue) {
         Write-Host "Generating Traefik TLS certificates..." -ForegroundColor Green
         & $makeCertPath -install
 
-        $cmd = "& $makeCertPath -cert-file `"$outputPath\server.crt`" -key-file `"$outputPath\server.key`" `"$($domainsList -join '" "')`""
+        $cmd = "& $makeCertPath -cert-file `"$outputPath/server.crt`" -key-file `"$outputPath/server.key`" `"$($domainsList -join '" "')`""
         Write-Host $cmd
         Invoke-Expression $cmd
     } catch {
