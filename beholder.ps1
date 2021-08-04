@@ -10,10 +10,7 @@ param(
     [string] $environment = "dev"
 )
 
-$dockerComposeFiles = @("docker-compose.yml", "docker-compose.dev.yml")
-if ($environment -eq "rpi") {
-  $dockerComposeFiles = @("docker-compose.yml", "docker-compose.rpi.yml")
-}
+$dockerComposeFiles = @("docker-compose.yml", "docker-compose.$environment.yml")
 
 if ($environment -eq "rpi") {
   $hostName = [System.Net.Dns]::GetHostName()

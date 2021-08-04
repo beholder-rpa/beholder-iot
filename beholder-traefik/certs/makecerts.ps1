@@ -21,9 +21,38 @@ if ($IsWindows) {
     $openSSLPath = "/usr/local/opt/openssl/bin/openssl"
 }
 
+$makeCertPath = "mkcert"
+if (!(Get-Command $makeCertPath -ErrorAction SilentlyContinue) -and !(Get-Command $openSSLPath -ErrorAction SilentlyContinue)) {
+    # if mkcert is not installed, try to install it
+    if ($IsWindows) {
+        Write-Host "Downloading and installing mkcert certificate tool..." -ForegroundColor Green 
+        Invoke-WebRequest "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe" -UseBasicParsing -OutFile mkcert.exe
+        if ((Get-FileHash mkcert.exe).Hash -ne "9DC25F7D1AE0BE93DB81AA42F3ABFD62D13725DFD48969C9FE94B6AF57E5573C") {
+            Remove-Item mkcert.exe -Force
+            throw "Invalid mkcert.exe file"
+        }
+
+        $makeCertPath = "$PWD\mkcert.exe"
+    }
+}
+
+if (Get-Command $makeCertPath -ErrorAction SilentlyContinue) {
+    Write-Host "Using mkcert..."
+
+    try {
+        Write-Host "Generating Traefik TLS certificates..." -ForegroundColor Green
+        & $makeCertPath -install
+
+        $cmd = "& $makeCertPath -cert-file `"$outputPath\server.crt`" -key-file `"$outputPath\server.key`" `"$($domainsList -join '" "')`""
+        Write-Host $cmd
+        Invoke-Expression $cmd
+    } catch {
+        Write-Host "An error occurred while attempting to generate TLS certificates: $_" -ForegroundColor Red
+    }
+}
+
 # If openssl is available, this will be used to generate the certificate.
-if (Get-Command $openSSLPath -ErrorAction SilentlyContinue) 
-{
+ElseIf (Get-Command $openSSLPath -ErrorAction SilentlyContinue) {
     Write-Host "Using OpenSSL..."
 
     $passOut = "pass:"
@@ -31,6 +60,7 @@ if (Get-Command $openSSLPath -ErrorAction SilentlyContinue)
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
+    try {
     & $openSSLPath req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
         -subj "/CN=BEHOLDER DEFAULT CERT" `
         -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
@@ -39,55 +69,24 @@ if (Get-Command $openSSLPath -ErrorAction SilentlyContinue)
         -keyout "$outputPath/server.key" `
         -out "$outputPath/server.crt" `
         -passout $passOut
-
-    foreach ($domain in $domainsList) {
-
-        if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
-
-            cp "$outputPath/server.crt" "$outputPath/$domain.crt"
-            cp "$outputPath/server.key" "$outputPath/$domain.key"
-
-            if ($IsMacOS) {
-                & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/$domain.crt"
-            }
-
-            if ($IsLinux) {
-                & sudo cp "$outputPath/$domain.crt" /usr/local/share/ca-certificates/
-            }
-        }
-    }
-
-    if ($IsLinux) {
-        sudo update-ca-certificates --fresh
-    }
-} else {
-
-    Write-Host "Using mkcert..."
-
-    # If openssl is not available, we'll use makecert certificate generation
-    try {
-        $mkcert = ".\mkcert.exe"
-        if ($null -ne (Get-Command mkcert.exe -ErrorAction SilentlyContinue)) {
-            # mkcert installed in PATH
-            $mkcert = "mkcert"
-        } elseif (-not (Test-Path $mkcert)) {
-            Write-Host "Downloading and installing mkcert certificate tool..." -ForegroundColor Green 
-            Invoke-WebRequest "https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-windows-amd64.exe" -UseBasicParsing -OutFile mkcert.exe
-            if ((Get-FileHash mkcert.exe).Hash -ne "1BE92F598145F61CA67DD9F5C687DFEC17953548D013715FF54067B34D7C3246") {
-                Remove-Item mkcert.exe -Force
-                throw "Invalid mkcert.exe file"
-            }
-        }
-        Write-Host "Generating Traefik TLS certificates..." -ForegroundColor Green
-        & $mkcert -install
-
-        foreach ($domain in $domainsList) {
-            if (-not(Test-Path -Path "$outputPath/$domain.crt" -PathType Leaf)) {
-                & $mkcert -cert-file $outputPath/$domain.crt -key-file $outputPath/$domain.key "$domain"
-            }
-        }
-    }
-    catch {
+    } catch {
         Write-Host "An error occurred while attempting to generate TLS certificates: $_" -ForegroundColor Red
     }
+
+    if ($IsMacOS) {
+        & sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain "$outputPath/server.crt"
+    } ElseIf ($IsLinux) {
+        & sudo cp "$outputPath/server.crt" /usr/local/share/ca-certificates/
+        & sudo update-ca-certificates --fresh
+    } ElseIf ($IsWindows) {
+        & $openSSLPath pkcs12 -export `
+                -in "$outputPath/server.crt" `
+                -inkey "$outputPath/server.key" `
+                -passout "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)" `
+                -out "$PWD/server.pfx"
+        $cmd = "Import-PfxCertificate -FilePath `"$outputPath\server.pfx`" -CertStoreLocation Cert:\LocalMachine\My -Password (ConvertTo-SecureString -String `"$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)`" -AsPlainText -Force)"
+        Write-Host -ForegroundColor yellow "To trust this certificate, please execute the following from an elevated powershell prompt: $cmd"
+    }
+} else {
+    Write-Host "Unable to find mkcert or openssl. Please install mkcert or openssl and try again." -ForegroundColor Red
 }

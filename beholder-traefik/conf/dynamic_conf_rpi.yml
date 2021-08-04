@@ -1,9 +1,0 @@
-# Default TLS Certs
-tls:
-  certificates:
-    - certFile: /etc/traefik/certs/{{ env "beholder_hostname" }}.crt
-      keyFile: /etc/traefik/certs/{{ env "beholder_hostname" }}.key
-    - certFile: /etc/traefik/certs/nexus.{{ env "beholder_hostname" }}.crt
-      keyFile: /etc/traefik/certs/nexus.{{ env "beholder_hostname" }}.key
-    - certFile: /etc/traefik/certs/grafana.{{ env "beholder_hostname" }}.crt
-      keyFile: /etc/traefik/certs/grafana.{{ env "beholder_hostname" }}.key

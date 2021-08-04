@@ -16,22 +16,22 @@ services:
       - traefik.http.routers.cortex.tls=true
       - traefik.http.services.cortex.loadbalancer.server.port=3000
   # Dapr Sidecar
-  beholder-cortex-dapr:
-    image: daprio/daprd
-    container_name: beholder-cortex-dapr
-    restart: always
-    command: ["./daprd",
-    "-app-id", "cortex",
-    "-app-port", "3000",
-    "-dapr-http-max-request-size", "16",
-    "-placement-host-address", "beholder-dapr-placement:50006",
-    "-components-path", "/dapr/components",
-    "-config", "/dapr/config.yaml"]
-    volumes:
-      - "./beholder-dapr/:/dapr"
-    depends_on:
-      - beholder-cortex
-    network_mode: "service:beholder-cortex"
+  # beholder-cortex-dapr:
+  #   image: daprio/daprd
+  #   container_name: beholder-cortex-dapr
+  #   restart: always
+  #   command: ["./daprd",
+  #   "-app-id", "cortex",
+  #   "-app-port", "3000",
+  #   "-dapr-http-max-request-size", "16",
+  #   "-placement-host-address", "beholder-dapr-placement:50006",
+  #   "-components-path", "/dapr/components",
+  #   "-config", "/dapr/config.yaml"]
+  #   volumes:
+  #     - ./beholder-dapr/:/dapr:ro
+  #   depends_on:
+  #     - beholder-cortex
+  #   network_mode: "service:beholder-cortex"
   ###############################################
   # Beholder Nexus
   beholder-nexus:
@@ -93,6 +93,23 @@ services:
       - backend
     depends_on:
       - beholder-nexus
+  # Dapr Sidecar
+  # beholder-stalk-dapr:
+  #   image: daprio/daprd
+  #   container_name: beholder-stalk-dapr
+  #   restart: always
+  #   command: ["./daprd",
+  #   "-app-id", "stalk",
+  #   "-app-port", "80",
+  #   "-dapr-http-max-request-size", "16",
+  #   "-placement-host-address", "beholder-dapr-placement:50006",
+  #   "-components-path", "/dapr/components",
+  #   "-config", "/dapr/config.yaml"]
+  #   volumes:
+  #     - "./beholder-dapr/:/dapr"
+  #   depends_on:
+  #     - beholder-stalk
+  #   network_mode: "service:beholder-stalk"
   ###############################################
   # Beholder Grafana
   beholder-grafana:
@@ -159,6 +176,18 @@ services:
     image: traefik:v2.4
     container_name: beholder-traefik
     restart: always
+    command:
+      - "--global.checkNewVersion=true"
+      - "--global.sendAnonymousUsage=false"
+      - "--api.dashboard=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.amqp.address=:5672"
+      - "--entrypoints.mqtt.address=:1883"
+      - "--entrypoints.redis.address=:6379"
+      - "--providers.docker.exposedbydefault=false"
     ports:
       - 80:80
       - 443:443
@@ -166,6 +195,8 @@ services:
       - frontend
       - backend
     volumes:
+      - ./beholder-traefik/certs:/etc/traefik/certs/:ro
+      - ./beholder-traefik/conf:/etc/traefik/conf/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:

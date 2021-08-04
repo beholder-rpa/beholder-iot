@@ -4,18 +4,18 @@ services:
   ###############################################
   # Beholder Cortex
   beholder-cortex:
-    image: beholderrpa/cortex:latest
+    image: beholderrpa/iot-cortex:latest
     build:
       context: ./beholder-cortex
       dockerfile: Dockerfile.dev
     volumes:
-      - './beholder-cortex:/srv/app'
-      - 'beholder_cortex_node_modules:/srv/app/node_modules'
-      - 'beholder_cortex_next:/srv/app/.next'
+      - ./beholder-cortex:/srv/app:rw
+      - beholder_cortex_node_modules:/srv/app/node_modules
+      - beholder_cortex_next:/srv/app/.next
   ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/stalk:latest
+    image: beholderrpa/iot-stalk:latest
     build:
       context: ./beholder-stalk
       dockerfile: Dockerfile.dev
@@ -26,7 +26,7 @@ services:
   ###############################################
   # Beholder Postgres
   beholder-postgres:
-    image: beholderrpa/postgres:latest
+    image: postgres:latest
     ports:
       - 5432:5432
   ###############################################
@@ -44,9 +44,6 @@ services:
   ###############################################
   # Beholder Reverse Proxy
   beholder-traefik:
-    image: traefik:latest
-    volumes: 
-      - ./beholder-traefik:/etc/traefik/:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.dashboard.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)
