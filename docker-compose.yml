@@ -1,5 +1,12 @@
 version: "2.4"
 
+x-dapr:
+  &default-dapr
+  image: daprio/daprd
+  restart: always
+  volumes:
+    - ./beholder-dapr/:/dapr:ro
+    
 services:
   ###############################################
   # Beholder Cortex
@@ -16,22 +23,19 @@ services:
       - traefik.http.routers.cortex.tls=true
       - traefik.http.services.cortex.loadbalancer.server.port=3000
   # Dapr Sidecar
-  # beholder-cortex-dapr:
-  #   image: daprio/daprd
-  #   container_name: beholder-cortex-dapr
-  #   restart: always
-  #   command: ["./daprd",
-  #   "-app-id", "cortex",
-  #   "-app-port", "3000",
-  #   "-dapr-http-max-request-size", "16",
-  #   "-placement-host-address", "beholder-dapr-placement:50006",
-  #   "-components-path", "/dapr/components",
-  #   "-config", "/dapr/config.yaml"]
-  #   volumes:
-  #     - ./beholder-dapr/:/dapr:ro
-  #   depends_on:
-  #     - beholder-cortex
-  #   network_mode: "service:beholder-cortex"
+  beholder-cortex-dapr:
+    << : *default-dapr
+    container_name: beholder-cortex-dapr
+    command: ["./daprd",
+      "-app-id", "cortex",
+      "-app-port", "3000",
+      "-dapr-http-max-request-size", "16",
+      "-placement-host-address", "beholder-dapr-placement:50006",
+      "-components-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    depends_on:
+      - beholder-cortex
+    network_mode: "service:beholder-cortex"
   ###############################################
   # Beholder Nexus
   beholder-nexus:
@@ -94,22 +98,19 @@ services:
     depends_on:
       - beholder-nexus
   # Dapr Sidecar
-  # beholder-stalk-dapr:
-  #   image: daprio/daprd
-  #   container_name: beholder-stalk-dapr
-  #   restart: always
-  #   command: ["./daprd",
-  #   "-app-id", "stalk",
-  #   "-app-port", "80",
-  #   "-dapr-http-max-request-size", "16",
-  #   "-placement-host-address", "beholder-dapr-placement:50006",
-  #   "-components-path", "/dapr/components",
-  #   "-config", "/dapr/config.yaml"]
-  #   volumes:
-  #     - "./beholder-dapr/:/dapr"
-  #   depends_on:
-  #     - beholder-stalk
-  #   network_mode: "service:beholder-stalk"
+  beholder-stalk-dapr:
+    << : *default-dapr
+    container_name: beholder-stalk-dapr
+    command: ["./daprd",
+      "-app-id", "stalk",
+      "-app-port", "80",
+      "-dapr-http-max-request-size", "16",
+      "-placement-host-address", "beholder-dapr-placement:50006",
+      "-components-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    depends_on:
+      - beholder-stalk
+    network_mode: "service:beholder-stalk"
   ###############################################
   # Beholder Grafana
   beholder-grafana:
@@ -187,6 +188,7 @@ services:
       - "--entrypoints.amqp.address=:5672"
       - "--entrypoints.mqtt.address=:1883"
       - "--entrypoints.redis.address=:6379"
+      - "--providers.file.filename=/etc/traefik/conf/dynamic_conf.yml"
       - "--providers.docker.exposedbydefault=false"
     ports:
       - 80:80
