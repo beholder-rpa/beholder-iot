@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "beholder-stalk-v2": {
+      "commandName": "Executable",
+      "executablePath": "dapr",
+      "commandLineArgs": "run --app-id stalk-v2-dev --app-protocol grpc --app-port 5000 --components-path  $(SolutionDir)beholder-dapr\\components --config $(SolutionDir)beholder-dapr\\config.yaml --dapr-http-port 3500 -- dotnet run --project $(ProjectPath)",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "http://localhost:5000;https://localhost:5001"
+    }
+  }
+}

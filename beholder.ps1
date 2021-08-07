@@ -18,6 +18,7 @@ if ($environment -eq "rpi") {
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
   $env:BEHOLDER_GRAFANA_HOSTNAME = "grafana.$hostName"
+  $env:BEHOLDER_JAEGER_HOSTNAME = "jaeger.$hostName"
 }
 
 switch ($command)

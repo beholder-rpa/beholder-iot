@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "beholder_stalk_v2.Protos";
+
+package stalk.mouse;
+
+// The Mouse service definition.
+service Mouse {
+  // Sends mouse click
+  rpc SendMouseClick (MouseClickRequest) returns (MouseClickReply);
+}
+
+// The request message containing the user's name.
+message MouseClickRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message MouseClickReply {
+  string message = 1;
+}

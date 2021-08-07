@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "beholder_stalk_v2.Protos";
+
+package stalk.joystick;
+
+// The Joystick service definition.
+service Joystick {
+  // Sends joystick actions
+  rpc SendJoystickActions (JoystickActionsRequest) returns (JoystickActionsReply);
+}
+
+// The request message containing the user's name.
+message JoystickActionsRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message JoystickActionsReply {
+  string message = 1;
+}

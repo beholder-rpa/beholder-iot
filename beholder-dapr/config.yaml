@@ -6,7 +6,7 @@ spec:
   mtls:
     enabled: false
   tracing:
-    enabled: false
+    enabled: true
     samplingRate: "1"
     expandParams: true
     includeBody: true

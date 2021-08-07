@@ -1,7 +1,7 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: rabbitmq-pubsub
+  name: nexus
   namespace: default
 spec:
   type: pubsub.rabbitmq

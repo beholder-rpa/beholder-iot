@@ -42,6 +42,21 @@ services:
     networks:
       - backend
   ###############################################
+  # Beholder Redis
+  beholder-redis:
+    ports: 
+      - 6379:6379
+  ###############################################
+  # Dapr placement service
+  beholder-dapr-placement:
+    ports: 
+      - 6050:50006
+  ###############################################
+  # Jaeger
+  jaeger:
+    ports:
+      - 9411:9411
+  ###############################################
   # Beholder Reverse Proxy
   beholder-traefik:
     labels:
