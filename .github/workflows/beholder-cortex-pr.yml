@@ -1,4 +1,4 @@
-name: Beholder - Validate PRs for Beholder Cortex
+name: Cortex PR
 
 on:
   workflow_dispatch:

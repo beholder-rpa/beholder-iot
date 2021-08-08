@@ -1,4 +1,4 @@
-name: Beholder - Build and Push Beholder Stalk v2 Docker Image
+name: Stalk v2 CD
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Beholder - Validate PRs for Beholder Stalk v2
+name: Stalk v2 PR
 
 on:
   workflow_dispatch:

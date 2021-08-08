@@ -1,4 +1,4 @@
-name: Beholder - Build and Push Beholder Cortex Docker Image
+name: Cortex CD
 
 on:
   workflow_dispatch:
