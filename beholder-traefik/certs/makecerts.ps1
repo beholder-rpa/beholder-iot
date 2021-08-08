@@ -7,7 +7,7 @@ param(
     [Parameter()]
     [string] $outputPath = $pwd,
     [Parameter()]
-    [string[]] $domainsList = @("beholder.localhost","nexus.beholder.localhost","grafana.beholder.localhost")
+    [string[]] $domainsList = @("beholder.localhost","*.beholder.localhost")
 )
 
 Write-Host "Generating certificates..."
