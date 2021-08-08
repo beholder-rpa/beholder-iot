@@ -53,7 +53,7 @@ const VirtualControls = ({ hostName }: VirtualControlProps) => {
           </Dropdown> */}
         </div>
         <div className="row">
-          <textarea className="flex w-full" autoFocus ref={textAreaRef} rows={3} />
+          <textarea className="textarea h-24 flex w-full textarea-bordered" autoFocus ref={textAreaRef} rows={3} />
         </div>
         <div className="row">
           <SimpleKeyboard className="flex w-full" onKeyReleased={onChange} />
