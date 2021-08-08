@@ -7,6 +7,7 @@ COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./next.config.js ./
 
+RUN yarn config set network-timeout 600000 -g
 RUN yarn --non-interactive --frozen-lockfile --prefer-offline
 
 COPY . .
