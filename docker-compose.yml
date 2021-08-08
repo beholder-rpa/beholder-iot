@@ -78,7 +78,7 @@ services:
   ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/iot-stalk
+    image: beholderrpa/iot-stalk-v2
     container_name: beholder-stalk
     restart: always
     logging:

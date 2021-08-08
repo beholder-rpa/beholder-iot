@@ -13,11 +13,16 @@ services:
       - beholder_cortex_node_modules:/srv/app/node_modules
       - beholder_cortex_next:/srv/app/.next
   ###############################################
+  # Beholder Nexus
+  beholder-nexus:
+    ports:
+      - 1883:1883
+  ###############################################
   # Beholder Stalk
   beholder-stalk:
-    image: beholderrpa/iot-stalk:latest
+    image: beholderrpa/iot-stalk-v2:latest
     build:
-      context: ./beholder-stalk
+      context: ./beholder-stalk-v2
       dockerfile: Dockerfile.dev
     volumes:
       - ./usb-dev/hidg0:/dev/hidg0

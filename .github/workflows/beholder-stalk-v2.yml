@@ -1,0 +1,57 @@
+name: Beholder - Validate PRs for Beholder Stalk v2
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: 
+      - master
+    paths:
+      - 'beholder-stalk-v2/**'
+      - '!beholder-stalk-v2/README.md'
+      - '!beholder-stalk-v2/docs/**'
+
+jobs:
+  validate:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./beholder-stalk-v2
+      cache-key: beholder-stalk-v2-pr
+    
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.working-directory }}
+
+    strategy:
+      matrix:
+        dotnet-version: ['5.x']
+
+    steps:
+      -
+        uses: actions/checkout@v2
+      - 
+        name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1.8.1
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - 
+        name: Install dependencies
+        run: dotnet restore
+      -
+        name: Add dotnet-format problem matcher
+        uses: xt0rted/dotnet-format-problem-matcher@v1
+      -
+        name: Restore dotnet tools
+        uses: xt0rted/dotnet-tool-restore@v1
+      -
+        name: Run dotnet format
+        uses: xt0rted/dotnet-format@v1
+        with:
+          only-changed-files: "true"
+      - 
+        name: Build
+        run: dotnet build --configuration Release --no-restore
+      # -
+      #   name: Test
+      #   run: dotnet test --no-restore --verbosity normal
