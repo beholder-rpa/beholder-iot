@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:
   - name: url
-    value: "tcp://guest:guest@beholder-nexus:1883"
+    value: "tcp://beholder-nexus:1883"
   - name: qos
     value: 0
   - name: retain

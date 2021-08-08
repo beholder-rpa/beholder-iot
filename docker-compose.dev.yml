@@ -58,8 +58,6 @@ services:
       - 6050:50006
   ###############################################
   # Jaeger
-  ###############################################
-  # Jaeger
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: beholder-jaeger

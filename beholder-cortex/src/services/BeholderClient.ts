@@ -25,10 +25,8 @@ export class BeholderClient {
 
   connect() {
     const host = window.location.host;
-    this.username = 'guest';
-    this.authToken = 'guest';
 
-    this.client = mqtt.connect(`wss://${host}/nexus/ws`, {
+    this.client = mqtt.connect(`wss://${host}/nexus/mqtt`, {
       username: this.username,
       password: this.authToken,
       reconnectPeriod: 5000,

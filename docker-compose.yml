@@ -39,18 +39,22 @@ services:
   ###############################################
   # Beholder Nexus
   beholder-nexus:
-    image: rabbitmq:management
+    image: emqx/emqx:4.3.5
     container_name: beholder-nexus
     restart: always
     expose: 
-      # Management Port
-      - 15672
-      # Amqp Port
-      - 5672
+      # Dashboard Port
+      - 18083
+      # Emqx Port
+      - 11883
       # MQTT Port
       - 1883
-      # MQTT Web Port
-      - 15675  
+      # MQTT SSL Port
+      - 8883
+      # MQTT Web Sockets Port
+      - 8083
+      # MQTT Web Sockets Secure Port
+      - 8084
     networks:
       - backend
     labels:
@@ -60,7 +64,7 @@ services:
       - traefik.http.routers.beholder_nexus.entrypoints=websecure
       - traefik.http.routers.beholder_nexus.tls=true
       - traefik.http.routers.beholder_nexus.service=beholder_nexus
-      - traefik.http.services.beholder_nexus.loadbalancer.server.port=15672
+      - traefik.http.services.beholder_nexus.loadbalancer.server.port=18083
       # Proxy mqtt web sockets
       - traefik.http.middlewares.beholder_nexus_mqtt_ws_stripprefixregex.stripprefixregex.regex=/nexus/
       - traefik.http.routers.beholder_nexus_mqtt_ws.rule=Host(`${BEHOLDER_CORTEX_HOSTNAME}`) && PathPrefix(`/nexus`)
@@ -68,7 +72,7 @@ services:
       - traefik.http.routers.beholder_nexus_mqtt_ws.tls=true
       - traefik.http.routers.beholder_nexus_mqtt_ws.middlewares=beholder_nexus_mqtt_ws_stripprefixregex
       - traefik.http.routers.beholder_nexus_mqtt_ws.service=beholder_nexus_mqtt_ws
-      - traefik.http.services.beholder_nexus_mqtt_ws.loadbalancer.server.port=15675
+      - traefik.http.services.beholder_nexus_mqtt_ws.loadbalancer.server.port=8083
       # Proxy mqtt
       - traefik.tcp.routers.beholder_nexus_mqtt.rule=HostSNI(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.tcp.routers.beholder_nexus_mqtt.entrypoints=mqtt
