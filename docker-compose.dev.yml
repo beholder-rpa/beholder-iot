@@ -58,9 +58,25 @@ services:
       - 6050:50006
   ###############################################
   # Jaeger
+  ###############################################
+  # Jaeger
   jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: beholder-jaeger
+    restart: always
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: 9411
     ports:
       - 9411:9411
+    networks:
+      - backend
+    labels:
+      - traefik.enable=true
+      # Host TLS jaeger site
+      - traefik.http.routers.jaeger.rule=Host(`${BEHOLDER_JAEGER_HOSTNAME}`)
+      - traefik.http.routers.jaeger.entrypoints=websecure
+      - traefik.http.routers.jaeger.tls=true
+      - traefik.http.services.jaeger.loadbalancer.server.port=16686
   ###############################################
   # Beholder Reverse Proxy
   beholder-traefik:
