@@ -8,8 +8,8 @@
   {
     public BeholderServiceInfo()
     {
-      HostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME");
-      IpAddresses = string.Join(", ", Dns.GetHostAddresses(HostName).Select(ip => ip.ToString()));
+      HostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME") ?? Dns.GetHostName();
+      IpAddresses = string.Join(", ", Dns.GetHostAddresses(Dns.GetHostName()).Select(ip => ip.ToString()));
     }
 
     public string HostName

@@ -9,6 +9,7 @@
   using Grpc.Core;
   using Microsoft.Extensions.Logging;
   using System;
+  using System.Net;
   using System.Threading.Tasks;
 
   public class KeyboardService : AppCallback.AppCallbackBase
@@ -58,7 +59,7 @@
     public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
     {
       var result = new ListTopicSubscriptionsResponse();
-      var hostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME");
+      var hostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME") ?? Dns.GetHostName();
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
