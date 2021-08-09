@@ -2,12 +2,13 @@
 {
     using System.Linq;
     using System.Net;
+    using System;
 
     public record BeholderServiceInfo
     {
         public BeholderServiceInfo()
         {
-            HostName = Dns.GetHostName();
+            HostName = Environment.GetEnvironmentVariable("beholder_hostname") ?? Dns.GetHostName();
             IpAddresses = string.Join(", ", Dns.GetHostAddresses(HostName).Select(ip => ip.ToString()));
         }
 

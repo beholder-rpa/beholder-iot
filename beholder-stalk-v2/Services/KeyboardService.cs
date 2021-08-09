@@ -9,6 +9,7 @@
     using Grpc.Core;
     using Microsoft.Extensions.Logging;
     using System;
+    using System.Net;
     using System.Threading.Tasks;
 
     public class KeyboardService : AppCallback.AppCallbackBase
@@ -58,34 +59,35 @@
         public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
         {
             var result = new ListTopicSubscriptionsResponse();
+            var hostName = Environment.GetEnvironmentVariable("beholder_hostname") ?? Dns.GetHostName();
             result.Subscriptions.Add(new TopicSubscription
             {
                 PubsubName = Consts.PubSubName,
-                Topic = "sendkey"
+                Topic = $"beholder/stalk/{hostName}/sendkey"
             });
 
             result.Subscriptions.Add(new TopicSubscription
             {
                 PubsubName = Consts.PubSubName,
-                Topic = "sendkeys"
+                Topic = $"beholder/stalk/{hostName}/sendkeys"
             });
 
             result.Subscriptions.Add(new TopicSubscription
             {
                 PubsubName = Consts.PubSubName,
-                Topic = "sendkeysraw"
+                Topic = $"beholder/stalk/{hostName}/sendkeysraw"
             });
 
             result.Subscriptions.Add(new TopicSubscription
             {
                 PubsubName = Consts.PubSubName,
-                Topic = "sendkeysreset"
+                Topic = $"beholder/stalk/{hostName}/sendkeysreset"
             });
 
             result.Subscriptions.Add(new TopicSubscription
             {
                 PubsubName = Consts.PubSubName,
-                Topic = "setaveragekeypressduration"
+                Topic = $"beholder/stalk/{hostName}/setaveragekeypressduration"
             });
 
             return Task.FromResult(result);

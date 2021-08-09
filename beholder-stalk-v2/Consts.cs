@@ -2,6 +2,6 @@
 {
     public static class Consts
     {
-        public const string PubSubName = "stalk";
+        public const string PubSubName = "nexus";
     }
 }

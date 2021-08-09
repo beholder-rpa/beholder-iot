@@ -9,8 +9,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-  using Microsoft.Extensions.Logging;
-  using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -44,6 +44,8 @@
 
             app.UseRouting();
 
+            app.UseCloudEvents();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<KeyboardService>();
@@ -67,7 +69,7 @@
                 for (; ; )
                 {
                     await Task.Delay(5000);
-                    await daprClient.PublishEventAsync("ctaf", "unicom", beholderStalk);
+                    await daprClient.PublishEventAsync(Consts.PubSubName, "beholder/ctaf", beholderStalk);
                     logger.LogInformation("Published service info event.");
                 }
             });

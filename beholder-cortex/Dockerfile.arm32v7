@@ -1,4 +1,4 @@
-FROM arm32v7/node:14-alpine as build
+FROM node:14-alpine as build
 
 WORKDIR /srv/app
 

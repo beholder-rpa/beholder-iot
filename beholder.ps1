@@ -12,9 +12,10 @@ param(
 
 $dockerComposeFiles = @("docker-compose.yml", "docker-compose.$environment.yml")
 
-if ($environment -eq "rpi") {
-  $hostName = [System.Net.Dns]::GetHostName()
-  $env:BEHOLDER_HOSTNAME = $hostName
+$hostName = [System.Net.Dns]::GetHostName()
+$env:BEHOLDER_HOSTNAME = $hostName
+
+if ($environment -eq "rpi") {  
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
   $env:BEHOLDER_GRAFANA_HOSTNAME = "grafana.$hostName"

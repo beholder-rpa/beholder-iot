@@ -35,6 +35,7 @@ services:
       "-config", "/dapr/config.yaml"]
     depends_on:
       - beholder-cortex
+      - beholder-nexus
     network_mode: "service:beholder-cortex"
   ###############################################
   # Beholder Nexus
@@ -91,10 +92,7 @@ services:
         max-size: "5m"
         max-file: "2"
     environment:
-      - beholder_stalk_clientid=stalk-01
-      - beholder_nexus_url=ws://beholder-nexus:15675/ws
-      - beholder_nexus_username=guest
-      - beholder_nexus_password=guest
+      - beholder_hostname=${BEHOLDER_HOSTNAME}
       - beholder_stalk_keymin=40
       - beholder_stalk_keymax=80
     networks:
@@ -108,12 +106,14 @@ services:
     command: ["./daprd",
       "-app-id", "stalk",
       "-app-port", "80",
+      "--app-protocol", "grpc",
       "-dapr-http-max-request-size", "16",
       "-placement-host-address", "beholder-dapr-placement:50006",
       "-components-path", "/dapr/components",
       "-config", "/dapr/config.yaml"]
     depends_on:
       - beholder-stalk
+      - beholder-nexus
     network_mode: "service:beholder-stalk"
   ###############################################
   # Beholder Grafana
