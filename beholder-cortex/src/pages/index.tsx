@@ -21,7 +21,7 @@ export default function Home() {
   } = useForm<TestFormInputs>();
 
   const onSubmit = (data: TestFormInputs) => {
-    beholderClient.mqtt.publish('asdf', data.message);
+    beholderClient.mqtt.publish('beholder', data.message);
   };
 
   return (

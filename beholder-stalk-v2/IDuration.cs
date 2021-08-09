@@ -1,23 +1,23 @@
 ﻿namespace beholder_stalk_v2
 {
-    public interface IDuration
+  public interface IDuration
+  {
+    uint Delay
     {
-        uint Delay
-        {
-            get;
-            set;
-        }
-
-        uint Min
-        {
-            get;
-            set;
-        }
-
-        uint Max
-        {
-            get;
-            set;
-        }
+      get;
+      set;
     }
+
+    uint Min
+    {
+      get;
+      set;
+    }
+
+    uint Max
+    {
+      get;
+      set;
+    }
+  }
 }

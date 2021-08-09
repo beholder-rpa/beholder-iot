@@ -125,3 +125,5 @@ dist
 /beholder-traefik/certs/**/*.crt
 /beholder-traefik/certs/**/*.key
 /beholder-traefik/certs/**/mkcert.exe
+
+**/.idea

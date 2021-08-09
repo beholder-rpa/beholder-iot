@@ -92,7 +92,7 @@ services:
         max-size: "5m"
         max-file: "2"
     environment:
-      - beholder_hostname=${BEHOLDER_HOSTNAME}
+      - BEHOLDER_STALK_NAME=${BEHOLDER_SHORT_HOSTNAME}
       - beholder_stalk_keymin=40
       - beholder_stalk_keymax=80
     networks:

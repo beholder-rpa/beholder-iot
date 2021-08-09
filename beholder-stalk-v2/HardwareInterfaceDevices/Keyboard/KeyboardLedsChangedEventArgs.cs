@@ -1,15 +1,15 @@
 ﻿namespace beholder_stalk_v2.HardwareInterfaceDevices
 {
-    using System;
+  using System;
 
-    public class KeyboardLedsChangedEventArgs : EventArgs
+  public class KeyboardLedsChangedEventArgs : EventArgs
+  {
+    public KeyboardLedsChangedEventArgs(KeyboardLeds keyboardLeds)
+        : base()
     {
-        public KeyboardLedsChangedEventArgs(KeyboardLeds keyboardLeds)
-            : base()
-        {
-            KeyboardLeds = keyboardLeds;
-        }
-
-        public KeyboardLeds KeyboardLeds { get; private set; }
+      KeyboardLeds = keyboardLeds;
     }
+
+    public KeyboardLeds KeyboardLeds { get; private set; }
+  }
 }

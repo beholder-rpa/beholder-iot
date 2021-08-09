@@ -14,6 +14,7 @@ $dockerComposeFiles = @("docker-compose.yml", "docker-compose.$environment.yml")
 
 $hostName = [System.Net.Dns]::GetHostName()
 $env:BEHOLDER_HOSTNAME = $hostName
+$env:BEHOLDER_SHORT_HOSTNAME = $hostName.Split(".")[0]
 
 if ($environment -eq "rpi") {  
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
