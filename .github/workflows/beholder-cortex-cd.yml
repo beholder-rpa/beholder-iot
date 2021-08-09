@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./beholder-cortex
-      cache-key: beholder-cortex
+      cache-key: beholder-cortex-v1
 
     defaults:
       run:
