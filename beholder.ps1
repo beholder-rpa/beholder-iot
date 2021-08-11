@@ -21,6 +21,11 @@ if ($environment -eq "rpi") {
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
   $env:BEHOLDER_GRAFANA_HOSTNAME = "grafana.$hostName"
   $env:BEHOLDER_JAEGER_HOSTNAME = "jaeger.$hostName"
+  $env:BEHOLDER_NODERED_HOSTNAME = "nodered.$hostName"
+} elseif ($environment -eq "dev") {
+  $null > ./usb-dev/hidg0
+  $null > ./usb-dev/hidg1
+  $null > ./usb-dev/hidg2
 }
 
 switch ($command)

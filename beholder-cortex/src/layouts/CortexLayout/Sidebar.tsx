@@ -1,13 +1,23 @@
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
-
+import { templateSettings, template } from 'lodash';
 import nav from '@src/data/navigation';
 import classNames from '@src/utils/classNames';
 
 import SidebarItem from './SidebarItem';
 
 const Sidebar = () => {
+  templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+  const [urlTemplateData, setUrlTemplateData] = React.useState({ host: '' });
+  useEffect(() => {
+    setUrlTemplateData({
+      ...urlTemplateData,
+      host: window.location.host,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <nav className="fixed flex flex-col top-14 left-0 w-14 md:w-64 h-full text-white transition-all duration-300 border-none z-10 sidebar bg-base-200">
       <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
@@ -15,7 +25,12 @@ const Sidebar = () => {
           {nav.map((item) =>
             !item.children ? (
               <li key={item.title}>
-                <SidebarItem title={item.title} url={item.url} icon={item.icon} />
+                <SidebarItem
+                  title={item.title}
+                  url={template(item.url)(urlTemplateData)}
+                  icon={item.icon}
+                  target={item.target}
+                />
               </li>
             ) : (
               <Disclosure as="div" key={item.title} className="space-y-1" defaultOpen={item.defaultOpen}>
@@ -45,8 +60,9 @@ const Sidebar = () => {
                           key={subItem.title}
                           className="md:ml-11"
                           title={subItem.title}
-                          url={subItem.url}
+                          url={template(subItem.url)(urlTemplateData)}
                           icon={subItem.icon}
+                          target={subItem.target}
                         />
                       ))}
                     </Disclosure.Panel>

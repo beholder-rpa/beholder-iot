@@ -17,6 +17,7 @@
     private readonly Keyboard _keyboard;
     private readonly DaprClient _daprClient;
     private readonly ILogger<KeyboardService> _logger;
+    private readonly string _hostName;
 
     public KeyboardService(Keyboard keyboard, DaprClient daprClient, ILogger<KeyboardService> logger)
     {
@@ -24,6 +25,7 @@
       _keyboard.KeyboardLedsChanged += HandleKeyboardLedsChanged;
       _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      _hostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME") ?? Dns.GetHostName();
     }
 
     private void HandleKeyboardLedsChanged(object sender, KeyboardLedsChangedEventArgs e)
@@ -59,35 +61,34 @@
     public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
     {
       var result = new ListTopicSubscriptionsResponse();
-      var hostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME") ?? Dns.GetHostName();
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{hostName}/sendkey"
+        Topic = $"beholder/stalk/{_hostName}/sendkey"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{hostName}/sendkeys"
+        Topic = $"beholder/stalk/{_hostName}/sendkeys"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{hostName}/sendkeysraw"
+        Topic = $"beholder/stalk/{_hostName}/sendkeysraw"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{hostName}/sendkeysreset"
+        Topic = $"beholder/stalk/{_hostName}/sendkeysreset"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{hostName}/setaveragekeypressduration"
+        Topic = $"beholder/stalk/{_hostName}/setaveragekeypressduration"
       });
 
       return Task.FromResult(result);
@@ -106,7 +107,10 @@
         return new TopicEventResponse();
       }
 
-      return request.Topic switch
+      _logger.LogInformation($"Received Topic Event for {request.Topic}");
+      var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/", "");
+
+      return topic switch
       {
         "sendkey" => await Util.InvokeMethodFromEvent<SendKeyRequest, Empty>(_daprClient, request, (input) => SendKey(input)),
         "sendkeys" => await Util.InvokeMethodFromEvent<SendKeysRequest, Empty>(_daprClient, request, (input) => SendKeys(input)),
@@ -120,12 +124,14 @@
     public async Task<Empty> SendKey(SendKeyRequest request)
     {
       await _keyboard.SendKey(request.Keypress);
+      _logger.LogInformation($"Sent Keypress {request.Keypress}");
       return null;
     }
 
     public async Task<Empty> SendKeys(SendKeysRequest request)
     {
       await _keyboard.SendKeys(request.Keys);
+      _logger.LogInformation($"Sent Keys {request.Keys}");
       return null;
     }
 

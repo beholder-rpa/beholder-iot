@@ -38,6 +38,39 @@ services:
       - beholder-nexus
     network_mode: "service:beholder-cortex"
   ###############################################
+  # Beholder Node Red
+  beholder-node-red:
+    image: nodered/node-red:latest
+    container_name: beholder-node-red
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - ./beholder-node-red/data:/data
+    labels:
+      - traefik.enable=true
+      # Proxy to authenticated content
+      - traefik.http.routers.beholder_node_red.rule=Host(`${BEHOLDER_NODERED_HOSTNAME}`)
+      - traefik.http.routers.beholder_node_red.entrypoints=websecure
+      - traefik.http.routers.beholder_node_red.tls=true
+      - traefik.http.routers.beholder_node_red.service=beholder_node_red
+      - traefik.http.services.beholder_node_red.loadbalancer.server.port=1880
+  # Dapr Sidecar
+  beholder-node-red-dapr:
+    << : *default-dapr
+    container_name: beholder-node-red-dapr
+    command: ["./daprd",
+      "-app-id", "node-red",
+      "-app-port", "1880",
+      "-dapr-http-max-request-size", "16",
+      "-placement-host-address", "beholder-dapr-placement:50006",
+      "-components-path", "/dapr/components",
+      "-config", "/dapr/config.yaml"]
+    depends_on:
+      - beholder-node-red
+      - beholder-nexus
+    network_mode: "service:beholder-node-red"
+  ###############################################
   # Beholder Nexus
   beholder-nexus:
     image: emqx/emqx:4.3.5

@@ -127,3 +127,6 @@ dist
 /beholder-traefik/certs/**/mkcert.exe
 
 **/.idea
+
+usb-dev/**/*
+!usb-dev/.gitkeep
