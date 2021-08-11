@@ -45,7 +45,7 @@
         "correl": "",
         "expiry": "",
         "broker": "0b70dd4da53f0867",
-        "x": 1410,
+        "x": 790,
         "y": 400,
         "wires": []
     },
@@ -68,7 +68,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "beholder/stalk/rsm-mbp-l2019/sendkeys",
-        "payload": "{\"type\":\"com.dapr.event.sent\",\"topic\":\"beholder/ctaf\",\"pubsubname\":\"nexus\",\"specversion\":\"1.0\",\"data\":{\"keys\":\"asdf\"},\"datacontenttype\":\"application/json\"}",
+        "payload": "{\"data\":{\"keys\":\"Asdf\"},\"datacontenttype\":\"application/json\"}",
         "payloadType": "json",
         "x": 560,
         "y": 400,
@@ -129,7 +129,7 @@
         "proxy": "",
         "authType": "",
         "x": 810,
-        "y": 500,
+        "y": 520,
         "wires": [
             []
         ]
@@ -161,8 +161,8 @@
         "topic": "",
         "payload": "{\"keys\":\"Asdf\"}",
         "payloadType": "json",
-        "x": 570,
-        "y": 500,
+        "x": 540,
+        "y": 520,
         "wires": [
             [
                 "7eff91a5150f2ac5"
@@ -251,5 +251,25 @@
                 "ea8fcf194f1f3033"
             ]
         ]
+    },
+    {
+        "id": "2ee13481d6b516f1",
+        "type": "comment",
+        "z": "6a61b64910c046bc",
+        "name": "Use MQTT Directly",
+        "info": "Use MQTT Directly",
+        "x": 450,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "de3841b2d258ddd7",
+        "type": "comment",
+        "z": "6a61b64910c046bc",
+        "name": "Invoke via Dapr",
+        "info": "",
+        "x": 460,
+        "y": 460,
+        "wires": []
     }
 ]
