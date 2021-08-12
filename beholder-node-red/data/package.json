@@ -5,7 +5,7 @@
     "private": true,
     "dependencies": {
         "@node-red-contrib-themes/theme-collection": "^2.0.3",
-        "node-red-contrib-beholder": "file:node-red-contrib-beholder",
+        "node-red-contrib-beholder": "file:./node-red-contrib-beholder",
         "node-red-contrib-image-output": "^0.6.3",
         "node-red-contrib-os": "^0.2.1",
         "node-red-contrib-process-env": "^0.2.5",
