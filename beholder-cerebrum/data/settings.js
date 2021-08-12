@@ -321,11 +321,11 @@ module.exports = {
      */
     editorTheme: {
         page: {
-            title: "Beholder",
+            title: "Beholder Cerebrum",
             favicon: "/data/images/favicon.ico"
         },
         header: {
-            title: "Beholder",
+            title: "Beholder Cerebrum",
             image: "/data/images/beholder.png"
         },
         /** The following property can be used to set a custom theme for the editor.

@@ -38,40 +38,40 @@ services:
       - beholder-nexus
     network_mode: "service:beholder-cortex"
   ###############################################
-  # Beholder Frontal Lobe (Node Red)
-  beholder-node-red:
+  # Beholder Cerebrum (Node Red)
+  beholder-cerebrum:
     image: nodered/node-red:latest
-    container_name: beholder-node-red
+    container_name: beholder-cerebrum
     restart: always
     environment:
       - BEHOLDER_STALK_NAME=${BEHOLDER_SHORT_HOSTNAME}
     networks:
       - backend
     volumes:
-      - ./beholder-node-red/data:/data:rw
+      - ./beholder-cerebrum/data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy to authenticated content
-      - traefik.http.routers.beholder_node_red.rule=Host(`${BEHOLDER_NODERED_HOSTNAME}`)
-      - traefik.http.routers.beholder_node_red.entrypoints=websecure
-      - traefik.http.routers.beholder_node_red.tls=true
-      - traefik.http.routers.beholder_node_red.service=beholder_node_red
-      - traefik.http.services.beholder_node_red.loadbalancer.server.port=1880
+      - traefik.http.routers.beholder_cerebrum.rule=Host(`${BEHOLDER_CEREBRUM_HOSTNAME}`)
+      - traefik.http.routers.beholder_cerebrum.entrypoints=websecure
+      - traefik.http.routers.beholder_cerebrum.tls=true
+      - traefik.http.routers.beholder_cerebrum.service=beholder_cerebrum
+      - traefik.http.services.beholder_cerebrum.loadbalancer.server.port=1880
   # Dapr Sidecar
-  beholder-node-red-dapr:
+  beholder-cerebrum-dapr:
     << : *default-dapr
-    container_name: beholder-node-red-dapr
+    container_name: beholder-cerebrum-dapr
     command: ["./daprd",
-      "-app-id", "node-red",
+      "-app-id", "cerebrum",
       "-app-port", "1880",
       "-dapr-http-max-request-size", "16",
       "-placement-host-address", "beholder-dapr-placement:50006",
       "-components-path", "/dapr/components",
       "-config", "/dapr/config.yaml"]
     depends_on:
-      - beholder-node-red
+      - beholder-cerebrum
       - beholder-nexus
-    network_mode: "service:beholder-node-red"
+    network_mode: "service:beholder-cerebrum"
   ###############################################
   # Beholder Nexus
   beholder-nexus:

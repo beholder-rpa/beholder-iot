@@ -6,6 +6,10 @@ services:
   beholder-cortex:
     image: beholderrpa/iot-cortex-arm32v7:master
   ###############################################
+  # Beholder Cerebrum (Node Red)
+  beholder-cerebrum:
+    image: beholderrpa/iot-cerebrum-v1:master
+  ###############################################
   # Beholder Stalk
   beholder-stalk:
     image: beholderrpa/iot-stalk-v2-arm32v7:master

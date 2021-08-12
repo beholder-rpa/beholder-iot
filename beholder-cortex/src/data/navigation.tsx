@@ -65,6 +65,12 @@ const navigation: Navigation[] = [
     defaultOpen: true,
     children: [
       {
+        title: 'Cerebrum',
+        icon: <FontAwesomeIcon icon={faStream} />,
+        url: 'https://cerebrum.{{ host }}',
+        target: '_blank',
+      },
+      {
         title: 'Traefik',
         icon: <FontAwesomeIcon icon={faStream} />,
         url: 'https://traefik.{{ host }}/dashboard/',
@@ -74,12 +80,6 @@ const navigation: Navigation[] = [
         title: 'Nexus (EMQ X)',
         icon: <FontAwesomeIcon icon={faStream} />,
         url: 'https://nexus.{{ host }}',
-        target: '_blank',
-      },
-      {
-        title: 'Node Red',
-        icon: <FontAwesomeIcon icon={faStream} />,
-        url: 'https://nodered.{{ host }}',
         target: '_blank',
       },
       {
