@@ -1,4 +1,4 @@
-name: Cortex CD
+name: Cerebrum CD
 
 on:
   workflow_dispatch:
