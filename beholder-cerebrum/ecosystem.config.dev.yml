@@ -1,0 +1,13 @@
+apps:
+  - name: 'node-RED'
+    script: '(cd /data; npm install --prefer-offline --no-audit --no-fund --no-update-notifier) && npm --no-update-notifier --no-fund start --cache /data/.npm -- --userDir /data'
+    cwd: '/usr/src/node-red'
+    watch:
+      - 'data/node-red-contrib-beholder'
+    ignore_watch:
+      - 'node_modules'
+      - 'data/node_modules'
+      - 'data/node-red-contrib-beholder/node_modules'
+    max_memory_restart: 4G
+    restart_delay: 2500
+    exp_backoff_restart_delay: 2500

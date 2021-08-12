@@ -48,14 +48,6 @@ switch ($command)
       }
       Pop-Location
 
-      ## Install Node-RED modules
-      ## TODO: Remove me when we have a dockerfile.dev for cerebrum
-      if ($environment -eq "dev") {
-        Push-Location $PWD/beholder-node-red/data
-        & npm install
-        Pop-Location
-      }
-
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") build"
       Invoke-Expression $dockerComposeCommand
     }

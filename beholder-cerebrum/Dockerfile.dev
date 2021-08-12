@@ -1,0 +1,9 @@
+FROM nodered/node-red:latest
+
+USER root
+RUN npm install pm2 -g
+
+USER node-red
+COPY ./entrypoint.dev.sh .
+COPY ./ecosystem.config.dev.yml .
+ENTRYPOINT ["/usr/src/node-red/entrypoint.dev.sh"]

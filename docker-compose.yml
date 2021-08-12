@@ -40,7 +40,7 @@ services:
   ###############################################
   # Beholder Cerebrum (Node Red)
   beholder-cerebrum:
-    image: nodered/node-red:latest
+    image: beholderrpa/iot-cerebrum-v1
     container_name: beholder-cerebrum
     restart: always
     environment:

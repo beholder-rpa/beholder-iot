@@ -15,6 +15,10 @@ services:
   ###############################################
   # Beholder Cerebrum (Node Red)
   beholder-cerebrum:
+    image: beholderrpa/iot-cerebrum-v1:latest
+    build:
+      context: ./beholder-cerebrum
+      dockerfile: Dockerfile.dev
     volumes:
       - ./beholder-cerebrum/data:/data:rw
   ###############################################
