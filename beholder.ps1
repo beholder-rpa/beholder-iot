@@ -23,10 +23,6 @@ if ($environment -eq "rpi") {
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
   $env:BEHOLDER_GRAFANA_HOSTNAME = "grafana.$hostName"
   $env:BEHOLDER_JAEGER_HOSTNAME = "jaeger.$hostName"
-} elseif ($environment -eq "dev") {
-  $null > ./usb-dev/hidg0
-  $null > ./usb-dev/hidg1
-  $null > ./usb-dev/hidg2
 }
 
 switch ($command)
@@ -53,15 +49,25 @@ switch ($command)
       Pop-Location
 
       ## Install Node-RED modules
-      Push-Location $PWD/beholder-node-red/data
-      & npm install
-      Pop-Location
+      ## TODO: Remove me when we have a dockerfile.dev for cerebrum
+      if ($environment -eq "dev") {
+        Push-Location $PWD/beholder-node-red/data
+        & npm install
+        Pop-Location
+      }
 
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") build"
       Invoke-Expression $dockerComposeCommand
     }
     'up'
     {
+      # Write out null values for the hidg files
+      if ($environment -eq "dev") {
+        $null > ./usb-dev/hidg0
+        $null > ./usb-dev/hidg1
+        $null > ./usb-dev/hidg2
+      }
+
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
       Invoke-Expression $dockerComposeCommand
     }

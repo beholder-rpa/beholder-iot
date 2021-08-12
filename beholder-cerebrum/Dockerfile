@@ -6,4 +6,4 @@ RUN npm install
 
 WORKDIR /usr/src/node-red
 COPY ./entrypoint.sh .
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/src/node-red/entrypoint.sh"]
