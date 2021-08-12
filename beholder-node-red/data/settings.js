@@ -41,7 +41,7 @@ module.exports = {
      * node-red from being able to decrypt your existing credentials and they will be
      * lost.
      */
-    //credentialSecret: "a-secret-key",
+    credentialSecret: "beholder",
 
     /** By default, the flow JSON will be formatted over multiple lines making
      * it easier to compare changes when using version control.
@@ -287,19 +287,19 @@ module.exports = {
       * will install/load. It can use '*' as a wildcard that matches anything.
       */
      externalModules: {
-         // autoInstall: false,   /** Whether the runtime will attempt to automatically install missing modules */
-         // autoInstallRetry: 30, /** Interval, in seconds, between reinstall attempts */
-         // palette: {              /** Configuration for the Palette Manager */
-         //     allowInstall: true, /** Enable the Palette Manager in the editor */
-         //     allowUpload: true,  /** Allow module tgz files to be uploaded and installed */
-         //     allowList: [],
-         //     denyList: []
-         // },
-         // modules: {              /** Configuration for node-specified modules */
-         //     allowInstall: true,
-         //     allowList: [],
-         //     denyList: []
-         // }
+         autoInstall: true,   /** Whether the runtime will attempt to automatically install missing modules */
+         autoInstallRetry: 30, /** Interval, in seconds, between reinstall attempts */
+         palette: {              /** Configuration for the Palette Manager */
+             allowInstall: true, /** Enable the Palette Manager in the editor */
+             allowUpload: true,  /** Allow module tgz files to be uploaded and installed */
+             allowList: [],
+             denyList: []
+         },
+         modules: {              /** Configuration for node-specified modules */
+             allowInstall: true,
+             allowList: [],
+             denyList: []
+         }
      },
 
 
@@ -320,11 +320,19 @@ module.exports = {
      * for all available options.
      */
     editorTheme: {
+        page: {
+            title: "Beholder",
+            favicon: "/data/images/favicon.ico"
+        },
+        header: {
+            title: "Beholder",
+            image: "/data/images/beholder.png"
+        },
         /** The following property can be used to set a custom theme for the editor.
          * See https://github.com/node-red-contrib-themes/theme-collection for
          * a collection of themes to chose from.
          */
-        //theme: "",
+        theme: "solarized-dark",
         palette: {
             /** The following property can be used to order the categories in the editor
              * palette. If a node's category is not in the list, the category will get

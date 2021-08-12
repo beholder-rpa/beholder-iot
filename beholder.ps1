@@ -51,6 +51,11 @@ switch ($command)
       }
       Pop-Location
 
+      ## Install Node-RED modules
+      Push-Location $PWD/beholder-node-red/data
+      & npm install
+      Pop-Location
+
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") build"
       Invoke-Expression $dockerComposeCommand
     }

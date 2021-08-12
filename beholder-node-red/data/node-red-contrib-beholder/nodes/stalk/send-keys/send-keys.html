@@ -1,0 +1,27 @@
+<script type="text/javascript">
+  RED.nodes.registerType('send-keys', {
+    category: 'beholder',
+    color: '#D8BFD8',
+    defaults: {
+      keys: { value: "" }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "font-awesome/fa-keyboard-o",
+    paletteLabel: "send keys",
+    label: function () {
+      return this.name || "send keys";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="send-keys">
+  <div class="form-row">
+      <label for="node-input-keys"><i class="fa fa-tag"></i> Keys</label>
+      <input type="text" id="node-input-keys" placeholder="Keys">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="send-keys">
+  <p>A node that converts the message payload into a message that can be sent to a mqtt out node</p>
+</script>

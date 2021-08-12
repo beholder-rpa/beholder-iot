@@ -130,3 +130,5 @@ dist
 
 usb-dev/**/*
 !usb-dev/.gitkeep
+
+/beholder-node-red/data/*.backup

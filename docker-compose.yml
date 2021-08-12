@@ -38,11 +38,13 @@ services:
       - beholder-nexus
     network_mode: "service:beholder-cortex"
   ###############################################
-  # Beholder Node Red
+  # Beholder Frontal Lobe (Node Red)
   beholder-node-red:
     image: nodered/node-red:latest
     container_name: beholder-node-red
     restart: always
+    environment:
+      - BEHOLDER_STALK_NAME=${BEHOLDER_SHORT_HOSTNAME}
     networks:
       - backend
     volumes:
