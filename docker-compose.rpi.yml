@@ -23,6 +23,12 @@ services:
   beholder-traefik:
     environment: 
       - beholder_hostname=${BEHOLDER_HOSTNAME}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=Host(`${BEHOLDER_TRAEFIK_HOSTNAME}`)
+      - traefik.http.routers.dashboard.entrypoints=websecure
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.service=api@internal
   ###############################################
   # Watchtower
   watchtower:
