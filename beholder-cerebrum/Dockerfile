@@ -6,5 +6,5 @@ RUN npm install
 
 WORKDIR /usr/src/node-red
 COPY ./entrypoint.sh .
-RUN chmod +x /usr/src/node-red/entrypoint.sh
+RUN sudo chmod +x /usr/src/node-red/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
