@@ -7,7 +7,7 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 ## Comprised of the following skeuomorphic parts:
 
 - Cortex - Browser-based admin/orchestration interface (NextJS) [![Beholder - Build and Push Beholder Cortex Docker Image](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml)
-- Cerebrum - Node-RED with custom nodes
+- Cerebrum - Node-RED with custom nodes [![Cerebrum CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml)
 - Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core) [![Beholder - Build and Push Beholder Stalk Docker Image](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml)
 
 ## Foundational Components
