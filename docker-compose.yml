@@ -48,7 +48,7 @@ services:
     networks:
       - backend
     volumes:
-      - ./beholder-node-red/data:/data
+      - ./beholder-node-red/data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy to authenticated content
@@ -113,8 +113,6 @@ services:
       - traefik.tcp.routers.beholder_nexus_mqtt.rule=HostSNI(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.tcp.routers.beholder_nexus_mqtt.entrypoints=mqtt
       - traefik.tcp.services.beholder_nexus_mqtt.loadbalancer.server.port=1883
-    volumes: 
-      - ./beholder-nexus:/etc/rabbitmq
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -162,7 +160,7 @@ services:
       - backend
     volumes:
       - ./beholder-grafana:/etc/grafana/:ro
-      - beholder_grafana_data:/var/lib/grafana
+      - beholder_grafana_data:/var/lib/grafana:rw
     labels: 
       - traefik.enable=true
       # Proxy to authenticated content
@@ -184,7 +182,7 @@ services:
       - backend
     volumes:
       - ./beholder-postgres/initdb/:/docker-entrypoint-initdb.d/:ro
-      - beholder_postgres_data:/var/lib/postgresql/data
+      - beholder_postgres_data:/var/lib/postgresql/data:rw
   ###############################################
   # Beholder Redis
   beholder-redis:
@@ -194,7 +192,7 @@ services:
     networks:
       - backend
     volumes:
-      - beholder_redis_data:/data
+      - beholder_redis_data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy redis

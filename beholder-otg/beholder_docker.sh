@@ -10,6 +10,7 @@ then
     ./beholder.ps1 build rpi
     ./beholder.ps1 up rpi
     popd
+    chown -R beholder /home/beholder/beholder/
 fi
 
 if [ "$1" = down ]
