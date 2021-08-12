@@ -47,8 +47,6 @@ services:
       - BEHOLDER_STALK_NAME=${BEHOLDER_SHORT_HOSTNAME}
     networks:
       - backend
-    volumes:
-      - ./beholder-cerebrum/data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy to authenticated content

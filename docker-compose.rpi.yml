@@ -9,6 +9,8 @@ services:
   # Beholder Cerebrum (Node Red)
   beholder-cerebrum:
     image: beholderrpa/iot-cerebrum-v1:master
+    volumes:
+      - beholder-cerebrum-data:/data:rw
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -37,4 +39,6 @@ services:
       - "WATCHTOWER_SCHEDULE=15 * * * * *"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  
+
+volumes: 
+  beholder-cerebrum-data:

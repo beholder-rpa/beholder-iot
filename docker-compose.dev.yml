@@ -13,6 +13,11 @@ services:
       - beholder_cortex_node_modules:/srv/app/node_modules
       - beholder_cortex_next:/srv/app/.next
   ###############################################
+  # Beholder Cerebrum (Node Red)
+  beholder-cerebrum:
+    volumes:
+      - ./beholder-cerebrum/data:/data:rw
+  ###############################################
   # Beholder Nexus
   beholder-nexus:
     ports:
