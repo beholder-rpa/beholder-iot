@@ -1,3 +1,4 @@
+#!/bin/sh
 if [[ ! -f /data/package.json ]]; then
   echo "package.json not found in data directory; copying files from seed data"
   cp -r /data-seed/* /data
