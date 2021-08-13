@@ -4,10 +4,11 @@ echo "# Executing Beholder IoT Docker script..."
 
 if [ "$1" = up ]
 then
-    sudo systemctl enable --now avahi-alias@cerebrum.$HOSTNAME.service
-    sudo systemctl enable --now avahi-alias@traefik.$HOSTNAME.service
-    sudo systemctl enable --now avahi-alias@nexus.$HOSTNAME.service
-    sudo systemctl enable --now avahi-alias@grafana.$HOSTNAME.service
+    SHORT_HOST = $HOSTNAME | sed -En 's/^(.*?)\.local$/\1/p'
+    sudo systemctl enable --now avahi-alias@cerebrum.$SHORT_HOST.service
+    sudo systemctl enable --now avahi-alias@traefik.$SHORT_HOST.service
+    sudo systemctl enable --now avahi-alias@nexus.$SHORT_HOST.service
+    sudo systemctl enable --now avahi-alias@grafana.$SHORT_HOST.service
 
     pushd /home/beholder/beholder/
     git pull --depth 1
@@ -24,10 +25,11 @@ then
     ./beholder.ps1 down rpi
     popd
 
-    sudo systemctl disable --now avahi-alias@cerebrum.$HOSTNAME.service
-    sudo systemctl disable --now avahi-alias@traefik.$HOSTNAME.service
-    sudo systemctl disable --now avahi-alias@nexus.$HOSTNAME.service
-    sudo systemctl disable --now avahi-alias@grafana.$HOSTNAME.service
+    SHORT_HOST = $HOSTNAME | sed -En 's/^(.*?)\.local$/\1/p'
+    sudo systemctl disable --now avahi-alias@cerebrum.$SHORT_HOST.service
+    sudo systemctl disable --now avahi-alias@traefik.$SHORT_HOST.service
+    sudo systemctl disable --now avahi-alias@nexus.$SHORT_HOST.service
+    sudo systemctl disable --now avahi-alias@grafana.$SHORT_HOST.service
 fi
 
 echo "# Completed Beholder IoT Docker script."
