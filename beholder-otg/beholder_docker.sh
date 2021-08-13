@@ -4,10 +4,10 @@ echo "# Executing Beholder IoT Docker script..."
 
 if [ "$1" = up ]
 then
-    sudo systemctl enable --now avahi-alias@cerebrum.$HOSTNAME.local.service
-    sudo systemctl enable --now avahi-alias@traefik.$HOSTNAME.local.service
-    sudo systemctl enable --now avahi-alias@nexus.$HOSTNAME.local.service
-    sudo systemctl enable --now avahi-alias@grafana.$HOSTNAME.local.service
+    sudo systemctl enable --now avahi-alias@cerebrum.$HOSTNAME.service
+    sudo systemctl enable --now avahi-alias@traefik.$HOSTNAME.service
+    sudo systemctl enable --now avahi-alias@nexus.$HOSTNAME.service
+    sudo systemctl enable --now avahi-alias@grafana.$HOSTNAME.service
 
     pushd /home/beholder/beholder/
     git pull --depth 1
