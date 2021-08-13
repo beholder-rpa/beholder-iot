@@ -60,27 +60,11 @@ switch ($command)
         $null > ./usb-dev/hidg2
       }
 
-      if ($environment -eq "rpi") {
-        #export SHORT_HOST=$(echo $HOSTNAME | sed -En 's/^(.*?)\.local$/\1/p')
-        sudo systemctl enable --now avahi-alias@"cerebrum.$HOSTNAME".service
-        sudo systemctl enable --now avahi-alias@"traefik.$HOSTNAME".service
-        sudo systemctl enable --now avahi-alias@"nexus.$HOSTNAME".service
-        sudo systemctl enable --now avahi-alias@"grafana.$HOSTNAME".service
-      }
-
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
       Invoke-Expression $dockerComposeCommand
     }
     'down'
     {
-      if ($environment -eq "rpi") {
-        #export SHORT_HOST=$(echo $HOSTNAME | sed -En 's/^(.*?)\.local$/\1/p')
-        sudo systemctl disable --now avahi-alias@"cerebrum.$HOSTNAME".service
-        sudo systemctl disable --now avahi-alias@"traefik.$HOSTNAME".service
-        sudo systemctl disable --now avahi-alias@"nexus.$HOSTNAME".service
-        sudo systemctl disable --now avahi-alias@"grafana.$HOSTNAME".service
-      }
-
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") down --remove-orphans"
       Invoke-Expression $dockerComposeCommand
     }
