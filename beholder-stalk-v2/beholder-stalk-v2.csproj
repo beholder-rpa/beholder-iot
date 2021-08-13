@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\joystick.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\mouse.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\joystick.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\keyboard.proto" GrpcServices="Server" />
   </ItemGroup>
 

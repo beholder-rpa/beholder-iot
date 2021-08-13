@@ -1,16 +1,13 @@
 ﻿namespace beholder_stalk_v2
 {
   using beholder_stalk_v2.HardwareInterfaceDevices;
-  using beholder_stalk_v2.Models;
-  using Dapr.Client;
+  using beholder_stalk_v2.Services;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
-  using Microsoft.Extensions.Logging;
-  using System.Threading.Tasks;
 
   public class Startup
   {
@@ -26,7 +23,7 @@
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddSingleton<Keyboard>();
-      //services.AddSingleton(new Mouse(Configuration));
+      services.AddSingleton<Mouse>();
       //services.AddSingleton(new Joystick(Configuration));
 
       services.AddGrpc();
@@ -51,6 +48,7 @@
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapGrpcService<KeyboardService>();
+        endpoints.MapGrpcService<MouseService>();
 
         endpoints.MapGet("/", async context =>
               {

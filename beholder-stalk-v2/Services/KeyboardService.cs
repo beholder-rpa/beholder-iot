@@ -1,4 +1,4 @@
-﻿namespace beholder_stalk_v2
+﻿namespace beholder_stalk_v2.Services
 {
   using beholder_stalk_v2.HardwareInterfaceDevices;
   using beholder_stalk_v2.Protos;
@@ -31,6 +31,7 @@
     private void HandleKeyboardLedsChanged(object sender, KeyboardLedsChangedEventArgs e)
     {
       _daprClient.PublishEventAsync(Consts.PubSubName, "keyboardledschanged", e.KeyboardLeds);
+      _logger.LogInformation($"Published keyboard leds changed");
     }
 
     /// <summary>

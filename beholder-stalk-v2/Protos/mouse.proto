@@ -2,20 +2,45 @@ syntax = "proto3";
 
 option csharp_namespace = "beholder_stalk_v2.Protos";
 
-package stalk.joystick;
+package stalk.mouse;
 
-// The Joystick service definition.
-service Joystick {
-  // Sends joystick actions
-  rpc SendJoystickActions (JoystickActionsRequest) returns (JoystickActionsReply);
+message MouseClickDuration {
+    optional uint32 delay = 1;
+    optional uint32 min = 2;
+    optional uint32 max = 3;
 }
 
-// The request message containing the user's name.
-message JoystickActionsRequest {
-  string name = 1;
+message MouseResolution {
+    uint32 horizontal_resolution = 1;
+    uint32 vertical_resolution = 2;
 }
 
-// The response message containing the greetings.
-message JoystickActionsReply {
-  string message = 1;
+message MouseClick {
+    string button = 1; // Indicates the mouse button name
+    // Indicates a mouse click direction
+    enum ClickDirection {
+        PRESS_AND_RELEASE = 0;
+        PRESS = 1;
+        RELEASE = 2;
+    };
+    optional ClickDirection click_direction = 2;
+    optional MouseClickDuration duration = 4;
+}
+
+message MouseMove {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message MouseScroll {
+    int32 amount = 1;
+}
+
+message MouseTilt {
+    int32 amount = 1;
+}
+
+// The request message containing the single mouse click
+message SendClickRequest {
+  MouseClick mouseClick = 1;
 }
