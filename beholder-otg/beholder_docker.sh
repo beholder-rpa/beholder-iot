@@ -10,6 +10,7 @@ then
     sudo systemctl enable --now avahi-alias@"grafana.$HOSTNAME".service
 
     pushd /home/beholder/beholder/
+    git reset origin --hard
     git pull --depth 1
     ./beholder.ps1 pull rpi
     ./beholder.ps1 build rpi
