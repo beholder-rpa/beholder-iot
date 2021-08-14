@@ -46,7 +46,7 @@
     {
       return request.Method switch
       {
-        "SendMouseClick" => await Util.InvokeMethodFromInvoke<SendClickRequest, Empty>(request, (input) => SendMouseClick(input)),
+        "SendMouseClick" => await Util.InvokeMethodFromInvoke<SendMouseClickRequest, Empty>(request, (input) => SendMouseClick(input)),
         "SendMouseActions" => await Util.InvokeMethodFromInvoke<SendMouseActionsRequest, Empty>(request, (input) => SendMouseActions(input)),
         "SendMouseRaw" => await Util.InvokeMethodFromInvoke<SendMouseRawRequest, Empty>(request, (input) => SendMouseRaw(input)),
         "SendMouseReset" => await Util.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendMouseReset()),
@@ -108,7 +108,7 @@
       var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/mouse/", "");
       return topic switch
       {
-        "click" => await Util.InvokeMethodFromEvent<SendClickRequest, Empty>(_daprClient, request, (input) => SendMouseClick(input)),
+        "click" => await Util.InvokeMethodFromEvent<SendMouseClickRequest, Empty>(_daprClient, request, (input) => SendMouseClick(input)),
         "actions" => await Util.InvokeMethodFromEvent<SendMouseActionsRequest, Empty>(_daprClient, request, (input) => SendMouseActions(input)),
         "raw" => await Util.InvokeMethodFromEvent<SendMouseRawRequest, Empty>(_daprClient, request, (input) => SendMouseRaw(input)),
         "reset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendMouseReset()),
@@ -117,7 +117,7 @@
       };
     }
 
-    public async Task<Empty> SendMouseClick(SendClickRequest request)
+    public async Task<Empty> SendMouseClick(SendMouseClickRequest request)
     {
       await _mouse.SendMouseClick(request.MouseClick.Button, request.MouseClick.ClickDirection, request.MouseClick.Duration);
       _logger.LogInformation($"Sent Mouse Click {request.MouseClick}");

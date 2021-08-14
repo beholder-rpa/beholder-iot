@@ -8,14 +8,13 @@ namespace beholder_stalk_v2
   using Google.Protobuf.WellKnownTypes;
   using System;
   using System.Collections.Generic;
+  using System.Net.Mime;
   using System.Text.Json;
   using System.Threading;
   using System.Threading.Tasks;
 
   public static class Util
   {
-    private const string ApplicationJsonContentType = "application/json";
-
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy() };
     private static readonly Random Random = new Random();
 
@@ -38,7 +37,7 @@ namespace beholder_stalk_v2
       var response = new TopicEventResponse();
       switch (request.DataContentType)
       {
-        case ApplicationJsonContentType:
+        case MediaTypeNames.Application.Json:
           var input = JsonSerializer.Deserialize<TRequest>(request.Data.ToStringUtf8(), JsonOptions);
           var reply = await method(input);
           response.Status = TopicEventResponse.Types.TopicEventResponseStatus.Success;
@@ -67,8 +66,9 @@ namespace beholder_stalk_v2
       TRequest input;
       switch (request.ContentType)
       {
-        case ApplicationJsonContentType:
+        case MediaTypeNames.Application.Json:
           {
+            Console.WriteLine(request.Data.Value.ToStringUtf8());
             input = JsonSerializer.Deserialize<TRequest>(request.Data.Value.ToStringUtf8(), JsonOptions);
             var output = await method(input);
             response.Data = new Any() { Value = ByteString.CopyFromUtf8(JsonSerializer.Serialize(output, JsonOptions)) };

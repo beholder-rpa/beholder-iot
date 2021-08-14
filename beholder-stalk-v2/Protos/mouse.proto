@@ -41,7 +41,7 @@ message MouseTilt {
 }
 
 // The request message containing the single mouse click
-message SendClickRequest {
+message SendMouseClickRequest {
   MouseClick mouseClick = 1;
 }
 

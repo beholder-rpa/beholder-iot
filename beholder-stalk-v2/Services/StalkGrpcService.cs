@@ -25,7 +25,7 @@
         throw new ArgumentNullException(nameof(hidServices));
       }
 
-      foreach(var hidService in hidServices)
+      foreach (var hidService in hidServices)
       {
         if (_hidServices.ContainsKey(hidService.Name))
         {
@@ -42,7 +42,7 @@
     public override async Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
     {
       var result = new ListTopicSubscriptionsResponse();
-      foreach(var hidService in _hidServices.Values)
+      foreach (var hidService in _hidServices.Values)
       {
         var hidResponse = await hidService.ListTopicSubscriptions(request, context);
         result.Subscriptions.AddRange(hidResponse.Subscriptions);
@@ -59,7 +59,7 @@
 
     public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
     {
-      foreach(var hidService in _hidServices.Values.OrderBy(h => h.Name))
+      foreach (var hidService in _hidServices.Values.OrderBy(h => h.Name))
       {
         var response = await hidService.OnInvoke(request, context);
         if (response != null)
