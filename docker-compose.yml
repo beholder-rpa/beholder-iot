@@ -158,7 +158,7 @@ services:
       - backend
     volumes:
       - ./beholder-grafana:/etc/grafana/:ro
-      - beholder_grafana_data:/var/lib/grafana:rw
+      - grafana_data:/var/lib/grafana:rw
     labels: 
       - traefik.enable=true
       # Proxy to authenticated content
@@ -180,7 +180,7 @@ services:
       - backend
     volumes:
       - ./beholder-postgres/initdb/:/docker-entrypoint-initdb.d/:ro
-      - beholder_postgres_data:/var/lib/postgresql/data:rw
+      - postgres_data:/var/lib/postgresql/data:rw
   ###############################################
   # Beholder Redis
   beholder-redis:
@@ -190,7 +190,7 @@ services:
     networks:
       - backend
     volumes:
-      - beholder_redis_data:/data:rw
+      - redis_data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy redis
@@ -241,6 +241,6 @@ networks:
   backend:
 
 volumes:
-  beholder_redis_data:
-  beholder_postgres_data:
-  beholder_grafana_data:
+  redis_data:
+  postgres_data:
+  grafana_data:

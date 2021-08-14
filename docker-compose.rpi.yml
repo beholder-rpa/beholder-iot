@@ -10,7 +10,7 @@ services:
   beholder-cerebrum:
     image: beholderrpa/iot-cerebrum-v1:master
     volumes:
-      - beholder-cerebrum-data:/data:rw
+      - cerebrum_data:/data:rw
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -41,4 +41,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 volumes: 
-  beholder-cerebrum-data:
+  cerebrum_data:
