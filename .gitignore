@@ -131,4 +131,4 @@ dist
 usb-dev/**/*
 !usb-dev/.gitkeep
 
-/beholder-node-red/data/*.backup
+/beholder-cerebrum/data/**/*.backup
