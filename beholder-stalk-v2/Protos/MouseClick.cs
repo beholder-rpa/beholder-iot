@@ -1,6 +1,4 @@
-﻿using beholder_stalk_v2.Models;
-
-namespace beholder_stalk_v2.Protos
+﻿namespace beholder_stalk_v2.Protos
 {
   public partial class MouseClick : IMouseAction
   {

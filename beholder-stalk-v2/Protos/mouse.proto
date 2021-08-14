@@ -24,23 +24,39 @@ message MouseClick {
         RELEASE = 2;
     };
     optional ClickDirection click_direction = 2;
-    optional MouseClickDuration duration = 4;
+    optional MouseClickDuration duration = 3;
 }
 
 message MouseMove {
-    int32 x = 1;
-    int32 y = 2;
+    sint32 x = 1;
+    sint32 y = 2;
 }
 
 message MouseScroll {
-    int32 amount = 1;
+    sint32 amount = 1;
 }
 
 message MouseTilt {
-    int32 amount = 1;
+    sint32 amount = 1;
 }
 
 // The request message containing the single mouse click
 message SendClickRequest {
   MouseClick mouseClick = 1;
+}
+
+message SendMouseActionsRequest {
+  string actions = 1;
+}
+
+message SendMouseRawRequest {
+  bytes report = 1;
+}
+
+message SetAverageMouseClickDurationRequest {
+  MouseClickDuration duration = 1;
+}
+
+message SetAverageMouseClickDurationReply {
+  MouseClickDuration duration = 1;
 }

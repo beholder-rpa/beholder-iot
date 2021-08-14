@@ -12,7 +12,7 @@
   using System.Net;
   using System.Threading.Tasks;
 
-  public class KeyboardService : AppCallback.AppCallbackBase
+  public class KeyboardService : IHumanInterfaceService
   {
     private readonly Keyboard _keyboard;
     private readonly DaprClient _daprClient;
@@ -28,9 +28,11 @@
       _hostName = Environment.GetEnvironmentVariable("BEHOLDER_STALK_NAME") ?? Dns.GetHostName();
     }
 
+    public string Name => "keyboard";
+
     private void HandleKeyboardLedsChanged(object sender, KeyboardLedsChangedEventArgs e)
     {
-      _daprClient.PublishEventAsync(Consts.PubSubName, "keyboardledschanged", e.KeyboardLeds);
+      _daprClient.PublishEventAsync(Consts.PubSubName, $"beholder/stalk/{_hostName}/status/keyboard/leds", e.KeyboardLeds);
       _logger.LogInformation($"Published keyboard leds changed");
     }
 
@@ -40,7 +42,7 @@
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
+    public async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
     {
       return request.Method switch
       {
@@ -49,7 +51,7 @@
         "SendKeysRaw" => await Util.InvokeMethodFromInvoke<SendKeysRawRequest, Empty>(request, (input) => SendKeysRaw(input)),
         "SendKeysReset" => await Util.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendKeysReset()),
         "SetAverageKeypressDuration" => await Util.InvokeMethodFromInvoke<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(request, (input) => SetAverageKeypressDuration(input)),
-        _ => throw new NotImplementedException(),
+        _ => null,
       };
     }
 
@@ -59,37 +61,37 @@
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
+    public Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
     {
       var result = new ListTopicSubscriptionsResponse();
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{_hostName}/sendkey"
+        Topic = $"beholder/stalk/{_hostName}/keyboard/key"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{_hostName}/sendkeys"
+        Topic = $"beholder/stalk/{_hostName}/keyboard/keys"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{_hostName}/sendkeysraw"
+        Topic = $"beholder/stalk/{_hostName}/keyboard/raw"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{_hostName}/sendkeysreset"
+        Topic = $"beholder/stalk/{_hostName}/keyboard/reset"
       });
 
       result.Subscriptions.Add(new TopicSubscription
       {
         PubsubName = Consts.PubSubName,
-        Topic = $"beholder/stalk/{_hostName}/setaveragekeypressduration"
+        Topic = $"beholder/stalk/{_hostName}/keyboard/keypress_duration"
       });
 
       return Task.FromResult(result);
@@ -101,24 +103,17 @@
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public override async Task<TopicEventResponse> OnTopicEvent(TopicEventRequest request, ServerCallContext context)
+    public async Task<TopicEventResponse> OnTopicEvent(TopicEventRequest request, ServerCallContext context)
     {
-      if (request.PubsubName != Consts.PubSubName)
-      {
-        return new TopicEventResponse();
-      }
-
-      _logger.LogInformation($"Received Topic Event for {request.Topic}");
-      var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/", "");
-
+      var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/keyboard/", "");
       return topic switch
       {
-        "sendkey" => await Util.InvokeMethodFromEvent<SendKeyRequest, Empty>(_daprClient, request, (input) => SendKey(input)),
-        "sendkeys" => await Util.InvokeMethodFromEvent<SendKeysRequest, Empty>(_daprClient, request, (input) => SendKeys(input)),
-        "sendkeysraw" => await Util.InvokeMethodFromEvent<SendKeysRawRequest, Empty>(_daprClient, request, (input) => SendKeysRaw(input)),
-        "sendkeysreset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendKeysReset()),
-        "setaveragekeypressduration" => await Util.InvokeMethodFromEvent<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(_daprClient, request, (input) => SetAverageKeypressDuration(input)),
-        _ => new TopicEventResponse(),
+        "key" => await Util.InvokeMethodFromEvent<SendKeyRequest, Empty>(_daprClient, request, (input) => SendKey(input)),
+        "keys" => await Util.InvokeMethodFromEvent<SendKeysRequest, Empty>(_daprClient, request, (input) => SendKeys(input)),
+        "raw" => await Util.InvokeMethodFromEvent<SendKeysRawRequest, Empty>(_daprClient, request, (input) => SendKeysRaw(input)),
+        "reset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendKeysReset()),
+        "keypress_duration" => await Util.InvokeMethodFromEvent<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(_daprClient, request, (input) => SetAverageKeypressDuration(input)),
+        _ => null,
       };
     }
 
@@ -163,6 +158,16 @@
       {
         Duration = _keyboard.AverageKeypressDuration
       });
+    }
+
+    public async Task OnStatusEvent()
+    {
+      await _daprClient.PublishEventAsync(Consts.PubSubName, $"beholder/stalk/{_hostName}/status/keyboard/keypress_duration", new SetAverageKeypressDurationReply()
+      {
+        Duration = _keyboard.AverageKeypressDuration
+      });
+
+      _logger.LogInformation($"Published keyboard status");
     }
   }
 }

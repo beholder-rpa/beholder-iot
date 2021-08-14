@@ -27,7 +27,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
     private readonly byte[] sizeBuffer = new byte[1];
 
-    public Mouse(IConfigurationRoot config)
+    public Mouse(IConfiguration config)
         : base(config["hid:mouse:devPath"])
     {
       uint mouseMin = 40;
