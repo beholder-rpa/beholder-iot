@@ -1,6 +1,6 @@
 <script type="text/javascript">
   RED.nodes.registerType('send-keys', {
-    category: 'beholder',
+    category: 'beholder stalk - keyboard',
     color: '#D8BFD8',
     defaults: {
       keys: { value: "" }
@@ -8,7 +8,7 @@
     inputs: 1,
     outputs: 0,
     icon: "font-awesome/fa-keyboard-o",
-    paletteLabel: "send keys",
+    paletteLabel: "keys",
     label: function () {
       return this.name || "send keys";
     }
@@ -23,5 +23,5 @@
 </script>
 
 <script type="text/html" data-help-name="send-keys">
-  <p>A node that converts the message payload into a message that can be sent to a mqtt out node</p>
+  <p>Types the specified characters on the host machine</p>
 </script>

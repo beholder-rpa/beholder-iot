@@ -294,14 +294,14 @@
         "id": "694025d4212a209e",
         "type": "function",
         "z": "6a61b64910c046bc",
-        "name": "toggle",
+        "name": "",
         "func": "let count = context.get(\"count\") || 0;\nlet state = context.get(\"state\") || 'stop';\n\nswitch(msg.payload) {\n    case \"start\":\n    case \"stop\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", msg.payload);\n        node.status({text: count});\n        break;\n    default:\n        if (state === \"stop\") {\n            return null;\n        }\n        count++;\n        context.set(\"count\", count);\n        node.status({text: count});\n        return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 490,
+        "x": 500,
         "y": 600,
         "wires": [
             [

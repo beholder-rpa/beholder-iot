@@ -604,6 +604,28 @@
                 "user": false,
                 "module": "node-red-contrib-beholder",
                 "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-keys/send-keys.js"
+            },
+            "beholder-stalk-send-keys-raw": {
+                "name": "beholder-stalk-send-keys-raw",
+                "types": [
+                    "send-keys-raw"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-keys-raw/send-keys-raw.js"
+            },
+            "beholder-stalk-send-mouse-click": {
+                "name": "beholder-stalk-send-mouse-click",
+                "types": [
+                    "send-mouse-click"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-mouse-click/send-mouse-click.js"
             }
         }
     }
