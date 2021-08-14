@@ -202,8 +202,8 @@
         "z": "6a61b64910c046bc",
         "name": "Invoke via Dapr",
         "info": "",
-        "x": 460,
-        "y": 460,
+        "x": 360,
+        "y": 420,
         "wires": []
     },
     {
@@ -214,5 +214,124 @@
         "x": 800,
         "y": 520,
         "wires": []
+    },
+    {
+        "id": "92d2c5897081f7cd",
+        "type": "send-mouse-click",
+        "z": "6a61b64910c046bc",
+        "button": "lclick",
+        "click_direction": 0,
+        "duration": null,
+        "x": 770,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "85fad01cc7dce6ba",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "loop",
+        "props": [],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 270,
+        "y": 560,
+        "wires": [
+            [
+                "694025d4212a209e"
+            ]
+        ]
+    },
+    {
+        "id": "1ff5b7565811c8d9",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/stalk/+/mouse/+",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "ec0798c50e445d70"
+            ]
+        ]
+    },
+    {
+        "id": "033ed51af12f47a2",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "stop",
+        "payloadType": "str",
+        "x": 270,
+        "y": 720,
+        "wires": [
+            [
+                "694025d4212a209e"
+            ]
+        ]
+    },
+    {
+        "id": "694025d4212a209e",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "toggle",
+        "func": "let count = context.get(\"count\") || 0;\nlet state = context.get(\"state\") || 'stop';\n\nswitch(msg.payload) {\n    case \"start\":\n    case \"stop\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", msg.payload);\n        node.status({text: count});\n        break;\n    default:\n        if (state === \"stop\") {\n            return null;\n        }\n        count++;\n        context.set(\"count\", count);\n        node.status({text: count});\n        return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 600,
+        "wires": [
+            [
+                "92d2c5897081f7cd"
+            ]
+        ]
+    },
+    {
+        "id": "a844ef87fb01cb87",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "start",
+        "payloadType": "str",
+        "x": 270,
+        "y": 660,
+        "wires": [
+            [
+                "694025d4212a209e"
+            ]
+        ]
     }
 ]

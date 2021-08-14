@@ -615,6 +615,36 @@
                 "user": false,
                 "module": "node-red-contrib-beholder",
                 "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-keys-raw/send-keys-raw.js"
+            },
+            "beholder-stalk-send-mouse-click": {
+                "name": "beholder-stalk-send-mouse-click",
+                "types": [
+                    "send-mouse-click"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-mouse-click/send-mouse-click.js"
+            }
+        }
+    },
+    "node-red-contrib-cron-plus": {
+        "name": "node-red-contrib-cron-plus",
+        "version": "1.5.4",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "cronplus": {
+                "name": "cronplus",
+                "types": [
+                    "cronplus"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-cron-plus",
+                "file": "/data/node_modules/node-red-contrib-cron-plus/cronplus.js"
             }
         }
     }

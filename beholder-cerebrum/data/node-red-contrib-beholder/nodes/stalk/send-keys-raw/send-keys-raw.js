@@ -6,7 +6,7 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     const node = this;
     node.on('input', async function (msg) {
-      await fetch(`${baseUrl}publish/nexus/beholder/stalk/${stalkName}/sendkeysraw`, {
+      await fetch(`${baseUrl}publish/nexus/beholder/stalk/${stalkName}/keyboard/raw`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,0 +1,47 @@
+<script type="text/javascript">
+  RED.nodes.registerType('send-mouse-click', {
+    category: 'beholder stalk - mouse',
+    color: '#D8BFD8',
+    defaults: {
+      button: { value: "lclick", required: true,  },
+      click_direction: { value: 0, required: true,  },
+      duration: { value: null, required: true,  },
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "font-awesome/fa-mouse-pointer",
+    paletteLabel: "mouse click",
+    label: function () {
+      return this.name || "send mouse click";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="send-mouse-click">
+  <div class="form-row">
+    <label for="node-input-button">Mouse Button</label>
+    <select id="node-input-button">
+      <option value="lclick">Left Click</option>
+      <option value="rclick">Right Click</option>
+      <option value="mclick">Middle Click</option>
+      <option value="back">Back</option>
+      <option value="forward">Forward</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-click_direction">Direction</label>
+    <select id="node-input-click_direction">
+      <option value="0">Press and Release</option>
+      <option value="1">Press</option>
+      <option value="2">Release</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="send-mouse-click">
+  <p>Clicks the mouse on the host machine</p>
+</script>

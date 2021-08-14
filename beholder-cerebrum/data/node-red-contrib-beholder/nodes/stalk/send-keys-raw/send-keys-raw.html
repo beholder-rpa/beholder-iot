@@ -1,6 +1,6 @@
 <script type="text/javascript">
   RED.nodes.registerType('send-keys-raw', {
-    category: 'beholder',
+    category: 'beholder stalk - keyboard',
     color: '#D8BFD8',
     defaults: {
       keys: { value: "" }
@@ -8,7 +8,7 @@
     inputs: 1,
     outputs: 0,
     icon: "font-awesome/fa-keyboard-o",
-    paletteLabel: "send keys raw",
+    paletteLabel: "keys raw",
     label: function () {
       return this.name || "send keys raw";
     }
@@ -20,8 +20,12 @@
       <label for="node-input-keys"><i class="fa fa-tag"></i> Buffer</label>
       <input type="text" id="node-input-keys" placeholder="Buffer">
   </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
 </script>
 
 <script type="text/html" data-help-name="send-keys-raw">
-  <p>A node that converts the message payload into a message that can be sent to a mqtt out node</p>
+  <p>Sends the raw keyboard report and performs the keyboard actions on the host machine</p>
 </script>

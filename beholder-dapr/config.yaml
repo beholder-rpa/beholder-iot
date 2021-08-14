@@ -5,10 +5,3 @@ metadata:
 spec:
   mtls:
     enabled: false
-  tracing:
-    enabled: false
-    samplingRate: "1"
-    expandParams: true
-    includeBody: true
-    zipkin:
-      endpointAddress: "http://jaeger:9411/api/v2/spans"

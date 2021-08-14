@@ -8,10 +8,12 @@
   "node-red": {
     "nodes": {
       "beholder-stalk-send-keys": "nodes/stalk/send-keys/send-keys.js",
-      "beholder-stalk-send-keys-raw": "nodes/stalk/send-keys-raw/send-keys-raw.js"
+      "beholder-stalk-send-keys-raw": "nodes/stalk/send-keys-raw/send-keys-raw.js",
+      "beholder-stalk-send-mouse-click": "nodes/stalk/send-mouse-click/send-mouse-click.js"
     }
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.1"
   }
 }
