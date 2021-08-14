@@ -202,8 +202,8 @@
         "z": "6a61b64910c046bc",
         "name": "Invoke via Dapr",
         "info": "",
-        "x": 460,
-        "y": 460,
+        "x": 360,
+        "y": 420,
         "wires": []
     },
     {
@@ -230,7 +230,7 @@
         "id": "85fad01cc7dce6ba",
         "type": "inject",
         "z": "6a61b64910c046bc",
-        "name": "",
+        "name": "loop",
         "props": [],
         "repeat": "0.1",
         "crontab": "",
