@@ -145,7 +145,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         case ClickDirection.PressAndRelease:
         default:
           SendButtonPress(buttonValue);
-          await Util.Think(duration);
+          await DelayUtil.Think(duration);
           SendButtonRelease(buttonValue);
           break;
       }

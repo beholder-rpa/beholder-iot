@@ -46,11 +46,11 @@
     {
       return request.Method switch
       {
-        "SendKey" => await Util.InvokeMethodFromInvoke<SendKeyRequest, Empty>(request, (input) => SendKey(input)),
-        "SendKeys" => await Util.InvokeMethodFromInvoke<SendKeysRequest, Empty>(request, (input) => SendKeys(input)),
-        "SendKeysRaw" => await Util.InvokeMethodFromInvoke<SendKeysRawRequest, Empty>(request, (input) => SendKeysRaw(input)),
-        "SendKeysReset" => await Util.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendKeysReset()),
-        "SetAverageKeypressDuration" => await Util.InvokeMethodFromInvoke<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(request, (input) => SetAverageKeypressDuration(input)),
+        "SendKey" => await GrpcUtil.InvokeMethodFromInvoke<SendKeyRequest, Empty>(request, (input) => SendKey(input)),
+        "SendKeys" => await GrpcUtil.InvokeMethodFromInvoke<SendKeysRequest, Empty>(request, (input) => SendKeys(input)),
+        "SendKeysRaw" => await GrpcUtil.InvokeMethodFromInvoke<SendKeysRawRequest, Empty>(request, (input) => SendKeysRaw(input)),
+        "SendKeysReset" => await GrpcUtil.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendKeysReset()),
+        "SetAverageKeypressDuration" => await GrpcUtil.InvokeMethodFromInvoke<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(request, (input) => SetAverageKeypressDuration(input)),
         _ => null,
       };
     }
@@ -108,18 +108,18 @@
       var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/keyboard/", "");
       return topic switch
       {
-        "key" => await Util.InvokeMethodFromEvent<SendKeyRequest, Empty>(_daprClient, request, (input) => SendKey(input)),
-        "keys" => await Util.InvokeMethodFromEvent<SendKeysRequest, Empty>(_daprClient, request, (input) => SendKeys(input)),
-        "raw" => await Util.InvokeMethodFromEvent<SendKeysRawRequest, Empty>(_daprClient, request, (input) => SendKeysRaw(input)),
-        "reset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendKeysReset()),
-        "keypress_duration" => await Util.InvokeMethodFromEvent<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(_daprClient, request, (input) => SetAverageKeypressDuration(input)),
+        "key" => await GrpcUtil.InvokeMethodFromEvent<SendKeyRequest, Empty>(_daprClient, request, (input) => SendKey(input)),
+        "keys" => await GrpcUtil.InvokeMethodFromEvent<SendKeysRequest, Empty>(_daprClient, request, (input) => SendKeys(input)),
+        "raw" => await GrpcUtil.InvokeMethodFromEvent<SendKeysRawRequest, Empty>(_daprClient, request, (input) => SendKeysRaw(input)),
+        "reset" => await GrpcUtil.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendKeysReset()),
+        "keypress_duration" => await GrpcUtil.InvokeMethodFromEvent<SetAverageKeypressDurationRequest, SetAverageKeypressDurationReply>(_daprClient, request, (input) => SetAverageKeypressDuration(input)),
         _ => null,
       };
     }
 
     public async Task<Empty> SendKey(SendKeyRequest request)
     {
-      await _keyboard.SendKey(request.Keypress);
+      await _keyboard.SendKey(request.Keypress?.Key, request.Keypress?.KeyDirection ?? Keypress.Types.KeyDirection.PressAndRelease, request.Keypress?.Modifiers, request.Keypress?.Duration);
       _logger.LogInformation($"Sent Keypress {request.Keypress}");
       return null;
     }

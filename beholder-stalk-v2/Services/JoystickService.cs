@@ -39,11 +39,11 @@
     {
       return request.Method switch
       {
-        "SendJoystickButtonClick" => await Util.InvokeMethodFromInvoke<SendJoystickButtonPressRequest, Empty>(request, (input) => SendJoystickButtonPress(input)),
-        "SendJoystickActions" => await Util.InvokeMethodFromInvoke<SendJoystickActionsRequest, Empty>(request, (input) => SendJoystickActions(input)),
-        "SendJoystickRaw" => await Util.InvokeMethodFromInvoke<SendJoystickRawRequest, Empty>(request, (input) => SendJoystickRaw(input)),
-        "SendJoystickReset" => await Util.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendJoystickReset()),
-        "SetAverageJoystickButtonPressDuration" => await Util.InvokeMethodFromInvoke<SetAverageJoystickButtonPressDurationRequest, SetAverageJoystickButtonPressDurationReply>(request, (input) => SetAverageJoystickButtonPressDuration(input)),
+        "SendJoystickButtonClick" => await GrpcUtil.InvokeMethodFromInvoke<SendJoystickButtonPressRequest, Empty>(request, (input) => SendJoystickButtonPress(input)),
+        "SendJoystickActions" => await GrpcUtil.InvokeMethodFromInvoke<SendJoystickActionsRequest, Empty>(request, (input) => SendJoystickActions(input)),
+        "SendJoystickRaw" => await GrpcUtil.InvokeMethodFromInvoke<SendJoystickRawRequest, Empty>(request, (input) => SendJoystickRaw(input)),
+        "SendJoystickReset" => await GrpcUtil.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendJoystickReset()),
+        "SetAverageJoystickButtonPressDuration" => await GrpcUtil.InvokeMethodFromInvoke<SetAverageJoystickButtonPressDurationRequest, SetAverageJoystickButtonPressDurationReply>(request, (input) => SetAverageJoystickButtonPressDuration(input)),
         _ => null,
       };
     }
@@ -101,18 +101,18 @@
       var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/mouse/", "");
       return topic switch
       {
-        "click" => await Util.InvokeMethodFromEvent<SendJoystickButtonPressRequest, Empty>(_daprClient, request, (input) => SendJoystickButtonPress(input)),
-        "actions" => await Util.InvokeMethodFromEvent<SendJoystickActionsRequest, Empty>(_daprClient, request, (input) => SendJoystickActions(input)),
-        "raw" => await Util.InvokeMethodFromEvent<SendJoystickRawRequest, Empty>(_daprClient, request, (input) => SendJoystickRaw(input)),
-        "reset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendJoystickReset()),
-        "click_duration" => await Util.InvokeMethodFromEvent<SetAverageJoystickButtonPressDurationRequest, SetAverageJoystickButtonPressDurationReply>(_daprClient, request, (input) => SetAverageJoystickButtonPressDuration(input)),
+        "click" => await GrpcUtil.InvokeMethodFromEvent<SendJoystickButtonPressRequest, Empty>(_daprClient, request, (input) => SendJoystickButtonPress(input)),
+        "actions" => await GrpcUtil.InvokeMethodFromEvent<SendJoystickActionsRequest, Empty>(_daprClient, request, (input) => SendJoystickActions(input)),
+        "raw" => await GrpcUtil.InvokeMethodFromEvent<SendJoystickRawRequest, Empty>(_daprClient, request, (input) => SendJoystickRaw(input)),
+        "reset" => await GrpcUtil.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendJoystickReset()),
+        "click_duration" => await GrpcUtil.InvokeMethodFromEvent<SetAverageJoystickButtonPressDurationRequest, SetAverageJoystickButtonPressDurationReply>(_daprClient, request, (input) => SetAverageJoystickButtonPressDuration(input)),
         _ => new TopicEventResponse(),
       };
     }
 
     public async Task<Empty> SendJoystickButtonPress(SendJoystickButtonPressRequest request)
     {
-      await _joystick.SendButton(request.ButtonPress.Button, request.ButtonPress.PressDirection, request.ButtonPress.Duration);
+      await _joystick.SendButton(request.ButtonPress?.Button, request.ButtonPress?.PressDirection ?? JoystickButtonPress.Types.ButtonPressDirection.PressAndRelease, request.ButtonPress?.Duration);
       _logger.LogInformation($"Sent Joystick Click {request.ButtonPress}");
       return null;
     }

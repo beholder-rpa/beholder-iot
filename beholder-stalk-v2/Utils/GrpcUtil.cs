@@ -1,6 +1,5 @@
-namespace beholder_stalk_v2
+﻿namespace beholder_stalk_v2
 {
-  using beholder_stalk_v2.Utils;
   using Dapr.AppCallback.Autogen.Grpc.v1;
   using Dapr.Client;
   using Dapr.Client.Autogen.Grpc.v1;
@@ -13,10 +12,9 @@ namespace beholder_stalk_v2
   using System.Threading;
   using System.Threading.Tasks;
 
-  public static class Util
+  public static class GrpcUtil
   {
     private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy() };
-    private static readonly Random Random = new Random();
 
     /// <summary>
     /// Invokes the specified method using the payload contained in a TopicEventRequest. If pubsubName and topicName are specified and the method return value is not empty, publishes the return value as an event.
@@ -84,29 +82,6 @@ namespace beholder_stalk_v2
       }
 
       return response;
-    }
-
-    public static uint GetDelay(IDuration duration = null)
-    {
-      if (duration != null)
-      {
-        if (duration.Delay != default)
-        {
-          return duration.Delay;
-        }
-
-        if (duration.Max != default && duration.Min != default)
-        {
-          return (uint)Random.NextLong(duration.Min, duration.Max);
-        }
-      }
-
-      return 0;
-    }
-
-    public static Task Think(IDuration duration = null)
-    {
-      return Task.Delay((int)GetDelay(duration));
     }
   }
 }

@@ -145,7 +145,7 @@
         case ButtonPressDirection.PressAndRelease:
         default:
           SendButtonPress(buttonValue.Item1, buttonValue.Item2);
-          await Util.Think(duration);
+          await DelayUtil.Think(duration);
           SendButtonRelease(buttonValue.Item1, buttonValue.Item2);
           break;
       }

@@ -46,11 +46,11 @@
     {
       return request.Method switch
       {
-        "SendMouseClick" => await Util.InvokeMethodFromInvoke<SendMouseClickRequest, Empty>(request, (input) => SendMouseClick(input)),
-        "SendMouseActions" => await Util.InvokeMethodFromInvoke<SendMouseActionsRequest, Empty>(request, (input) => SendMouseActions(input)),
-        "SendMouseRaw" => await Util.InvokeMethodFromInvoke<SendMouseRawRequest, Empty>(request, (input) => SendMouseRaw(input)),
-        "SendMouseReset" => await Util.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendMouseReset()),
-        "SetAverageClickDuration" => await Util.InvokeMethodFromInvoke<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(request, (input) => SetAverageMouseClickDuration(input)),
+        "SendMouseClick" => await GrpcUtil.InvokeMethodFromInvoke<SendMouseClickRequest, Empty>(request, (input) => SendMouseClick(input)),
+        "SendMouseActions" => await GrpcUtil.InvokeMethodFromInvoke<SendMouseActionsRequest, Empty>(request, (input) => SendMouseActions(input)),
+        "SendMouseRaw" => await GrpcUtil.InvokeMethodFromInvoke<SendMouseRawRequest, Empty>(request, (input) => SendMouseRaw(input)),
+        "SendMouseReset" => await GrpcUtil.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendMouseReset()),
+        "SetAverageClickDuration" => await GrpcUtil.InvokeMethodFromInvoke<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(request, (input) => SetAverageMouseClickDuration(input)),
         _ => null,
       };
     }
@@ -108,18 +108,18 @@
       var topic = request.Topic.Replace($"beholder/stalk/{_hostName}/mouse/", "");
       return topic switch
       {
-        "click" => await Util.InvokeMethodFromEvent<SendMouseClickRequest, Empty>(_daprClient, request, (input) => SendMouseClick(input)),
-        "actions" => await Util.InvokeMethodFromEvent<SendMouseActionsRequest, Empty>(_daprClient, request, (input) => SendMouseActions(input)),
-        "raw" => await Util.InvokeMethodFromEvent<SendMouseRawRequest, Empty>(_daprClient, request, (input) => SendMouseRaw(input)),
-        "reset" => await Util.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendMouseReset()),
-        "click_duration" => await Util.InvokeMethodFromEvent<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(_daprClient, request, (input) => SetAverageMouseClickDuration(input)),
+        "click" => await GrpcUtil.InvokeMethodFromEvent<SendMouseClickRequest, Empty>(_daprClient, request, (input) => SendMouseClick(input)),
+        "actions" => await GrpcUtil.InvokeMethodFromEvent<SendMouseActionsRequest, Empty>(_daprClient, request, (input) => SendMouseActions(input)),
+        "raw" => await GrpcUtil.InvokeMethodFromEvent<SendMouseRawRequest, Empty>(_daprClient, request, (input) => SendMouseRaw(input)),
+        "reset" => await GrpcUtil.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendMouseReset()),
+        "click_duration" => await GrpcUtil.InvokeMethodFromEvent<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(_daprClient, request, (input) => SetAverageMouseClickDuration(input)),
         _ => new TopicEventResponse(),
       };
     }
 
     public async Task<Empty> SendMouseClick(SendMouseClickRequest request)
     {
-      await _mouse.SendMouseClick(request.MouseClick.Button, request.MouseClick.ClickDirection, request.MouseClick.Duration);
+      await _mouse.SendMouseClick(request.MouseClick?.Button, request.MouseClick?.ClickDirection ?? MouseClick.Types.ClickDirection.PressAndRelease, request.MouseClick.Duration);
       _logger.LogInformation($"Sent Mouse Click {request.MouseClick}");
       return null;
     }

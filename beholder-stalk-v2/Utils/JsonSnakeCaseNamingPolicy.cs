@@ -1,4 +1,4 @@
-﻿namespace beholder_stalk_v2.Utils
+﻿namespace beholder_stalk_v2
 {
   using System;
   using System.Text;

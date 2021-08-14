@@ -219,15 +219,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         case KeyDirection.PressAndRelease:
         default:
           SendKeyPress(keyValue.Item1, modifiersValue);
-          await Util.Think(duration);
+          await DelayUtil.Think(duration);
           SendKeyRelease(keyValue.Item1, modifiersValue);
           break;
       }
-    }
-
-    public Task SendKey(Keypress keypress)
-    {
-      return SendKey(keypress.Key, keypress.KeyDirection, keypress.Modifiers, keypress.Duration);
     }
 
     public async Task SendKeys(string keys)
@@ -329,7 +324,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       // Now that we have the keypresses, press them.
       foreach (var keypress in keypresses)
       {
-        await SendKey(keypress);
+        await SendKey(keypress.Key, keypress.KeyDirection, keypress.Modifiers, keypress.Duration);
       }
     }
 
