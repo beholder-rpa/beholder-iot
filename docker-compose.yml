@@ -182,15 +182,15 @@ services:
       - ./beholder-postgres/initdb/:/docker-entrypoint-initdb.d/:ro
       - postgres_data:/var/lib/postgresql/data:rw
   ###############################################
-  # Beholder Redis
-  beholder-redis:
+  # Beholder Prefrontal Redis
+  beholder-prefrontal:
     image: redis
-    container_name: beholder-redis
+    container_name: beholder-prefrontal
     restart: always
     networks:
       - backend
     volumes:
-      - redis_data:/data:rw
+      - prefrontal_redis_data:/data:rw
     labels:
       - traefik.enable=true
       # Proxy redis
@@ -241,6 +241,6 @@ networks:
   backend:
 
 volumes:
-  redis_data:
+  prefrontal_redis_data:
   postgres_data:
   grafana_data:

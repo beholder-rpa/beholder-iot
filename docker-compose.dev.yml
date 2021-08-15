@@ -58,11 +58,6 @@ services:
     networks:
       - backend
   ###############################################
-  # Beholder Redis
-  beholder-redis:
-    ports: 
-      - 6379:6379
-  ###############################################
   # Dapr placement service
   beholder-dapr-placement:
     ports: 

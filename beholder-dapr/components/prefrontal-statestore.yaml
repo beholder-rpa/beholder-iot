@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:
   - name: redisHost
-    value: beholder-redis:6379
+    value: beholder-prefrontal:6379
   - name: redisPassword
     value: ""
   - name: enableTLS
