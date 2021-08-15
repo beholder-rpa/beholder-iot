@@ -1,6 +1,6 @@
 # Beholder RPA IoT
 
-A multi-faceted approach to robotic process automation.
+A multi-faceted, micrservices-based approach to robotic process automation.
 
 A Beholder agent runs as a self-contained IoT Edge device that can either act as a stand-alone node or be orchestrated as part of a brood of Beholder agents.
 
@@ -9,17 +9,15 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 - Cortex - Browser-based admin/orchestration interface (NextJS) [![Cortex CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml)
 - Cerebrum - Node-RED with custom nodes [![Cerebrum CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml)
 - Occipital - Routines for Object Detection using OpenCV [![Occipital v1 CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-occipital-v1.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-occipital-v1.yml)
-- Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core) [![Beholder - Build and Push Beholder Stalk Docker Image](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-cd.yml)
+- Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core) [![Stalk v2 CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-v2-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-v2-cd.yml)
 
-## Foundational Components
-
-- Nexus - Message Broker (RabbitMQ AMQP, MQTT, MQTT-WS)
 ## Backbone
 
 - PostgreSQL - DB
 - Traefik - L7 Proxy & Routing
 - Dapr - service invocation, state, and pub/sub blocks.
 - Redis - Cache/State Store
+- EMQx - MQTT based Message Broker
 - Grafna - Analytics
 - Jaeger - Tracing
 
@@ -42,9 +40,9 @@ for instructions on how to create an image.
 
 ### Updating
 
-Beholder will auto-update when new containers become available. Additionally, the it will pull git changes on startup.
+Beholder will auto-update when new containers become available. Additionally, it will pull git changes on startup.
 
-To manually update, ```ssh``` into the device. cd into /beholder. Run ```git pull```. Then, ```sudo reboot now```.
+To manually update, ```ssh``` into the device. cd into /beholder. Run ```sudo git pull```. Then, ```sudo reboot now```.
 
 
 # Developing Beholder
@@ -57,7 +55,7 @@ To manually update, ```ssh``` into the device. cd into /beholder. Run ```git pul
  - VSCode (or your favorite editor)
  - VSCode Remote extension
 
-It is recommended that front-end (Beholder Cortex) development occur via remotely connecting to a running Raspberry Pi instance via the Visual Studio Code Remote Remote - SSH plugin.
+It is recommended that front-end (Beholder Cortex) development occur on a local machine, or, via remotely connecting to a running Raspberry Pi instance via the Visual Studio Code Remote Remote - SSH plugin.
 
 > Note: If you've ssh'd into the Beholder before, use ```ssh-keygen -R beholder-01.local``` to clear the previous host key.
 
