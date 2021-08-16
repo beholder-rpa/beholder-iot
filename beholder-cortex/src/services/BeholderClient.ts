@@ -35,10 +35,9 @@ export class BeholderClient {
 
     this.client.on('connect', () => {
       console.log('%c connected!!', 'background: green; color: white; display: block;');
-      this.client.subscribe('beholder/+');
+      this.client.subscribe('beholder/ctaf');
       this.pulse();
 
-      this.client.publish('beholder/ping', null);
       this.beholderStore.updateConnected(true);
       this.beholderStore.updateLastMessageRecieved();
     });
@@ -46,6 +45,10 @@ export class BeholderClient {
     this.client.on('message', (topic, message) => {
       const strMessage = message.toString('utf8');
       switch (topic) {
+        case `beholder/ctaf`:
+          const cloudEvent = JSON.parse(strMessage);
+          this.beholderStore.putServiceInfo(cloudEvent.data);
+          break;
         case `beholder/host`:
           const host = JSON.parse(strMessage);
           this.beholderStore.addHost(host);

@@ -17,7 +17,7 @@ namespace beholder_occipital_v1
       return new BeholderServiceInfo
       {
         ServiceName = "occipital",
-        Version = "v2"
+        Version = "v1"
       };
     });
     private Timer _timer;

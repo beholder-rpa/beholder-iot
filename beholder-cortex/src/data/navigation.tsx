@@ -6,6 +6,7 @@ import {
   faSchool,
   faTools,
   faStream,
+  faSatelliteDish,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -57,6 +58,11 @@ const navigation: Navigation[] = [
         title: 'Status',
         icon: <FontAwesomeIcon icon={faStream} />,
         url: '/tools/status',
+      },
+      {
+        title: 'MQTT',
+        icon: <FontAwesomeIcon icon={faSatelliteDish} />,
+        url: '/tools/mqtt',
       },
     ],
   },

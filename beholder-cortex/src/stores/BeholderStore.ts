@@ -8,6 +8,7 @@ import { defaultKinesisState, KinesisState } from '@src/models/KinesisState';
 import { MatrixPixelLocation } from '@src/models/eye/ObservationRequest';
 import { ProcessInfo } from '@src/models/psionix/ProcessInfo';
 import { HostInfo } from '@src/models/cortex/HostInfo';
+import { BeholderServiceInfo } from '@models/BeholderServiceInfo';
 
 import { AppStore } from './AppStore';
 
@@ -18,6 +19,7 @@ class BeholderStore {
   @observable lastMessageReceived: string = null;
   @observable secondsSinceLastMessageRecieved = null;
   @observable hosts: HostInfo[] = [];
+  @observable serviceInfo: BeholderServiceInfo[] = [];
   @observable kinesisHosts: HostInfo[] = [];
   @observable eyeState: Record<string, EyeState> = {};
   @observable kinesisState: Record<string, KinesisState> = {};
@@ -52,6 +54,18 @@ class BeholderStore {
     }
 
     merge(existingHost, host);
+  }
+
+  @action putServiceInfo(serviceInfo: BeholderServiceInfo) {
+    serviceInfo.key = `${serviceInfo.hostName}-${serviceInfo.serviceName}`;
+    serviceInfo.lastSeen = dayjs();
+    const existingService = find(this.serviceInfo, { key: serviceInfo.key });
+    if (!existingService) {
+      this.serviceInfo.push(observable(serviceInfo));
+      return;
+    }
+
+    merge(existingService, serviceInfo);
   }
 
   @action addKinesisHost(kinesisHost: HostInfo) {
