@@ -27,13 +27,13 @@ services:
     << : *default-dapr
     container_name: beholder-cortex-dapr
     command: ["./daprd",
-      "-app-id", "cortex",
-      "-app-port", "3000",
-      "-enableMTLS", "false",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
+      "--app-id", "cortex",
+      "--app-port", "3000",
+      "--enable-mtls", "false",
+      "--dapr-http-max-request-size", "16",
+      "--placement-host-address", "beholder-dapr-placement:50006",
+      "--components-path", "/dapr/components",
+      "--config", "/dapr/config.yaml"]
     depends_on:
       - beholder-cortex
       - beholder-nexus
@@ -61,13 +61,13 @@ services:
     << : *default-dapr
     container_name: beholder-cerebrum-dapr
     command: ["./daprd",
-      "-app-id", "cerebrum",
-      "-app-port", "1880",
-      "-enableMTLS", "false",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
+      "--app-id", "cerebrum",
+      "--app-port", "1880",
+      "--enable-mtls", "false",
+      "--dapr-http-max-request-size", "16",
+      "--placement-host-address", "beholder-dapr-placement:50006",
+      "--components-path", "/dapr/components",
+      "--config", "/dapr/config.yaml"]
     depends_on:
       - beholder-cerebrum
       - beholder-nexus
@@ -137,14 +137,14 @@ services:
     << : *default-dapr
     container_name: beholder-stalk-dapr
     command: ["./daprd",
-      "-app-id", "stalk",
-      "-app-port", "80",
-      "-app-protocol", "grpc",
-      "-enableMTLS", "false",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
+      "--app-id", "stalk",
+      "--app-port", "80",
+      "--app-protocol", "grpc",
+      "--enable-mtls", "false",
+      "--dapr-http-max-request-size", "16",
+      "--placement-host-address", "beholder-dapr-placement:50006",
+      "--components-path", "/dapr/components",
+      "--config", "/dapr/config.yaml"]
     depends_on:
       - beholder-stalk
       - beholder-nexus
@@ -171,14 +171,14 @@ services:
     << : *default-dapr
     container_name: beholder-occipital-dapr
     command: ["./daprd",
-      "-app-id", "occipital",
-      "-app-port", "80",
-      "-enableMTLS", "false",
-      "-app-protocol", "grpc",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
+      "--app-id", "occipital",
+      "--app-port", "80",
+      "--app-protocol", "grpc",
+      "--enable-mtls", "false",
+      "--dapr-http-max-request-size", "16",
+      "--placement-host-address", "beholder-dapr-placement:50006",
+      "--components-path", "/dapr/components",
+      "--config", "/dapr/config.yaml"]
     depends_on:
       - beholder-occipital
       - beholder-nexus
