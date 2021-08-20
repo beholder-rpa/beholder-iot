@@ -7,7 +7,7 @@ param(
     [Parameter()]
     [ValidateNotNullOrEmpty()]
     [ValidateSet('dev','rpi')]
-    [string] $environment = "dev"
+    [string] $environment = "dev",
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$args
 )
