@@ -12,6 +12,16 @@ param(
     [string[]]$args
 )
 
+# If /proc/cpuinfo exists, obtain the model and determine if it is a RPi
+if (Test-Path "/proc/cpuinfo") {
+
+    $model = (Get-Content "/proc/cpuinfo" | Select-String -Pattern "^\s*?Model\s+?:\s+?(.*?)$").Matches[0].Groups[1].Value
+    # If the model string starts with Raspberry Pi 4 then we're an RPi
+    if ($model.StartsWith("Raspberry Pi 4")) {
+        $environment = "rpi"
+    }
+}
+
 $dockerComposeFiles = @("docker-compose.yml", "docker-compose.$environment.yml")
 
 $hostName = [System.Net.Dns]::GetHostName()
