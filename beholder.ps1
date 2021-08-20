@@ -13,12 +13,13 @@ param(
 )
 
 # If /proc/cpuinfo exists, obtain the model and determine if it is a RPi
-if (Test-Path "/proc/cpuinfo") {
+if ($environment -ne "rpi" -and (Test-Path "/proc/cpuinfo")) {
 
     $model = (Get-Content "/proc/cpuinfo" | Select-String -Pattern "^\s*?Model\s+?:\s+?(.*?)$").Matches[0].Groups[1].Value
-    # If the model string starts with Raspberry Pi 4 then we're an RPi
-    if ($model.StartsWith("Raspberry Pi 4")) {
+    # If the model string starts with Raspberry Pi then we're an RPi
+    if ($model.StartsWith("Raspberry Pi")) {
         $environment = "rpi"
+        Write-Host "Using RPi mode as we deterined we're on a RPi"
     }
 }
 
