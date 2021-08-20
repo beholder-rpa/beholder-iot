@@ -8,6 +8,8 @@ param(
     [ValidateNotNullOrEmpty()]
     [ValidateSet('dev','rpi')]
     [string] $environment = "dev"
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$args
 )
 
 $dockerComposeFiles = @("docker-compose.yml", "docker-compose.$environment.yml")
