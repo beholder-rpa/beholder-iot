@@ -4,7 +4,7 @@ services:
   ###############################################
   # Beholder Cortex
   beholder-cortex:
-    image: beholderrpa/iot-cortex:master
+    image: beholderrpa/iot-cortex-arm64:master
   ###############################################
   # Beholder Cerebrum (Node Red)
   beholder-cerebrum:
