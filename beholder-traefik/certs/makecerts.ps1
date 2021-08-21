@@ -60,17 +60,23 @@ ElseIf (Get-Command $openSSLPath -ErrorAction SilentlyContinue) {
         $passOut = "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)"
     }
 
-    try {
-    & $openSSLPath req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
-        -subj "/CN=BEHOLDER DEFAULT CERT" `
-        -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
-        -addext "extendedKeyUsage=serverAuth" `
-        -addext "subjectAltName=DNS:$($domainsList -join ",DNS:")" `
-        -keyout "$outputPath/server.key" `
-        -out "$outputPath/server.crt" `
-        -passout $passOut
-    } catch {
-        Write-Host "An error occurred while attempting to generate TLS certificates: $_" -ForegroundColor Red
+    # Don't overwrite existing files
+    if (!(Test-Path "$outputPath/server.crt") -and !(Test-Path "$outputPath/server.key")) {
+        try {
+            Write-Host "Generating Traefik TLS certificates..." -ForegroundColor Green
+            & $openSSLPath req -x509 -sha256 -nodes -new -days 365 -newkey rsa:2048 `
+                -subj "/CN=BEHOLDER DEFAULT CERT" `
+                -addext "keyUsage=critical,digitalSignature,keyEncipherment,dataEncipherment,keyAgreement" `
+                -addext "extendedKeyUsage=serverAuth" `
+                -addext "subjectAltName=DNS:$($domainsList -join ",DNS:")" `
+                -keyout "$outputPath/server.key" `
+                -out "$outputPath/server.crt" `
+                -passout $passOut
+        } catch {
+            Write-Host "An error occurred while attempting to generate TLS certificates: $_" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "TLS certificates already exist. Skipping..." -ForegroundColor Green
     }
 
     if ($IsMacOS) {
