@@ -80,10 +80,10 @@ ElseIf (Get-Command $openSSLPath -ErrorAction SilentlyContinue) {
         & sudo update-ca-certificates --fresh
     } ElseIf ($IsWindows) {
         & $openSSLPath pkcs12 -export `
-                -in "$outputPath/server.crt" `
-                -inkey "$outputPath/server.key" `
-                -passout "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)" `
-                -out "$PWD/server.pfx"
+            -in "$outputPath/server.crt" `
+            -inkey "$outputPath/server.key" `
+            -passout "pass:$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)" `
+            -out "$PWD/server.pfx"
         $cmd = "Import-PfxCertificate -FilePath `"$outputPath\server.pfx`" -CertStoreLocation Cert:\LocalMachine\My -Password (ConvertTo-SecureString -String `"$(ConvertFrom-SecureString -SecureString $certificatePassword -AsPlainText)`" -AsPlainText -Force)"
         Write-Host -ForegroundColor yellow "To trust this certificate, please execute the following from an elevated powershell prompt: $cmd"
     }

@@ -10,6 +10,7 @@ import Alerts from './Alerts';
 import Reminders from './Reminders';
 import UserWidget from './UserProfile';
 import SearchBar from './SearchBar';
+import Settings from './Settings';
 
 const AppHeader = () => {
   return (
@@ -29,6 +30,7 @@ const AppHeader = () => {
       <SearchBar />
       <Alerts />
       <Reminders />
+      <Settings />
       <UserWidget />
     </div>
   );

@@ -12,7 +12,7 @@ export interface Locale {
 export default class UIStore {
   appStore: AppStore;
 
-  @observable searchOverlayOpen = false;
+  @observable appSettingsOpen = false;
   @observable navCollapsed = false;
   @observable locale: Locale = {
     languageId: 'english',
@@ -26,8 +26,8 @@ export default class UIStore {
     makeObservable(this);
   }
 
-  @action setSearchOverlayOpen(value) {
-    this.searchOverlayOpen = value;
+  @action toggleAppSettings() {
+    this.appSettingsOpen = !this.appSettingsOpen;
   }
 
   @action toggleNavCollapsed() {

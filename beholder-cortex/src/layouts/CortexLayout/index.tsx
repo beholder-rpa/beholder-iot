@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 
 import Sidebar from './Sidebar';
 import AppHeader from './AppHeader';
+import AppSettings from './AppSettingsSlideOver';
 
 type Props = {
   children?: ReactNode;
@@ -19,6 +20,7 @@ const CortexLayout = ({ children, title = 'Home' }: Props) => {
       </Head>
       <AppHeader />
       <Sidebar />
+      <AppSettings />
       <div className="ml-14 mt-14 mb-4 md:ml-64 pt-4 pl-5 mr-4 content">{children}</div>
     </main>
   );

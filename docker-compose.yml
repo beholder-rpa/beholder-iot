@@ -22,6 +22,8 @@ services:
       - traefik.http.routers.cortex.entrypoints=websecure
       - traefik.http.routers.cortex.tls=true
       - traefik.http.services.cortex.loadbalancer.server.port=3000
+    volumes: 
+      - ./beholder-traefik/certs/server.crt:/srv/app/certs/server.crt
   # Dapr Sidecar
   beholder-cortex-dapr:
     << : *default-dapr
