@@ -6,20 +6,32 @@ param(
     [string] $command,
     [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [ValidateSet('dev','rpi')]
+    [ValidateSet('dev','arm32v7','arm64')]
     [string] $environment = "dev",
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$args
 )
 
 # If /proc/cpuinfo exists, obtain the model and determine if it is a RPi
-if ($environment -ne "rpi" -and (Test-Path "/proc/cpuinfo")) {
+if ($environment -ne "arm32v7" -and $environment -ne "arm64" -and (Test-Path "/proc/cpuinfo")) {
 
     $model = (Get-Content "/proc/cpuinfo" | Select-String -Pattern "^\s*?Model\s+?:\s+?(.*?)$").Matches[0].Groups[1].Value
+    $bits = (& getconf LONG_BIT)
     # If the model string starts with Raspberry Pi then we're an RPi
     if ($model.StartsWith("Raspberry Pi")) {
-        $environment = "rpi"
-        Write-Host "Using RPi mode as we've determined we're on a RPi"
+      if ($bits -eq 32) {
+        Write-Host "Using arm32v7"
+        $environment = "arm32v7"
+      } elseif ($bits -eq 64) {
+        Write-Host "Using arm64"
+        $environment = "arm64"
+      } else {
+        Write-Error "Unable to determine CPU architecture"
+        return;
+      }
+        
+    } else {
+      throw "Unknown device model: $model"
     }
 }
 
@@ -29,7 +41,7 @@ $hostName = [System.Net.Dns]::GetHostName()
 $env:BEHOLDER_HOSTNAME = $hostName
 $env:BEHOLDER_SHORT_HOSTNAME = $hostName.Split(".")[0]
 
-if ($environment -eq "rpi") {  
+if ($environment -eq "arm32v7" -or $environment -eq "arm64") {  
   $env:BEHOLDER_CORTEX_HOSTNAME = $hostName
   $env:BEHOLDER_CEREBRUM_HOSTNAME = "cerebrum.$hostName"
   $env:BEHOLDER_TRAEFIK_HOSTNAME = "traefik.$hostName"
@@ -53,7 +65,8 @@ switch ($command)
           {
             & $PWD/makecerts.ps1;
           }
-          'rpi'
+          'arm32v7'
+          'arm64'
           {
             & $PWD/makecerts.ps1 -domainsList @("$hostName", ,"*.$hostName");
           }
