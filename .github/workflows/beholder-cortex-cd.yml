@@ -68,24 +68,6 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
       -
-        name: Docker meta arm64
-        id: docker_meta_arm64
-        uses: docker/metadata-action@v3
-        with:
-          images: beholderrpa/iot-cortex-arm64
-          flavor: |
-            latest=auto
-            prefix=
-            suffix=
-          tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-      -
         name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -130,8 +112,8 @@ jobs:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile.arm64
           push: true
-          tags: ${{ steps.docker_meta_arm64.outputs.tags }}
-          labels: ${{ steps.docker_meta_arm64.outputs.labels }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
