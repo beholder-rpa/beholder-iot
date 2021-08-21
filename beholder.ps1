@@ -19,7 +19,7 @@ if ($environment -ne "rpi" -and (Test-Path "/proc/cpuinfo")) {
     # If the model string starts with Raspberry Pi then we're an RPi
     if ($model.StartsWith("Raspberry Pi")) {
         $environment = "rpi"
-        Write-Host "Using RPi mode as we deterined we're on a RPi"
+        Write-Host "Using RPi mode as we've determined we're on a RPi"
     }
 }
 

@@ -6,7 +6,7 @@ services:
   beholder-cortex:
     image: beholderrpa/iot-cortex-arm32v7:master
   beholder-cortex-dapr:
-    image: daprio/daprd:1.3.0-linux-arm
+    image: daprio/daprd:latest
   ###############################################
   # Beholder Cerebrum (Node Red)
   beholder-cerebrum:
@@ -14,7 +14,7 @@ services:
     volumes:
       - cerebrum_data:/data:rw
   beholder-cerebrum-dapr:
-    image: daprio/daprd:1.3.0-linux-arm
+    image: daprio/daprd:latest
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -24,13 +24,13 @@ services:
       - "/dev/hidg1:/dev/hidg1"
       - "/dev/hidg2:/dev/hidg2"
   beholder-stalk-dapr:
-    image: daprio/daprd:1.3.0-linux-arm
+    image: daprio/daprd:latest
   ###############################################
   # Beholder Occipital
   beholder-occipital:
     image: beholderrpa/iot-occipital-v1-arm32v7:master
   beholder-occipital-dapr:
-    image: daprio/daprd:1.3.0-linux-arm
+    image: daprio/daprd:latest
   ###############################################
   # Beholder Nexus
   beholder-nexus:
