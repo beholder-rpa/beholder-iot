@@ -65,8 +65,7 @@ switch ($command)
           {
             & $PWD/makecerts.ps1;
           }
-          'arm32v7'
-          'arm64'
+          { @("arm32v7", "arm64") -contains $_ }
           {
             & $PWD/makecerts.ps1 -domainsList @("$hostName", ,"*.$hostName");
           }
