@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 
 import CortexLayout from '@layouts/CortexLayout';
 import { AppStoreContext } from '@stores/AppStore';
+import DaemonStatus from '@modules/Daemon/DaemonStatus';
 
 const Home = () => {
   const appStore = useContext(AppStoreContext);
@@ -18,7 +19,7 @@ const Home = () => {
   });
   return (
     <CortexLayout>
-      <div className="pt-4 pl-5 mr-4 mb-4 h-64 grid grid-rows-3 grid-flow-col gap-4">
+      <div className="pt-4 pl-5 pr-4 pb-4 h-64 grid grid-rows-3 grid-flow-col gap-4">
         <div className="row-span-3 bg-base-200 rounded-md text-base-content text-2xl">
           <table className="table-auto w-full text-center">
             <thead>
@@ -47,6 +48,14 @@ const Home = () => {
         <div className="row-span-2 col-span-2 bg-base-200 rounded-md flex justify-center items-center text-base-contenttext-2xl font-extrabold">
           3
         </div>
+      </div>
+      <div className="pt-4 pl-5 pr-4 h-72">
+        {/* Filter out hosts that are not daemon hosts and display the number of services that are running on each host */}
+        {beholderStore.serviceInfo
+          .filter((service) => service.serviceName === 'stalk')
+          .map((service) => (
+            <DaemonStatus hostName={service.hostName} key={service.key} />
+          ))}
       </div>
     </CortexLayout>
   );

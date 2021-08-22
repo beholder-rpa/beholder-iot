@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
-import dayjs from 'dayjs';
 
 import CortexLayout from '@layouts/CortexLayout';
-import { AppStoreContext } from '@stores/AppStore';
 
 const Home = () => {
   return (
