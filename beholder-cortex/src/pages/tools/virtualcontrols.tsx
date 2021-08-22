@@ -38,7 +38,7 @@ const VirtualControls = ({ hostName }: VirtualControlProps) => {
 
   return (
     <CortexLayout>
-      <div className="container">
+      <div className="pt-4 pl-5 mr-4 mb-4 container">
         <div className="row justify-content-end">
           {/* <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">

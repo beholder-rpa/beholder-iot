@@ -17,3 +17,4 @@ rules:
   '@typescript-eslint/explicit-module-boundary-types': 'off'
   '@typescript-eslint/no-explicit-any': 'off'
   '@typescript-eslint/no-unused-vars': [2, { args: 'after-used', argsIgnorePattern: '^_' }]
+  '@next/next/no-html-link-for-pages': 'off'

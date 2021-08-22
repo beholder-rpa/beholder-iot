@@ -2,6 +2,7 @@ import {
   faKeyboard,
   faMouse,
   faTachometerAlt,
+  faBrain,
   faAirFreshener,
   faSchool,
   faTools,
@@ -22,6 +23,7 @@ export interface Navigation {
 
 const navigation: Navigation[] = [
   { title: 'Dashboard', icon: <FontAwesomeIcon icon={faTachometerAlt} />, current: true, url: '/' },
+  { title: 'Cerebrum', icon: <FontAwesomeIcon icon={faBrain} />, current: true, url: '/cerebrum' },
   {
     title: 'Event Handlers',
     icon: <FontAwesomeIcon icon={faAirFreshener} />,

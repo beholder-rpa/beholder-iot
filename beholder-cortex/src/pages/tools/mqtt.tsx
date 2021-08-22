@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <CortexLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="pt-4 pl-5 mr-4 mb-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <FormInput<TestFormInputs>
             field="message"

@@ -18,7 +18,7 @@ const Home = () => {
   });
   return (
     <CortexLayout>
-      <div className="h-64 grid grid-rows-3 grid-flow-col gap-4">
+      <div className="pt-4 pl-5 mr-4 mb-4 h-64 grid grid-rows-3 grid-flow-col gap-4">
         <div className="row-span-3 bg-base-200 rounded-md text-base-content text-2xl">
           <table className="table-auto w-full text-center">
             <thead>
