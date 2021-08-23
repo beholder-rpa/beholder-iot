@@ -4,6 +4,8 @@ A multi-faceted, micrservices-based approach to robotic process automation.
 
 A Beholder agent runs as a self-contained IoT Edge device that can either act as a stand-alone node or be orchestrated as part of a brood of Beholder agents.
 
+<img width="2487" alt="Screen Shot 2021-08-22 at 11 05 18 PM" src="https://user-images.githubusercontent.com/760674/130384500-17de5e03-7790-43d5-991d-c08ef1f673d8.png">
+
 ## Comprised of the following skeuomorphic parts:
 
 - Cortex - Browser-based admin/orchestration interface (NextJS) [![Cortex CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cortex-cd.yml)
