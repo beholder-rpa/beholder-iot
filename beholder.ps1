@@ -127,7 +127,7 @@ switch ($command)
       
       docker volume rm beholder_cerebrum_data
 
-      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up"
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
       Invoke-Expression $dockerComposeCommand
     }
     default
