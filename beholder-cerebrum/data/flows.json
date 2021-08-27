@@ -9,7 +9,7 @@
     {
         "id": "0b70dd4da53f0867",
         "type": "mqtt-broker",
-        "name": "",
+        "name": "Beholder Nexus",
         "broker": "beholder-nexus",
         "port": "1883",
         "clientid": "",
@@ -35,9 +35,9 @@
         "id": "7d9c49c23c8e96bf",
         "type": "mqtt out",
         "z": "6a61b64910c046bc",
-        "name": "",
+        "name": "Beholder Nexus",
         "topic": "",
-        "qos": "0",
+        "qos": "1",
         "retain": "",
         "respTopic": "",
         "contentType": "",
@@ -45,38 +45,9 @@
         "correl": "",
         "expiry": "",
         "broker": "0b70dd4da53f0867",
-        "x": 790,
-        "y": 400,
+        "x": 1100,
+        "y": 560,
         "wires": []
-    },
-    {
-        "id": "2de5b8920a76b192",
-        "type": "inject",
-        "z": "6a61b64910c046bc",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "beholder/stalk/rsm-mbp-l2019/sendkeys",
-        "payload": "{\"data\":{\"keys\":\"Asdf\"},\"datacontenttype\":\"application/json\"}",
-        "payloadType": "json",
-        "x": 570,
-        "y": 400,
-        "wires": [
-            [
-                "7d9c49c23c8e96bf"
-            ]
-        ]
     },
     {
         "id": "ce68bc1669887eeb",
@@ -90,8 +61,8 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 430,
-        "y": 260,
+        "x": 470,
+        "y": 340,
         "wires": [
             [
                 "701d74bb8d94326d"
@@ -112,7 +83,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 790,
-        "y": 260,
+        "y": 340,
         "wires": []
     },
     {
@@ -120,29 +91,13 @@
         "type": "inject",
         "z": "6a61b64910c046bc",
         "name": "",
-        "props": [
-            {
-                "p": "headers",
-                "v": "{}",
-                "vt": "json"
-            },
-            {
-                "p": "headers[\"Content-Type\"]",
-                "v": "application/json",
-                "vt": "str"
-            },
-            {
-                "p": "payload"
-            }
-        ],
+        "props": [],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"keys\":\"Asdf\"}",
-        "payloadType": "json",
-        "x": 540,
+        "x": 510,
         "y": 520,
         "wires": [
             [
@@ -155,14 +110,14 @@
         "type": "mqtt in",
         "z": "6a61b64910c046bc",
         "name": "",
-        "topic": "beholder/stalk/+/+",
-        "qos": "2",
+        "topic": "beholder/stalk/+/keyboard/+",
+        "qos": "1",
         "datatype": "auto",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 410,
+        "x": 460,
         "y": 180,
         "wires": [
             [
@@ -187,33 +142,17 @@
         "wires": []
     },
     {
-        "id": "2ee13481d6b516f1",
-        "type": "comment",
-        "z": "6a61b64910c046bc",
-        "name": "Use MQTT Directly",
-        "info": "Use MQTT Directly",
-        "x": 450,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "de3841b2d258ddd7",
-        "type": "comment",
-        "z": "6a61b64910c046bc",
-        "name": "Invoke via Dapr",
-        "info": "",
-        "x": 360,
-        "y": 420,
-        "wires": []
-    },
-    {
         "id": "2f36a5c4d50815d4",
         "type": "send-keys",
         "z": "6a61b64910c046bc",
-        "keys": "",
+        "keys": "Asdf",
         "x": 800,
         "y": 520,
-        "wires": []
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
     },
     {
         "id": "92d2c5897081f7cd",
@@ -224,7 +163,11 @@
         "duration": null,
         "x": 770,
         "y": 600,
-        "wires": []
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
     },
     {
         "id": "85fad01cc7dce6ba",
@@ -237,6 +180,7 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
+        "payloadType": "str",
         "x": 270,
         "y": 560,
         "wires": [
@@ -251,14 +195,14 @@
         "z": "6a61b64910c046bc",
         "name": "",
         "topic": "beholder/stalk/+/mouse/+",
-        "qos": "2",
+        "qos": "1",
         "datatype": "auto",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 430,
-        "y": 120,
+        "x": 470,
+        "y": 100,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -295,7 +239,7 @@
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "toggle",
-        "func": "let count = context.get(\"count\") || 0;\nlet state = context.get(\"state\") || 'stop';\n\nswitch(msg.payload) {\n    case \"start\":\n    case \"stop\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", msg.payload);\n        node.status({text: count});\n        break;\n    default:\n        if (state === \"stop\") {\n            return null;\n        }\n        count++;\n        context.set(\"count\", count);\n        node.status({text: count});\n        return msg;\n}\n",
+        "func": "const state = context.get(\"state\") || false;\nlet count = context.get(\"count\") || 0;\n\nswitch(msg.payload) {\n    case \"start\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", true);\n        node.status({text: count});\n        break;\n    case \"stop\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", false);\n        node.status({text: count});\n        break;\n    case \"toggle\":\n        count = 0;\n        context.set(\"count\", 0);\n        context.set(\"state\", !state);\n        node.status({text: count});\n        break;\n    default:\n        if (!state) {\n            return null;\n        }\n        count++;\n        context.set(\"count\", count);\n        node.status({text: count});\n        return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -331,6 +275,90 @@
         "wires": [
             [
                 "694025d4212a209e"
+            ]
+        ]
+    },
+    {
+        "id": "1e84eeba5db90a04",
+        "type": "register-hotkey",
+        "z": "6a61b64910c046bc",
+        "keys": "",
+        "x": 780,
+        "y": 740,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "224dc1ff7bd71280",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 490,
+        "y": 740,
+        "wires": [
+            [
+                "1e84eeba5db90a04"
+            ]
+        ]
+    },
+    {
+        "id": "e5a39b81f1ad5f54",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/psionix/+/hotkeys/pressed",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 440,
+        "y": 260,
+        "wires": [
+            [
+                "ec0798c50e445d70"
+            ]
+        ]
+    },
+    {
+        "id": "a681df0fe35a76c8",
+        "type": "unregister-hotkey",
+        "z": "6a61b64910c046bc",
+        "keys": "",
+        "x": 770,
+        "y": 820,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "f3f2ec5553e65845",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 490,
+        "y": 820,
+        "wires": [
+            [
+                "a681df0fe35a76c8"
             ]
         ]
     }

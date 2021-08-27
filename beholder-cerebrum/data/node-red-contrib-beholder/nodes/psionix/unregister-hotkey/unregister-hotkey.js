@@ -1,7 +1,5 @@
-const { stalkName } = require('../common/');
-
 module.exports = function (RED) {
-  function SendKeys(config) {
+  function UnregisterHotKey(config) {
     RED.nodes.createNode(this, config);
     const node = this;
     node.on('input', function (msg) {
@@ -10,14 +8,14 @@ module.exports = function (RED) {
         body = msg.payload;
       } else {
         body = {
-          keys: config.keys
+          keys: `${config.modifiers}${config.key}`
         };
       }
       this.send({
-        topic: `beholder/stalk/${stalkName}/keyboard/keys`,
+        topic: `beholder/psionix/${config.hostName}/hotkeys/unregister`,
         payload: body
       });
     });
   }
-  RED.nodes.registerType("send-keys", SendKeys);
+  RED.nodes.registerType("unregister-hotkey", UnregisterHotKey);
 }

@@ -594,6 +594,28 @@
         "local": true,
         "user": true,
         "nodes": {
+            "beholder-psionix-register-hotkey": {
+                "name": "beholder-psionix-register-hotkey",
+                "types": [
+                    "register-hotkey"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/psionix/register-hotkey/register-hotkey.js"
+            },
+            "beholder-psionix-unregister-hotkey": {
+                "name": "beholder-psionix-unregister-hotkey",
+                "types": [
+                    "unregister-hotkey"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/psionix/unregister-hotkey/unregister-hotkey.js"
+            },
             "beholder-stalk-send-keys": {
                 "name": "beholder-stalk-send-keys",
                 "types": [

@@ -1,10 +1,10 @@
-const { stalkName } = require('../common/');
+const {  stalkName } = require('../common/');
 
 module.exports = function (RED) {
-  function SendMouseClick(config) {
+  function SendMouseClickNode(config) {
     RED.nodes.createNode(this, config);
     const node = this;
-    node.on('input', function (msg) {
+    node.on('input', async function (msg) {
       let body = { };
       if (msg.hasOwnProperty("payload")) {
         body = msg.payload;
@@ -17,11 +17,14 @@ module.exports = function (RED) {
           }
         };
       }
-      this.send({
-        topic: `beholder/stalk/${stalkName}/mouse/click`,
-        payload: body
+      await fetch(`${baseUrl}publish/nexus/beholder/stalk/${stalkName}/mouse/click`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body),
       });
     });
   }
-  RED.nodes.registerType("send-mouse-click", SendMouseClick);
+  RED.nodes.registerType("send-mouse-click", SendMouseClickNode);
 }

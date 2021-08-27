@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "description": "Contains nodes associated with Beholder RPA",
   "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "node-red": {
     "nodes": {
+      "beholder-psionix-register-hotkey": "nodes/psionix/register-hotkey/register-hotkey.js",
+      "beholder-psionix-unregister-hotkey": "nodes/psionix/unregister-hotkey/unregister-hotkey.js",
       "beholder-stalk-send-keys": "nodes/stalk/send-keys/send-keys.js",
       "beholder-stalk-send-keys-raw": "nodes/stalk/send-keys-raw/send-keys-raw.js",
       "beholder-stalk-send-mouse-click": "nodes/stalk/send-mouse-click/send-mouse-click.js"
@@ -14,6 +18,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "typescript": "^4.3.5"
   }
 }

@@ -52,7 +52,7 @@ const Home = () => {
       <div className="pt-4 pl-5 pr-4 h-72">
         {/* Filter out hosts that are not daemon hosts and display the number of services that are running on each host */}
         {beholderStore.serviceInfo
-          .filter((service) => service.serviceName === 'stalk')
+          .filter((service) => service.serviceName === 'daemon')
           .map((service) => (
             <DaemonStatus hostName={service.hostName} key={service.key} />
           ))}

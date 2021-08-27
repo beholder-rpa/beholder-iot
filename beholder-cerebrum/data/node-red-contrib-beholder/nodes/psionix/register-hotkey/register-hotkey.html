@@ -1,0 +1,232 @@
+<script type="text/javascript">
+  RED.nodes.registerType('register-hotkey', {
+    category: 'beholder psionix - hotkey',
+    color: '#D8BFD8',
+    defaults: {
+      keys: { value: "" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-arrow-circle-down",
+    paletteLabel: "register hotkey",
+    label: function () {
+      return this.name || "register hotkey";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="register-hotkey">
+  <div class="form-row">
+    <label for="node-input-hostName"><i class="fa fa-tag"></i> Hostname</label>
+    <input type="text" id="node-input-hostName" placeholder="hostname">
+  </div>
+  <div class="form-row">
+    <label for="node-input-modifiers">Modifiers</label>
+    <select id="node-input-modifiers">
+      <option value="!">Alt</option>
+      <option value="^">Control</option>
+      <option value="+">Shift</option>
+      <option value="#">Meta</option>
+      <option value="!^">Alt-Control</option>
+      <option value="!+">Alt-Shift</option>
+      <option value="!#">Alt-Meta</option>
+      <option value="^+">Control-Shift</option>
+      <option value="^#">Control-Meta</option>
+      <option value="+#">Shift-Meta</option>
+      <option value="!^+">Alt-Control-Shift</option>
+      <option value="!^#">Alt-Control-Meta</option>
+      <option value="!+#">Alt-Shift-Meta</option>
+      <option value="^+#">Control-Shift-Meta</option>
+      <option value="!^+#">Alt-Control-Shift-Meta</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-key">Key</label>
+    <select id="node-input-key">
+      <option value="{A}">A</option>
+      <option value="{Add}">Add</option>
+      <option value="{Menu}">Alt</option>
+      <option value="{Apps}">Apps</option>
+      <option value="{Attn}">Attn</option>
+      <option value="{B}">B</option>
+      <option value="{Back}">Backspace</option>
+      <option value="{BrowserBack}">Browser Back</option>
+      <option value="{BrowserForward}">Browser Forward</option>
+      <option value="{BrowserHome}">Browser Home</option>
+      <option value="{BrowserRefresh}">Browser Refresh</option>
+      <option value="{BrowserSearch}">Browser Search</option>
+      <option value="{BrowserStop}">Browser Stop</option>
+      <option value="{C}">C</option>
+      <option value="{Cancel}">Cancel</option>
+      <option value="{CapsLock}">Caps Lock</option>
+      <option value="{Clear}">Clear</option>
+      <option value="{ControlKey}">Ctrl</option>
+      <option value="{Crsel}">The CRSEL key</option>
+      <option value="{D}">D</option>
+      <option value="{D0}">0</option>
+      <option value="{D1}">1</option>
+      <option value="{D2}">2</option>
+      <option value="{D3}">3</option>
+      <option value="{D4}">4</option>
+      <option value="{D5}">5</option>
+      <option value="{D6}">6</option>
+      <option value="{D7}">7</option>
+      <option value="{D8}">8</option>
+      <option value="{D9}">9</option>
+      <option value="{Decimal}">Decimal</option>
+      <option value="{Delete}">Del</option>
+      <option value="{Divide}">Divide</option>
+      <option value="{Down}">Down Arrow</option>
+      <option value="{E}">E</option>
+      <option value="{End}">End</option>
+      <option value="{Enter}">Enter</option>
+      <option value="{EraseEof}">The Erase EOF Key</option>
+      <option value="{Exsel}">The EXSEL Key</option>
+      <option value="{F}">F</option>
+      <option value="{F1}">F1</option>
+      <option value="{F2}">F2</option>
+      <option value="{F3}">F3</option>
+      <option value="{F4}">F4</option>
+      <option value="{F5}">F5</option>
+      <option value="{F6}">F6</option>
+      <option value="{F7}">F7</option>
+      <option value="{F8}">F8</option>
+      <option value="{F9}">F9</option>
+      <option value="{F10}">F10</option>
+      <option value="{F11}">F11</option>
+      <option value="{F12}">F12</option>
+      <option value="{F13}">F13</option>
+      <option value="{F14}">F14</option>
+      <option value="{F15}">F15</option>
+      <option value="{F16}">F16</option>
+      <option value="{F17}">F17</option>
+      <option value="{F18}">F18</option>
+      <option value="{F19}">F19</option>
+      <option value="{F20}">F20</option>
+      <option value="{F21}">F21</option>
+      <option value="{F22}">F22</option>
+      <option value="{F23}">F23</option>
+      <option value="{F24}">F24</option>
+      <option value="{FinalMode}">IME Final Mode</option>
+      <option value="{G}">G</option>
+      <option value="{H}">H</option>
+      <option value="{HanguelMode}">HanguelMode</option>
+      <option value="{HangulMode}">HangulMode</option>
+      <option value="{HanjaMode}">HanjaMode</option>
+      <option value="{Help}">Help</option>
+      <option value="{Home}">Home</option>
+      <option value="{I}">I</option>
+      <option value="{IMEAccept}">IMEAccept</option>
+      <option value="{IMEConvert}">IMEConvert</option>
+      <option value="{IMEModeChange}">IMEModeChange</option>
+      <option value="{Insert}">Insert</option>
+      <option value="{J}">J</option>
+      <option value="{JunjaMode}">JunjaMode</option>
+      <option value="{K}">K</option>
+      <option value="{KanaMode}">KanaMode</option>
+      <option value="{KanjiMode}">KanjiMode</option>
+      <option value="{L}">L</option>
+      <option value="{LaunchApplication1}">LaunchApplication1</option>
+      <option value="{LaunchApplication2}">LaunchApplication2</option>
+      <option value="{LaunchMail}">LaunchMail</option>
+      <option value="{LButton}">Left mouse button</option>
+      <option value="{LControlKey}">LControlKey</option>
+      <option value="{Left}">Left Arrow Key</option>
+      <option value="{LineFeed}">LineFeed</option>
+      <option value="{LMenu}">Left Alt Key</option>
+      <option value="{LShiftKey}">Left Shift Key</option>
+      <option value="{LWin}">Left Win Key</option>
+      <option value="{M}">M</option>
+      <option value="{MButton}">Middle Mouse Button</option>
+      <option value="{MediaNextTrack}">Media Next Track</option>
+      <option value="{MediaPlayPause}">Media Play Pause</option>
+      <option value="{MediaPreviousTrack}">Media Previous Track</option>
+      <option value="{MediaStop}">Media Stop</option>
+      <option value="{Menu}">Alt</option>
+      <option value="{Multiply}">Multiply</option>
+      <option value="{N}">N</option>
+      <option value="{Next}">Page Down</option>
+      <option value="{NumLock}">NumLock</option>
+      <option value="{NumPad0}">NumPad0</option>
+      <option value="{NumPad1}">NumPad1</option>
+      <option value="{NumPad2}">NumPad2</option>
+      <option value="{NumPad3}">NumPad3</option>
+      <option value="{NumPad4}">NumPad4</option>
+      <option value="{NumPad5}">NumPad5</option>
+      <option value="{NumPad6}">NumPad6</option>
+      <option value="{NumPad7}">NumPad7</option>
+      <option value="{NumPad8}">NumPad8</option>
+      <option value="{NumPad9}">NumPad9</option>
+      <option value="{O}">O</option>
+      <option value="{Oem1}">Oem1</option>
+      <option value="{Oem102}">Oem102</option>
+      <option value="{Oem2}">Oem2</option>
+      <option value="{Oem3}">Oem3</option>
+      <option value="{Oem4}">Oem4</option>
+      <option value="{Oem5}">Oem5</option>
+      <option value="{Oem6}">Oem6</option>
+      <option value="{Oem7}">Oem7</option>
+      <option value="{Oem8}">Oem8</option>
+      <option value="{OemBackslash}">OemBackslash</option>
+      <option value="{OemClear}">OemClear</option>
+      <option value="{OemCloseBrackets}">OemCloseBrackets</option>
+      <option value="{Oemcomma}">Oemcomma</option>
+      <option value="{OemMinus}">OemMinus</option>
+      <option value="{OemOpenBrackets}">OemOpenBrackets</option>
+      <option value="{OemPeriod}">OemPeriod</option>
+      <option value="{OemPipe}">OemPipe</option>
+      <option value="{Oemplus}">Oemplus</option>
+      <option value="{OemQuestion}">OemQuestion</option>
+      <option value="{OemQuotes}">OemQuotes</option>
+      <option value="{OemSemicolon}">OemSemicolon</option>
+      <option value="{Oemtilde}">Oemtilde</option>
+      <option value="{P}">P</option>
+      <option value="{Pa1}">Pa1</option>
+      <option value="{PageDown}">Page Down</option>
+      <option value="{PageUp}">Page Up</option>
+      <option value="{Pause}">Pause</option>
+      <option value="{Play}">Play</option>
+      <option value="{Print}">Print</option>
+      <option value="{PrintScreen}">PrintScreen</option>
+      <option value="{Prior}">Page Up</option>
+      <option value="{ProcessKey}">Process</option>
+      <option value="{Q}">Q</option>
+      <option value="{R}">R</option>
+      <option value="{RButton}">Right Mouse Button</option>
+      <option value="{RControlKey}">Right CTRL</option>
+      <option value="{Return}">Return</option>
+      <option value="{Right}">Right Arrow</option>
+      <option value="{RWin}">Right Windows Key</option>
+      <option value="{S}">S</option>
+      <option value="{Scroll}">Scroll Lock</option>
+      <option value="{SelectMedia}">Select Media</option>
+      <option value="{Separator}">Separator</option>
+      <option value="{ShiftKey}">Shift Key</option>
+      <option value="{Sleep}">Sleep</option>
+      <option value="{Snapshot}">Print Screen</option>
+      <option value="{Space}">Spacebar</option>
+      <option value="{T}">T</option>
+      <option value="{Tab}">Tab</option>
+      <option value="{U}">U</option>
+      <option value="{Up}">Up Arrow</option>
+      <option value="{VolumeDown}">Volume Down</option>
+      <option value="{VolumeMute}">Volume Mute</option>
+      <option value="{VolumeUp}">Volume Up</option>
+      <option value="{W}">W</option>
+      <option value="{X}">X</option>
+      <option value="{XButton1}">The first X Mouse Button</option>
+      <option value="{XButton2}">The second X Mouse Button</option>
+      <option value="{Y}">Y</option>
+      <option value="{Z}">Z</option>
+      <option value="{Zoom}">Zoom</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="register-hotkey">
+  <p>Registers the specified HotKey on the target host</p>
+</script>

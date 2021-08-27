@@ -1,0 +1,33 @@
+<script type="text/javascript">
+  RED.nodes.registerType('hotkey', {
+    category: 'beholder psionix - hotkey',
+    color: '#D8BFD8',
+    defaults: {
+      button: { value: "lclick", required: true,  },
+      click_direction: { value: 0, required: true,  },
+      duration: { value: null, required: true,  },
+    },
+    inputs: 0,
+    outputs: 1,
+    icon: "font-awesome/fa-fire",
+    paletteLabel: "hotkey",
+    label: function () {
+      return this.name || "hotkey";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="hotkey">
+  <div class="form-row">
+    <label for="node-input-hotkey"><i class="fa fa-tag"></i> Hotkey</label>
+    <input type="text" id="node-input-hotkey" placeholder="hotkey">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="hotkey">
+  <p>Listens for a hotkey from Beholder Daemon</p>
+</script>
