@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./beholder-cortex
-      cache-key: beholder-cortex-v2
 
     defaults:
       run:
@@ -86,14 +85,6 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
       -
-        name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ env.cache-key }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.cache-key }}-buildx-
-      -
         name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
@@ -110,8 +101,6 @@ jobs:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
       -
         name: Build and push arm32v7
         id: docker_build_arm32v7
