@@ -317,14 +317,14 @@
         "type": "mqtt in",
         "z": "6a61b64910c046bc",
         "name": "",
-        "topic": "beholder/psionix/+/hotkeys/pressed",
+        "topic": "beholder/psionix/+/hotkeys/pressed/+",
         "qos": "1",
         "datatype": "auto",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 440,
+        "x": 450,
         "y": 260,
         "wires": [
             [
@@ -382,6 +382,45 @@
         "wires": [
             [
                 "701d74bb8d94326d"
+            ]
+        ]
+    },
+    {
+        "id": "9b1dfda1f1f8156c",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/psionix/+/hotkeys/pressed/Xit7T2VtdGlsZGV9",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 220,
+        "y": 440,
+        "wires": [
+            [
+                "4ca0dd73db3eccac"
+            ]
+        ]
+    },
+    {
+        "id": "4ca0dd73db3eccac",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "on ctrl-shift-tilde",
+        "func": "let count = context.get(\"count\") || 0;\ncount++;\ncontext.set(\"count\", count);\nnode.status({text: count});\n\nreturn {\n    payload: \"toggle\"\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 500,
+        "wires": [
+            [
+                "694025d4212a209e"
             ]
         ]
     }
