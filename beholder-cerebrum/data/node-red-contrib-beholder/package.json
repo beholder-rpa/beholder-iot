@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Contains nodes associated with Beholder RPA",
   "scripts": {
-    "build": "tsc --build",
+    "build": "npx ts-node -T ./nodes/stalk/send-keys/test.ts",
     "clean": "tsc --build --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +18,12 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1",
-    "typescript": "^4.3.5"
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.3",
+    "@types/node-red": "^1.1.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }

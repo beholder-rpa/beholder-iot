@@ -1,4 +1,4 @@
-const {  stalkName } = require('../common/');
+const { stalkName } = require('../common/');
 
 module.exports = function (RED) {
   function SendMouseClickNode(config) {

@@ -16,5 +16,11 @@
         "node-red-contrib-weekday": "^0.1.0",
         "node-red-node-email": "^1.12.3",
         "node-red-node-random": "^0.4.0"
+    },
+    "devDependencies": {
+        "@types/node": "^16.7.3",
+        "@types/node-red": "^1.1.1",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.2"
     }
 }

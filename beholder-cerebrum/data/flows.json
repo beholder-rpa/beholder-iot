@@ -61,11 +61,11 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 470,
+        "x": 350,
         "y": 340,
         "wires": [
             [
-                "701d74bb8d94326d"
+                "a89eb3c39c45b8ee"
             ]
         ]
     },
@@ -282,8 +282,9 @@
         "id": "1e84eeba5db90a04",
         "type": "register-hotkey",
         "z": "6a61b64910c046bc",
-        "modifiers": "+",
-        "key": "{Add}",
+        "hostname": "",
+        "modifiers": "^+",
+        "key": "{Oemtilde}",
         "x": 780,
         "y": 740,
         "wires": [
@@ -335,6 +336,9 @@
         "id": "a681df0fe35a76c8",
         "type": "unregister-hotkey",
         "z": "6a61b64910c046bc",
+        "hostname": "",
+        "modifiers": "^+",
+        "key": "{Oemtilde}",
         "x": 770,
         "y": 820,
         "wires": [
@@ -359,6 +363,25 @@
         "wires": [
             [
                 "a681df0fe35a76c8"
+            ]
+        ]
+    },
+    {
+        "id": "a89eb3c39c45b8ee",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "populate services",
+        "func": "const services = global.get(\"beholder_services\") || {};\n\nconst payload = JSON.parse(msg.payload);\nif (payload.data) {\n    if (!services[payload.data.serviceName]) {\n       services[payload.data.serviceName] = [];\n    }\n    \n    const serviceHosts = services[payload.data.serviceName];\n    \n    if (!serviceHosts.includes(payload.data.hostName)) {\n        serviceHosts.push(payload.data.hostName);\n    }\n    global.set(\"beholder_services\", services);\n    node.log(JSON.stringify(services));\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 340,
+        "wires": [
+            [
+                "701d74bb8d94326d"
             ]
         ]
     }

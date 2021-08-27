@@ -7,9 +7,7 @@ module.exports = function (RED) {
       if (msg.hasOwnProperty("payload")) {
         body = msg.payload;
       } else {
-        body = {
-          keys: `${config.modifiers}${config.key}`
-        };
+        body = `${config.modifiers}${config.key}`
       }
       this.send({
         topic: `beholder/psionix/${config.hostname}/hotkeys/unregister`,
