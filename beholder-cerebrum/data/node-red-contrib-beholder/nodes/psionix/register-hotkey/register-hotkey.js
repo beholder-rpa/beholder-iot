@@ -12,7 +12,7 @@ module.exports = function (RED) {
         };
       }
       this.send({
-        topic: `beholder/psionix/${config.hostName}/hotkeys/register`,
+        topic: `beholder/psionix/${config.hostname}/hotkeys/register`,
         payload: body
       });
     });

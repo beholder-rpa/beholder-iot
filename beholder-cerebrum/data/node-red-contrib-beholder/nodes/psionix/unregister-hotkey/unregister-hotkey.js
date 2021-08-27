@@ -12,7 +12,7 @@ module.exports = function (RED) {
         };
       }
       this.send({
-        topic: `beholder/psionix/${config.hostName}/hotkeys/unregister`,
+        topic: `beholder/psionix/${config.hostname}/hotkeys/unregister`,
         payload: body
       });
     });
