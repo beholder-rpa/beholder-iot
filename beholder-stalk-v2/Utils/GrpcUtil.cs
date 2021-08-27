@@ -33,6 +33,11 @@
       where TRequest : IMessage, new()
     {
       var response = new TopicEventResponse();
+      if (string.IsNullOrWhiteSpace(request.DataContentType))
+      {
+        request.DataContentType = MediaTypeNames.Application.Json;
+      }
+
       switch (request.DataContentType)
       {
         case MediaTypeNames.Application.Json:
