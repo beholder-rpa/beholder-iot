@@ -8,7 +8,7 @@ module.exports = function (RED) {
       if (msg.hasOwnProperty("payload")) {
         body = msg.payload;
       } else {
-        body = `${config.modifiers}${config.key}`
+        body = `${config.modifiers}${config.key}`;
       }
 
       let hostName = config.hostname;
@@ -23,9 +23,9 @@ module.exports = function (RED) {
           return;
         }
       }
-
+      
       this.send({
-        topic: `beholder/psionix/${config.hostname}/hotkeys/unregister`,
+        topic: `beholder/psionix/${hostName}/hotkeys/unregister`,
         payload: body
       });
     });
