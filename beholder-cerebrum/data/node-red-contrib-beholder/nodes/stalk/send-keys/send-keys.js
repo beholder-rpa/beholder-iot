@@ -15,7 +15,11 @@ module.exports = function (RED) {
       }
       this.send({
         topic: `beholder/stalk/${stalkName}/keyboard/keys`,
-        payload: body
+        payload: {
+          datacontenttype: "application/json",
+          specversion: "0.2",
+          data: body
+        }
       });
     });
   }
