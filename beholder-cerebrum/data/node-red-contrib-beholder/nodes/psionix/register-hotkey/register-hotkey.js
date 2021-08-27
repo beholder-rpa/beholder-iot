@@ -16,7 +16,7 @@ module.exports = function (RED) {
       if (!hostName) {
         const beholderServices = globalContext.get('beholder_services');
         if (beholderServices && beholderServices.daemon) {
-          hostName = beholderServices.psionix[0];
+          hostName = beholderServices.daemon[0];
         }
 
         if (!hostName) {
