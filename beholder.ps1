@@ -120,6 +120,16 @@ switch ($command)
     {
       & journalctl -u beholder_docker.service
     }
+    'reset-cerebrum'
+    {
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") rm -f -s beholder-cerebrum"
+      Invoke-Expression $dockerComposeCommand
+      
+      docker volume rm beholder_cerebrum_data
+
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up"
+      Invoke-Expression $dockerComposeCommand
+    }
     default
     {
       throw "Unknown command: $command"
