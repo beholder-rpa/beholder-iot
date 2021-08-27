@@ -2,7 +2,6 @@ module.exports = function (RED) {
   function RegisterHotKey(config) {
     RED.nodes.createNode(this, config);
     const node = this;
-    const context = this.context();
     const globalContext = this.context().global;
     node.on('input', function (msg) {
       let body = { };

@@ -2,6 +2,7 @@ module.exports = function (RED) {
   function UnregisterHotKey(config) {
     RED.nodes.createNode(this, config);
     const node = this;
+    const globalContext = this.context().global;
     node.on('input', function (msg) {
       let body = { };
       if (msg.hasOwnProperty("payload")) {
