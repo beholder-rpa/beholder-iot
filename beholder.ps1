@@ -122,7 +122,7 @@ switch ($command)
     }
     'reset-cerebrum'
     {
-      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") rm -f -s beholder-cerebrum"
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") rm -f -s beholder-cerebrum beholder-cerebrum-dapr"
       Invoke-Expression $dockerComposeCommand
       
       docker volume rm beholder_cerebrum_data
