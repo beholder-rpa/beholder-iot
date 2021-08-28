@@ -594,6 +594,28 @@
         "local": true,
         "user": true,
         "nodes": {
+            "beholder-eye-start-observing": {
+                "name": "beholder-eye-start-observing",
+                "types": [
+                    "eye-start-observing"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/eye/start-observing/start-observing.js"
+            },
+            "beholder-eye-stop-observing": {
+                "name": "beholder-eye-stop-observing",
+                "types": [
+                    "stop-observing"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/eye/stop-observing/stop-observing.js"
+            },
             "beholder-psionix-register-hotkey": {
                 "name": "beholder-psionix-register-hotkey",
                 "types": [

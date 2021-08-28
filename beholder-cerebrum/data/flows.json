@@ -97,7 +97,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 510,
+        "x": 590,
         "y": 520,
         "wires": [
             [
@@ -117,7 +117,7 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 460,
+        "x": 480,
         "y": 180,
         "wires": [
             [
@@ -181,8 +181,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "str",
-        "x": 270,
-        "y": 560,
+        "x": 370,
+        "y": 580,
         "wires": [
             [
                 "694025d4212a209e"
@@ -201,7 +201,7 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 470,
+        "x": 490,
         "y": 100,
         "wires": [
             [
@@ -226,7 +226,7 @@
         "topic": "",
         "payload": "stop",
         "payloadType": "str",
-        "x": 270,
+        "x": 370,
         "y": 720,
         "wires": [
             [
@@ -245,7 +245,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 490,
+        "x": 590,
         "y": 600,
         "wires": [
             [
@@ -270,7 +270,7 @@
         "topic": "",
         "payload": "start",
         "payloadType": "str",
-        "x": 270,
+        "x": 370,
         "y": 660,
         "wires": [
             [
@@ -304,7 +304,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 490,
+        "x": 590,
         "y": 740,
         "wires": [
             [
@@ -340,7 +340,7 @@
         "modifiers": "^+",
         "key": "{Oemtilde}",
         "x": 770,
-        "y": 820,
+        "y": 800,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -358,8 +358,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 490,
-        "y": 820,
+        "x": 590,
+        "y": 800,
         "wires": [
             [
                 "a681df0fe35a76c8"
@@ -416,11 +416,86 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 290,
+        "x": 340,
         "y": 500,
         "wires": [
             [
                 "694025d4212a209e"
+            ]
+        ]
+    },
+    {
+        "id": "44f131939119e2b3",
+        "type": "eye-start-observing",
+        "z": "6a61b64910c046bc",
+        "hostname": "",
+        "adapterIndex": "0",
+        "deviceIndex": "0",
+        "regions": [],
+        "streamDesktopThumbnail": "true",
+        "streamPointerImage": "true",
+        "desktopThumbnailStreamSettingsMaxFps": "0.5",
+        "desktopThumbnailStreamSettingsScaleFactor": "0.15",
+        "pointerImageStreamSettingsMaxFps": "0.5",
+        "watchPointerPosition": "true",
+        "x": 780,
+        "y": 880,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "b954a2995a0b63f3",
+        "type": "stop-observing",
+        "z": "6a61b64910c046bc",
+        "hostname": "",
+        "modifiers": "^+",
+        "key": "{Oemtilde}",
+        "x": 780,
+        "y": 940,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "147e2214f41cb1b5",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 590,
+        "y": 880,
+        "wires": [
+            [
+                "44f131939119e2b3"
+            ]
+        ]
+    },
+    {
+        "id": "9ab1a19cc7c29a6e",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 590,
+        "y": 940,
+        "wires": [
+            [
+                "b954a2995a0b63f3"
             ]
         ]
     }

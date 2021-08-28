@@ -1,0 +1,34 @@
+<script type="text/javascript">
+  RED.nodes.registerType('stop-observing', {
+    category: 'beholder eye - observer',
+    color: '#D8BFD8',
+    defaults: {
+      hostname: { value: '' },
+      modifiers: { value: "^+" },
+      key: { value: "{Oemtilde}" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-eye-slash",
+    paletteLabel: "stop observing",
+    label: function () {
+      return this.name || "stop observing";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="stop-observing">
+  <div class="form-row">
+    <label for="node-input-hostname">Hostname</label>
+    <input type="text" id="node-input-hostname" placeholder="hostname">
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="stop-observing">
+  <p>Stops observing the screen on the target host</p>
+</script>

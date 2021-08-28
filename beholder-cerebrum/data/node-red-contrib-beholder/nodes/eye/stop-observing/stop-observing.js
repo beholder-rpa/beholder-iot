@@ -1,16 +1,10 @@
 module.exports = function (RED) {
-  function UnregisterHotKey(config) {
+  function StopObserving(config) {
     RED.nodes.createNode(this, config);
     const node = this;
     const globalContext = this.context().global;
     node.on('input', function (msg) {
-      let body = { };
-      if (msg.hasOwnProperty("payload")) {
-        body = msg.payload;
-      } else {
-        body = `${config.modifiers}${config.key}`;
-      }
-
+      
       let hostName = msg.hostname || config.hostname;
       if (!hostName) {
         const beholderServices = globalContext.get('beholder_services');
@@ -25,10 +19,10 @@ module.exports = function (RED) {
       }
       
       this.send({
-        topic: `beholder/psionix/${hostName}/hotkeys/unregister`,
-        payload: body
+        topic: `beholder/eye/${hostName}/stop_observing`,
+        payload: undefined
       });
     });
   }
-  RED.nodes.registerType("unregister-hotkey", UnregisterHotKey);
+  RED.nodes.registerType("stop-observing", StopObserving);
 }

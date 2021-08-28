@@ -12,7 +12,7 @@ A Beholder agent runs as a self-contained IoT Edge device that can either act as
 - Cerebrum - Node-RED with custom nodes [![Cerebrum CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-cerebrum-cd.yml)
 - Occipital - Routines for Object Detection using OpenCV [![Occipital v1 CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-occipital-v1.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-occipital-v1.yml)
 - Stalk - USB Gadget that mimics a Keyboard/Mouse/Joystick to send input to a desktop (OTG overlay + dotnet core) [![Stalk v2 CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-v2-cd.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-stalk-v2-cd.yml)
-
+- Epidermis - Allows for IO to/from the beholder [![Epidermis v1 CD](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-epidermis-v1.yml/badge.svg)](https://github.com/beholder-rpa/beholder-iot/actions/workflows/beholder-epidermis-v1.yml)
 ## Backbone
 
 - PostgreSQL - DB

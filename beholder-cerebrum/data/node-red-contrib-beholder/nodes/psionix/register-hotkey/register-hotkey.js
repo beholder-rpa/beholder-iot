@@ -11,7 +11,7 @@ module.exports = function (RED) {
         body = `${config.modifiers}${config.key}`;
       }
 
-      let hostName = config.hostname;
+      let hostName = msg.hostname || config.hostname;
       if (!hostName) {
         const beholderServices = globalContext.get('beholder_services');
         if (beholderServices && beholderServices.daemon) {
