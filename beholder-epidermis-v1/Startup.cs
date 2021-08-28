@@ -4,7 +4,6 @@ namespace beholder_epidermis_v1
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
-  using Microsoft.Extensions.Hosting;
   using Microsoft.OpenApi.Models;
 
   public class Startup
