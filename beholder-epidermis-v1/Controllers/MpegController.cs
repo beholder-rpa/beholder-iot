@@ -10,7 +10,6 @@
   using SixLabors.ImageSharp.Processing;
   using System;
   using System.IO;
-  using System.Threading;
   using System.Threading.Tasks;
 
   [Route("api/epidermis/[controller]")]
@@ -38,7 +37,7 @@
 
     // GET /api/epidermis/mjpeg/SOMEKEYHERE
     [HttpGet("{*key}")]
-    public IActionResult Get(string key, CancellationToken cancellationToken = default)
+    public IActionResult Get(string key)
     {
       var first = true;
       return new MjpegStream(async cancellationToken => {
