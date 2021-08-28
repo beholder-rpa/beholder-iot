@@ -22,8 +22,8 @@ module.exports = function (RED) {
               maxFps: 0.25,
             }
           }],
-          streamDesktopThumbnail: config.streamDesktopThumbnail,
-          streamPointerImage: config.streamPointerImage,
+          streamDesktopThumbnail: parseBool(config.streamDesktopThumbnail),
+          streamPointerImage: parseBool(config.streamPointerImage),
           desktopThumbnailStreamSettings: {
             maxFps: parseFloat(config.desktopThumbnailStreamSettingsMaxFps),
             scaleFactor: parseFloat(config.desktopThumbnailStreamSettingsScaleFactor),
@@ -31,7 +31,7 @@ module.exports = function (RED) {
           pointerImageStreamSettings: {
             maxFps: parseFloat(config.pointerImageStreamSettingsMaxFps),
           },
-          watchPointerPosition: config.watchPointerPosition,
+          watchPointerPosition: parseBool(config.watchPointerPosition),
         }
       }
 
