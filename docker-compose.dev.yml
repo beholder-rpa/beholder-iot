@@ -49,6 +49,15 @@ services:
     ports:
       - 7001:80
   ###############################################
+  # Beholder Epidermis
+  beholder-epidermis:
+    image: beholderrpa/iot-epidermis-v1:latest
+    build:
+      context: ./beholder-epidermis-v1
+      dockerfile: Dockerfile.dev
+    ports:
+      - 7002:80
+  ###############################################
   # Beholder Postgres
   beholder-postgres:
     image: postgres:latest

@@ -32,6 +32,12 @@ services:
   beholder-occipital-dapr:
     image: daprio/daprd:edge-linux-arm
   ###############################################
+  # Beholder Epidermis
+  beholder-epidermis:
+    image: beholderrpa/iot-epidermis-v1-arm32v7:master
+  beholder-epidermis-dapr:
+    image: daprio/daprd:edge-linux-arm
+  ###############################################
   # Beholder Nexus
   beholder-nexus:
     # If this is not present, clock_gettime fails

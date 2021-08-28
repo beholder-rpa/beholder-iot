@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["./beholder-epidermis-v1.csproj", "."]
+RUN dotnet restore "./beholder-epidermis-v1.csproj"
+COPY . .
+RUN dotnet build "beholder-epidermis-v1.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "beholder-epidermis-v1.csproj" -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "beholder-epidermis-v1.dll"]
