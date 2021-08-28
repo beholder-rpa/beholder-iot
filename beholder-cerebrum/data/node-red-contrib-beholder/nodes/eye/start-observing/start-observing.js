@@ -9,9 +9,9 @@ module.exports = function (RED) {
         body = msg.payload;
       } else {
         body = {
-          adapterIndex: config.adapterIndex,
-          deviceIndex: config.deviceIndex,
-          regions: {
+          adapterIndex: parseInt(config.adapterIndex),
+          deviceIndex: parseInt(config.deviceIndex),
+          regions: [{
             name: "default",
             kind: "image",
             bitmapSettings: {
@@ -21,15 +21,15 @@ module.exports = function (RED) {
               height: 480,
               maxFps: 0.25,
             }
-          },
+          }],
           streamDesktopThumbnail: config.streamDesktopThumbnail,
-          streamPointerImage: config.streamDesktopThumbnail,
+          streamPointerImage: config.streamPointerImage,
           desktopThumbnailStreamSettings: {
-            maxFps: config.desktopThumbnailStreamSettingsMaxFps,
-            scaleFactor: config.desktopThumbnailStreamSettingsScaleFactor,
+            maxFps: parseFloat(config.desktopThumbnailStreamSettingsMaxFps),
+            scaleFactor: parseFloat(config.desktopThumbnailStreamSettingsScaleFactor),
           },
           pointerImageStreamSettings: {
-            maxFps: config.pointerImageStreamSettingsMaxFps,
+            maxFps: parseFloat(config.pointerImageStreamSettingsMaxFps),
           },
           watchPointerPosition: config.watchPointerPosition,
         }
