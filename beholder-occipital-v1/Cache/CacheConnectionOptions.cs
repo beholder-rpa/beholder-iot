@@ -1,4 +1,4 @@
-﻿namespace beholder_epidermis_v1.Cache
+﻿namespace beholder_occipital_v1.Cache
 {
   public record CacheConnectionOptions
   {
@@ -6,7 +6,7 @@
     {
       Host = "beholder-prefrontal";
       Port = 6379;
-      ClientName = "beholder-epidermis";
+      ClientName = "beholder-occipital";
       RetryDelay = 2500;
       AllowAdmin = true;
     }

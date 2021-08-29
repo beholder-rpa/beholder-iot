@@ -1,5 +1,6 @@
 ﻿namespace beholder_occipital_v1.Services
 {
+  using beholder_occipital_v1.Cache;
   using beholder_occipital_v1.ObjectDetection;
   using beholder_occipital_v1.Protos;
   using Dapr.AppCallback.Autogen.Grpc.v1;
@@ -19,15 +20,17 @@
     private readonly IMatchMaskFactory _matchMaskFactory;
     private readonly IMatchProcessor _matchProcessor;
     private readonly DaprClient _daprClient;
+    private readonly ICacheClient _cacheClient;
     private readonly ILogger<ObjectDetectionService> _logger;
     private readonly string _hostName;
 
-    public ObjectDetectionService(IMatchMaskFactory matchMaskFactory, IMatchProcessor matchProcessor, DaprClient daprClient, ILogger<ObjectDetectionService> logger)
+    public ObjectDetectionService(IMatchMaskFactory matchMaskFactory, IMatchProcessor matchProcessor, DaprClient daprClient, ICacheClient cacheClient, ILogger<ObjectDetectionService> logger)
     {
       _matchMaskFactory = matchMaskFactory ?? throw new ArgumentNullException(nameof(matchMaskFactory));
       _matchProcessor = matchProcessor ?? throw new ArgumentNullException(nameof(matchProcessor));
 
       _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
+      _cacheClient = cacheClient ?? throw new ArgumentNullException(nameof(cacheClient));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _hostName = Environment.GetEnvironmentVariable("BEHOLDER_OCCIPITAL_NAME") ?? Dns.GetHostName();
     }
@@ -97,8 +100,8 @@
 
       _logger.LogInformation($"Performing Object Detection using {request.QueryImagePrefrontalKey}, {request.TargetImagePrefrontalKey}");
 
-      var queryImageBytes = await _daprClient.GetStateAsync<byte[]>(Consts.PrefrontalStateStoreName, request.QueryImagePrefrontalKey);
-      var targetImageBytes = await _daprClient.GetStateAsync<byte[]>(Consts.PrefrontalStateStoreName, request.TargetImagePrefrontalKey);
+      var queryImageBytes = await _cacheClient.Base64ByteArrayGet(request.QueryImagePrefrontalKey);
+      var targetImageBytes = await _cacheClient.Base64ByteArrayGet(request.TargetImagePrefrontalKey);
 
       using var queryImage = Cv2.ImDecode(queryImageBytes, ImreadModes.Color);
       using var trainImage = Cv2.ImDecode(targetImageBytes, ImreadModes.Color);
@@ -204,7 +207,7 @@
         using var outImg = new Mat();
         Cv2.DrawMatches(queryImage, queryKeyPoints, trainImage, trainKeyPoints, allGoodMatches, outImg, new Scalar(0, 255, 0), flags: DrawMatchesFlags.NotDrawSinglePoints);
         var outImageBytes = outImg.ImEncode();
-        await _daprClient.SaveStateAsync(Consts.PrefrontalStateStoreName, request.OutputImagePrefrontalKey, outImageBytes);
+        await _cacheClient.Base64ByteArraySet(request.OutputImagePrefrontalKey, outImageBytes);
       }
 
       // Create and return the result

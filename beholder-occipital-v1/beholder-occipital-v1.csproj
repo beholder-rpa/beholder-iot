@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="OpenCvSharp4" Version="4.5.3.20210725" />
+    <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
   </ItemGroup>
   
   <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">

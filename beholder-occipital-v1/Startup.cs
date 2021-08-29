@@ -1,5 +1,7 @@
 ﻿namespace beholder_occipital_v1
 {
+  using beholder_occipital_v1.Cache;
+  using beholder_occipital_v1.Models;
   using beholder_occipital_v1.ObjectDetection;
   using beholder_occipital_v1.Services;
   using Microsoft.AspNetCore.Builder;
@@ -22,6 +24,9 @@
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
+      services.Configure<OccipitalOptions>(Configuration.GetSection("Occipital"));
+      services.AddSingleton<ICacheClient, CacheClient>();
+
       services.AddTransient<IMatchMaskFactory, MatchMaskFactory>();
       services.AddTransient<IMatchProcessor, SiftFlannMatchProcessor>();
 
