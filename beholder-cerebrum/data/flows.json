@@ -498,5 +498,119 @@
                 "b954a2995a0b63f3"
             ]
         ]
+    },
+    {
+        "id": "d0a94632658c6d93",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/eye/+/pointer_position",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 1150,
+        "y": 60,
+        "wires": [
+            [
+                "a4e0e30675be9f61"
+            ]
+        ]
+    },
+    {
+        "id": "a4e0e30675be9f61",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "pointer position",
+        "func": "\nnode.status({text: `X: ${msg.x} Y: ${msg.y}`});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "babe2eb33a9f97d0",
+        "type": "jimp-image",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "data": "payload.image",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 1390,
+        "y": 120,
+        "wires": [
+            [
+                "fb2a2066576717aa"
+            ]
+        ]
+    },
+    {
+        "id": "eb74280d91c37d5e",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/eye/+/pointer_image",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 1160,
+        "y": 120,
+        "wires": [
+            [
+                "babe2eb33a9f97d0"
+            ]
+        ]
+    },
+    {
+        "id": "fb2a2066576717aa",
+        "type": "image viewer",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 1530,
+        "y": 120,
+        "wires": [
+            []
+        ]
     }
 ]

@@ -691,5 +691,66 @@
                 "file": "/data/node_modules/node-red-contrib-cron-plus/cronplus.js"
             }
         }
+    },
+    "node-red-contrib-image-tools": {
+        "name": "node-red-contrib-image-tools",
+        "version": "2.0.1",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "jimp": {
+                "name": "jimp",
+                "types": [
+                    "jimp-image"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-image-tools",
+                "file": "/data/node_modules/node-red-contrib-image-tools/jimp.js"
+            },
+            "xzingDecode": {
+                "name": "xzingDecode",
+                "types": [
+                    "Barcode Decoder"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-image-tools",
+                "file": "/data/node_modules/node-red-contrib-image-tools/xzingDecode.js"
+            },
+            "barcodeWriter": {
+                "name": "barcodeWriter",
+                "types": [
+                    "Barcode Generator"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-image-tools",
+                "file": "/data/node_modules/node-red-contrib-image-tools/barcodeWriter.js"
+            },
+            "imageViewer": {
+                "name": "imageViewer",
+                "types": [
+                    "image viewer"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-image-tools",
+                "file": "/data/node_modules/node-red-contrib-image-tools/imageViewer.js"
+            },
+            "app": {
+                "name": "app",
+                "types": [],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-image-tools",
+                "file": "/data/node_modules/node-red-contrib-image-tools/app.js"
+            }
+        }
     }
 }

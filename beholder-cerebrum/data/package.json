@@ -8,6 +8,7 @@
         "node-red-contrib-beholder": "file:./node-red-contrib-beholder",
         "node-red-contrib-cron-plus": "^1.5.4",
         "node-red-contrib-image-output": "^0.6.3",
+        "node-red-contrib-image-tools": "^2.0.1",
         "node-red-contrib-os": "^0.2.1",
         "node-red-contrib-process-env": "^0.2.5",
         "node-red-contrib-redis": "^1.3.9",
