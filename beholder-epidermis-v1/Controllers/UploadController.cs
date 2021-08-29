@@ -24,7 +24,7 @@
     }
 
     // POST /api/epidermis/upload/SOMEKEYHERE
-    [HttpGet("{*key}")]
+    [HttpPost("{*key}")]
     public async Task<IActionResult> UploadAsync(string key, List<IFormFile> files)
     {
       long size = files.Sum(f => f.Length);
