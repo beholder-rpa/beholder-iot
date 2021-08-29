@@ -1,7 +1,7 @@
 ﻿namespace beholder_epidermis_v1.Controllers
 {
+  using beholder_epidermis_v1.Cache;
   using beholder_epidermis_v1.Mvc;
-  using Dapr.Client;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;
   using SixLabors.ImageSharp;
@@ -17,8 +17,8 @@
   public class MpegController : ControllerBase
   {
     private readonly ILogger<MpegController> _logger;
-    private readonly DaprClient _daprClient;
-    
+    private readonly ICacheClient _cacheClient;
+
     private readonly Lazy<byte[]> _blankImage = new Lazy<byte[]>(() =>
     {
       using var image = new Image<Rgb24>(400, 225);
@@ -29,10 +29,10 @@
       return memStream.ToArray();
     });
 
-    public MpegController(ILogger<MpegController> logger, DaprClient daprClient)
+    public MpegController(ILogger<MpegController> logger, ICacheClient cacheClient)
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
+      _cacheClient = cacheClient ?? throw new ArgumentNullException(nameof(cacheClient));
     }
 
     // GET /api/epidermis/mjpeg/SOMEKEYHERE
@@ -46,7 +46,7 @@
         else
           await Task.Delay(TimeSpan.FromMilliseconds(33.3), cancellationToken); // Don't exceed 30fps
 
-        var img = await _daprClient.GetStateAsync<byte[]>(Consts.StateStoreName, key, ConsistencyMode.Eventual, cancellationToken: cancellationToken);
+        var img = await _cacheClient.Base64ByteArrayGet(key);
 
         if (img != null)
         {

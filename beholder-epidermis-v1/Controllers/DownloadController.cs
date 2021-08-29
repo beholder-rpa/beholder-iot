@@ -1,6 +1,6 @@
 ﻿namespace beholder_epidermis_v1.Controllers
 {
-  using Dapr.Client;
+  using beholder_epidermis_v1.Cache;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;
   using System;
@@ -13,12 +13,12 @@
   public class DownloadController : ControllerBase
   {
     private readonly ILogger<DownloadController> _logger;
-    private readonly DaprClient _daprClient;
+    private readonly ICacheClient _cacheClient;
 
-    public DownloadController(ILogger<DownloadController> logger, DaprClient daprClient)
+    public DownloadController(ILogger<DownloadController> logger, ICacheClient cacheClient)
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
+      _cacheClient = cacheClient ?? throw new ArgumentNullException(nameof(cacheClient));
     }
 
     // POST /api/epidermis/download/SOMEKEYHERE
@@ -31,7 +31,7 @@
       CancellationToken cancellationToken = default
     )
     {
-      var item = await _daprClient.GetStateAsync<byte[]>(Consts.StateStoreName, key, ConsistencyMode.Eventual, cancellationToken: cancellationToken);
+      var item = await _cacheClient.Base64ByteArrayGet(key);
 
       if (string.IsNullOrWhiteSpace(contentType))
       {

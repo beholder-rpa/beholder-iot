@@ -266,12 +266,8 @@ services:
       - backend
     volumes:
       - prefrontal_redis_data:/data:rw
-    labels:
-      - traefik.enable=true
-      # Proxy redis
-      - traefik.tcp.routers.beholder_redis.rule=HostSNI(`${BEHOLDER_CORTEX_HOSTNAME}`)
-      - traefik.tcp.routers.beholder_redis.entrypoints=redis
-      - traefik.tcp.services.beholder_redis.loadbalancer.server.port=6379
+    ports:
+      - 6379:6379
   ###############################################
   # Dapr placement service
   beholder-dapr-placement:

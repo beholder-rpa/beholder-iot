@@ -1,6 +1,6 @@
 ﻿namespace beholder_epidermis_v1.Controllers
 {
-  using Dapr.Client;
+  using beholder_epidermis_v1.Cache;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;
@@ -15,12 +15,12 @@
   public class UploadController : ControllerBase
   {
     private readonly ILogger<UploadController> _logger;
-    private readonly DaprClient _daprClient;
+    private readonly ICacheClient _cacheClient;
 
-    public UploadController(ILogger<UploadController> logger, DaprClient daprClient)
+    public UploadController(ILogger<UploadController> logger, ICacheClient cacheClient)
     {
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
+      _cacheClient = cacheClient ?? throw new ArgumentNullException(nameof(cacheClient));
     }
 
     // POST /api/epidermis/upload/SOMEKEYHERE
@@ -39,7 +39,7 @@
         using var ms = new MemoryStream();
         formFile.CopyTo(ms);
         var fileBytes = ms.ToArray();
-        await _daprClient.SaveStateAsync(Consts.StateStoreName, key, fileBytes);
+        await _cacheClient.Base64ByteArraySet(key, fileBytes);
       }
 
       return Ok(new { count = files.Count, size });

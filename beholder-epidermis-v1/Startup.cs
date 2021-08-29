@@ -1,5 +1,7 @@
 namespace beholder_epidermis_v1
 {
+  using beholder_epidermis_v1.Cache;
+  using beholder_epidermis_v1.Models;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.Extensions.Configuration;
@@ -18,6 +20,8 @@ namespace beholder_epidermis_v1
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.Configure<EpidermisOptions>(Configuration.GetSection("Epidermis"));
+      services.AddSingleton<ICacheClient, CacheClient>();
 
       services.AddControllers().AddDapr();
       services.AddSwaggerGen(c =>
