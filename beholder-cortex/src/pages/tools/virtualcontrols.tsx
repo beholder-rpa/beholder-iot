@@ -13,25 +13,13 @@ interface VirtualControlProps {
 }
 
 const VirtualControls = ({ hostName }: VirtualControlProps) => {
-  const { beholderStore } = useContext(AppStoreContext);
+  const {} = useContext(AppStoreContext);
   const beholderClient = useContext(BeholderClientContext);
   const textAreaRef = useRef<HTMLTextAreaElement>();
 
-  const kinesisHost = beholderStore.getFirstKinesisHost();
-
-  if (!hostName) {
-    const host = beholderStore.getFirstHost();
-    if (host) {
-      hostName = host.name;
-    }
-  }
-
-  // TODO: Show LED status from state.
-  // const _kinesisState = beholderStore.getKinesisState(kinesisHost?.name);
-
   const onChange = (input: string) => {
     const keyPress = mapKeyToKeypress(input);
-    const keyboard = new Keyboard(beholderClient, kinesisHost?.name);
+    const keyboard = new Keyboard(beholderClient, hostName);
     keyboard.keypress(keyPress);
     textAreaRef.current.focus();
   };
