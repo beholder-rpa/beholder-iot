@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import CortexLayout from '@layouts/CortexLayout';
 import { AppStoreContext } from '@stores/AppStore';
 import DaemonStatus from '@modules/Daemon/DaemonStatus';
+import { BeholderDaemonServiceInfo } from '@models/BeholderServiceInfo';
 
 const Home = () => {
   const appStore = useContext(AppStoreContext);
@@ -31,7 +32,7 @@ const Home = () => {
               </tr>
             </thead>
             <tbody>
-              {beholderStore.serviceInfo.map((service) => (
+              {Object.values(beholderStore.beholderServices).map((service) => (
                 <tr key={service.key}>
                   <td>{service.hostName}</td>
                   <td>{service.serviceName}</td>
@@ -45,16 +46,14 @@ const Home = () => {
         <div className="col-span-2 bg-neutral-focus rounded-md flex justify-center items-center text-neutral-content text-2xl font-extrabold">
           <div>{currentTime.format('MM/DD/YYYY  h:mm:ss')}</div>
         </div>
-        <div className="row-span-2 col-span-2 bg-base-200 rounded-md flex justify-center items-center text-base-contenttext-2xl font-extrabold">
-          3
-        </div>
+        <div className="row-span-2 col-span-2 bg-base-200 rounded-md flex justify-center items-center text-base-contenttext-2xl font-extrabold"></div>
       </div>
       <div className="pt-4 pl-5 pr-4 h-72">
         {/* Filter out hosts that are not daemon hosts and display the number of services that are running on each host */}
-        {beholderStore.serviceInfo
+        {Object.values(beholderStore.beholderServices)
           .filter((service) => service.serviceName === 'daemon')
           .map((service) => (
-            <DaemonStatus hostName={service.hostName} key={service.key} />
+            <DaemonStatus service={service as BeholderDaemonServiceInfo} key={service.key} />
           ))}
       </div>
     </CortexLayout>

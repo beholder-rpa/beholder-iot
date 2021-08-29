@@ -1,8 +1,7 @@
 import React from 'react';
 import mqtt, { IMqttClient } from 'async-mqtt';
+
 import BeholderStore from '@stores/BeholderStore';
-import { ObservationRequest } from '@src/models/eye/ObservationRequest';
-import { BeholderServiceInfo } from '@models/BeholderServiceInfo';
 
 export class BeholderClient {
   private client: IMqttClient;
@@ -35,7 +34,14 @@ export class BeholderClient {
 
     this.client.on('connect', () => {
       console.log('%c connected!!', 'background: green; color: white; display: block;');
-      this.client.subscribe('beholder/ctaf');
+      // Subscribe to all interesting topics
+      this.client.subscribe([
+        'beholder/ctaf',
+        'beholder/eye/+/region/+',
+        'beholder/eye/+/pointer_position',
+        'beholder/eye/+/pointer_image',
+        'beholder/psionix/+/hotkeys/pressed/+',
+      ]);
       this.pulse();
 
       this.beholderStore.updateConnected(true);
@@ -44,84 +50,34 @@ export class BeholderClient {
 
     this.client.on('message', (topic, message) => {
       const strMessage = message.toString('utf8');
+      const cloudEvent = JSON.parse(strMessage);
       switch (topic) {
         case `beholder/ctaf`:
-          const cloudEvent = JSON.parse(strMessage);
-          this.beholderStore.putServiceInfo(cloudEvent.data);
-
-          // If the service info is a daemon, then subscribe to host-specific topics
-          const serviceInfo: BeholderServiceInfo = cloudEvent.data;
-          if (serviceInfo.serviceName === 'daemon') {
-          }
-          break;
-        case `beholder/host`:
-          const host = JSON.parse(strMessage);
-          this.beholderStore.addHost(host);
-
-          // Now that we have a host name, Subscribe to host-specific messages
-          this.client.subscribe(`e/${host.name}/status`); // Subscribe to status updates.
-          this.client.subscribe(`e/${host.name}/alignment_map`); // Subscribe to alignment map updates.
-          this.client.subscribe(`e/${host.name}/matrix_frame`); // Subscribe to matrix frame updates
-
-          this.client.subscribe(`p/${host.name}/+`); // Subscribe to all psionix updates
-
-          // Also request some info
-          this.client.publish(`e/${host.name}/report_status`, null);
-          this.client.publish(`p/${host.name}/request_foreground_process`, null);
-          this.client.publish(`p/${host.name}/request_observed_process`, null);
-          break;
-        case `beholder/kinesis`:
-          const kinesisHost = JSON.parse(strMessage);
-          this.beholderStore.addKinesisHost(kinesisHost);
-
-          // Now that we have a kinesis host, subscribe to kinesis-specific messages
-          this.client.subscribe(`k/${kinesisHost.name}/status/keyboard/leds`); // Subscribe to keyboard led changes
+          this.beholderStore.putBeholderService(cloudEvent.data);
           break;
       }
 
-      // Process Host-Specific Messages (responses usually)
-      for (const host of this.beholderStore.hosts) {
+      // Process host-service specific messages
+      for (const knownService of Object.values(this.beholderStore.beholderServices)) {
         switch (topic) {
-          // Psyonix
-          case `p/${host.name}/process_list`:
-            const processes = JSON.parse(strMessage);
-            this.beholderStore.updateHostProcessList(host.name, processes);
+          case `beholder/eye/${knownService.hostName}/pointer_position`:
+            this.beholderStore.updateLastPointerPosition(knownService, cloudEvent.data);
             break;
-          case `p/${host.name}/process_changed`:
-            const processInfo = JSON.parse(strMessage);
-            this.beholderStore.updateHostProcess(host.name, processInfo);
-            break;
-          case `p/${host.name}/foreground_process`:
-            const foregroundProcessInfo = JSON.parse(strMessage);
-            this.beholderStore.updateHostForegroundProcess(host.name, foregroundProcessInfo);
-            break;
-          case `p/${host.name}/observed_processes`:
-            const observedProcesses = JSON.parse(strMessage);
-            this.beholderStore.updateObservedProcesses(host.name, observedProcesses);
-            break;
-          // Eye
-          case `e/${host.name}/status`:
-            const beholderEyeInfo = JSON.parse(strMessage);
-            this.beholderStore.updateEyeStatus(host.name, beholderEyeInfo);
-            break;
-          case `e/${host.name}/alignment_map`:
-            const alignmentMap = JSON.parse(strMessage);
-            this.beholderStore.updateEyeAlignmentMap(host.name, alignmentMap);
-            break;
-          case `e/${host.name}/matrix_frame`:
-            const matrixFrame = JSON.parse(strMessage);
-            this.beholderStore.updateLastMatrixFrame(host.name, matrixFrame);
+          case `beholder/eye/${knownService.hostName}/pointer_image`:
+            this.beholderStore.updateLastPointerImage(knownService, cloudEvent.data);
             break;
         }
-      }
 
-      // Process Kinesis Host-Specific Messages (responses usually)
-      for (const host of this.beholderStore.kinesisHosts) {
-        switch (topic) {
-          // Kinesis
-          case `k/${host.name}/status/keyboard/leds`:
-            console.dir(strMessage);
-            break;
+        if (topic.startsWith(`beholder/eye/${knownService.hostName}/region/`)) {
+          this.beholderStore.addUpdateRegion(
+            knownService,
+            topic.replace(`beholder/eye/${knownService.hostName}/region/`, ''),
+            cloudEvent.data,
+          );
+        }
+
+        if (topic.startsWith(`beholder/psionix/${knownService.hostName}/hotkeys/pressed/`)) {
+          this.beholderStore.updateLastHotkeyPressed(knownService, cloudEvent.data);
         }
       }
 
@@ -153,122 +109,6 @@ export class BeholderClient {
     }
 
     this.client.publish(`u/${this.username}/w/ident`, null);
-  }
-
-  /**
-   * Sends a RPC-Style message that requests that the indicated host commuicates the list of current processes.
-   */
-  requestProcessList() {
-    if (!this.client) {
-      return;
-    }
-    const firstHost = this.beholderStore.getFirstHost();
-    if (!firstHost) {
-      return;
-    }
-    this.client.publish(`p/${firstHost.name}/get_processes`, null);
-  }
-
-  /**
-   * Sends a RPC-Style message that requests to start observing the screen
-   */
-  startObserving(hostName?: string, observationRequest: ObservationRequest = {}) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`e/${hostName}/start_observing`, JSON.stringify(observationRequest));
-  }
-
-  /**
-   * Sends a RPC-Style message that requests to stop observing the screen
-   */
-  stopObserving(hostName?: string) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`e/${hostName}/stop_observing`, JSON.stringify({}));
-  }
-
-  requestAlignment(hostName?: string, pixelSize = 2) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`e/${hostName}/request_align`, JSON.stringify({ pixelSize }));
-  }
-
-  startObservingProcess(hostName = '', processName: string) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`p/${hostName}/observe_process`, processName);
-  }
-
-  stopObservingProcess(hostName = '', processName: string) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`p/${hostName}/ignore_process`, processName);
-  }
-
-  ensureForegroundWindow(hostName = '', processName: string) {
-    if (!this.client) {
-      return;
-    }
-
-    if (!hostName) {
-      const host = this.beholderStore.getFirstHost();
-      if (host == null) {
-        return;
-      }
-      hostName = host.name;
-    }
-
-    this.client.publish(`p/${hostName}/ensure_foreground_window`, processName);
   }
 }
 
