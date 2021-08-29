@@ -1,8 +1,8 @@
 import React from 'react';
 import mqtt, { IMqttClient } from 'async-mqtt';
-
 import BeholderStore from '@stores/BeholderStore';
 import { ObservationRequest } from '@src/models/eye/ObservationRequest';
+import { BeholderServiceInfo } from '@models/BeholderServiceInfo';
 
 export class BeholderClient {
   private client: IMqttClient;
@@ -48,6 +48,11 @@ export class BeholderClient {
         case `beholder/ctaf`:
           const cloudEvent = JSON.parse(strMessage);
           this.beholderStore.putServiceInfo(cloudEvent.data);
+
+          // If the service info is a daemon, then subscribe to host-specific topics
+          const serviceInfo: BeholderServiceInfo = cloudEvent.data;
+          if (serviceInfo.serviceName === 'daemon') {
+          }
           break;
         case `beholder/host`:
           const host = JSON.parse(strMessage);
