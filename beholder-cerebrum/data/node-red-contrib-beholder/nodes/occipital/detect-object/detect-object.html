@@ -1,0 +1,79 @@
+<script type="text/javascript">
+  RED.nodes.registerType('detect-object', {
+    category: 'beholder occipital - detect',
+    color: '#D8BFD8',
+    defaults: {
+      queryImagePrefrontalKey: { value: "" },
+      targetImagePrefrontalKey: { value: "" },
+      matchRatioThreshold: { value: 0.76, required: true,  },
+      scaleIncrement: { value: 2.0, required: true,  },
+      rotationBins: { value: 20, required: true,  },
+      outputImagePrefrontalKey: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-magic",
+    paletteLabel: "detect object",
+    label: function () {
+      return this.name || "detect object";
+    },
+    oneditprepare: function () {
+      $("#node-input-matchRatioThreshold").typedInput({
+        type: "num",
+        types: ["num"],
+        typeField: "#node-input-matchRatioThreshold-type"
+      });
+      $("#node-input-scaleIncrement").typedInput({
+        type: "num",
+        types: ["num"],
+        typeField: "#node-input-scaleIncrement-type"
+      });
+      $("#node-input-rotationBins").typedInput({
+        type: "num",
+        types: ["num"],
+        typeField: "#node-input-rotationBins-type"
+      });
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="detect-object">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-queryImagePrefrontalKey">Query Image Key</label>
+    <input type="text" id="node-input-queryImagePrefrontalKey" placeholder="query image key">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-targetImagePrefrontalKey">Target Image Key</label>
+    <input type="text" id="node-input-targetImagePrefrontalKey" placeholder="target image key">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-matchRatioThreshold">Match Ratio Threshold</label>
+    <input type="number" id="node-input-matchRatioThreshold" placeholder="match ratio threshold">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-scaleIncrement">Scale Increment</label>
+    <input type="number" id="node-input-scaleIncrement" placeholder="scale increment">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-rotationBins">Rotation Bins</label>
+    <input type="number" id="node-input-rotationBins" placeholder="rotation bins">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-outputImagePrefrontalKey">Output Image Key</label>
+    <input type="text" id="node-input-outputImagePrefrontalKey" placeholder="output image key">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="detect-object">
+  <p>Given two images, returns the location of image a within image b</p>
+</script>

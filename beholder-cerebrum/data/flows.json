@@ -56,13 +56,13 @@
         "name": "",
         "topic": "beholder/ctaf",
         "qos": "2",
-        "datatype": "auto",
+        "datatype": "json",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 350,
-        "y": 340,
+        "x": 330,
+        "y": 40,
         "wires": [
             [
                 "a89eb3c39c45b8ee"
@@ -82,8 +82,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
-        "y": 340,
+        "x": 770,
+        "y": 40,
         "wires": []
     },
     {
@@ -117,8 +117,8 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 480,
-        "y": 180,
+        "x": 460,
+        "y": 200,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -130,15 +130,15 @@
         "type": "debug",
         "z": "6a61b64910c046bc",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
-        "y": 180,
+        "x": 770,
+        "y": 200,
         "wires": []
     },
     {
@@ -201,8 +201,8 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 490,
-        "y": 100,
+        "x": 470,
+        "y": 120,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -324,8 +324,8 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 450,
-        "y": 260,
+        "x": 430,
+        "y": 280,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -371,14 +371,14 @@
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "populate services",
-        "func": "const services = global.get(\"beholder_services\") || {};\n\nconst payload = JSON.parse(msg.payload);\nif (payload.data) {\n    if (!services[payload.data.serviceName]) {\n       services[payload.data.serviceName] = [];\n    }\n    \n    const serviceHosts = services[payload.data.serviceName];\n    \n    if (!serviceHosts.includes(payload.data.hostName)) {\n        serviceHosts.push(payload.data.hostName);\n    }\n    global.set(\"beholder_services\", services);\n    node.log(JSON.stringify(services));\n}\n\nreturn msg;",
+        "func": "const services = global.get(\"beholder_services\") || {};\n\nconst payload = msg.payload;\nif (payload.data) {\n    if (!services[payload.data.serviceName]) {\n       services[payload.data.serviceName] = [];\n    }\n    \n    const serviceHosts = services[payload.data.serviceName];\n    \n    if (!serviceHosts.includes(payload.data.hostName)) {\n        serviceHosts.push(payload.data.hostName);\n    }\n    global.set(\"beholder_services\", services);\n    node.log(JSON.stringify(services));\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 340,
+        "x": 550,
+        "y": 40,
         "wires": [
             [
                 "701d74bb8d94326d"
@@ -451,8 +451,6 @@
         "type": "stop-observing",
         "z": "6a61b64910c046bc",
         "hostname": "",
-        "modifiers": "^+",
-        "key": "{Oemtilde}",
         "x": 780,
         "y": 940,
         "wires": [
@@ -506,7 +504,7 @@
         "name": "",
         "topic": "beholder/eye/+/pointer_position",
         "qos": "1",
-        "datatype": "auto",
+        "datatype": "json",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
@@ -524,7 +522,7 @@
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "pointer position",
-        "func": "\nnode.status({text: `X: ${msg.x} Y: ${msg.y}`});\n\nreturn msg;",
+        "func": "const payload = msg.payload;\nnode.status({text: `X: ${payload.data.x} Y: ${payload.data.y}`});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -541,7 +539,7 @@
         "type": "jimp-image",
         "z": "6a61b64910c046bc",
         "name": "",
-        "data": "payload.image",
+        "data": "payload.data.image",
         "dataType": "msg",
         "ret": "img",
         "parameter1": "",
@@ -585,7 +583,7 @@
         "name": "",
         "topic": "beholder/eye/+/pointer_image",
         "qos": "1",
-        "datatype": "auto",
+        "datatype": "json",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
@@ -603,14 +601,237 @@
         "type": "image viewer",
         "z": "6a61b64910c046bc",
         "name": "",
-        "width": 160,
+        "width": "25",
         "data": "payload",
         "dataType": "msg",
         "active": true,
-        "x": 1530,
+        "x": 1550,
         "y": 120,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "391b273d293ba752",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/eye/+/region/+",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 1180,
+        "y": 220,
+        "wires": [
+            [
+                "4c38ed9e60e155d6",
+                "3eb030707ceb7775"
+            ]
+        ]
+    },
+    {
+        "id": "6e2d116e9b7930e4",
+        "type": "http request",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1570,
+        "y": 220,
+        "wires": [
+            [
+                "19e72b5bb054139f"
+            ]
+        ]
+    },
+    {
+        "id": "4c38ed9e60e155d6",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "func": "const url = `http://beholder-epidermis/api/epidermis/download/${msg.payload.data.prefrontalImageKey}`;\nreturn {\n    url\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 220,
+        "wires": [
+            [
+                "6e2d116e9b7930e4"
+            ]
+        ]
+    },
+    {
+        "id": "19e72b5bb054139f",
+        "type": "image",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 1780,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d87894ce18bc09fd",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/psionix/+/active_process_changed",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "f646742f6716a194"
+            ]
+        ]
+    },
+    {
+        "id": "f646742f6716a194",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "active process",
+        "func": "const payload = msg.payload;\nnode.status({text: `${payload.data.processName} - X: ${payload.data.windowPosition.x} Y: ${payload.data.windowPosition.y}`});\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "78751995cdf02b81"
+            ]
+        ]
+    },
+    {
+        "id": "78751995cdf02b81",
+        "type": "update-focus-region",
+        "z": "6a61b64910c046bc",
+        "hostname": "",
+        "focusRegionName": "default",
+        "focusRegionX": "200",
+        "focusRegionY": "200",
+        "focusRegionWidth": "640",
+        "focusRegionHeight": "480",
+        "focusRegionMaxFps": "0.25",
+        "x": 770,
+        "y": 440,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "ab3a064cde3f0484",
+        "type": "remove-focus-region",
+        "z": "6a61b64910c046bc",
+        "hostname": "",
+        "focusRegionName": "default",
+        "x": 760,
+        "y": 1000,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "d7d9beeaa8d704fd",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 590,
+        "y": 1000,
+        "wires": [
+            [
+                "ab3a064cde3f0484"
+            ]
+        ]
+    },
+    {
+        "id": "3eb030707ceb7775",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2FgoldCookie\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          RatioThreshold: 0.76,\n          ScaleIncrement: 2.0,\n          RotationBins: 20,\n        },\n        outputImagePrefrontalKey: \"images/testOutput\",\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 340,
+        "wires": [
+            [
+                "7f017b15dc34141a"
+            ]
+        ]
+    },
+    {
+        "id": "7f017b15dc34141a",
+        "type": "detect-object",
+        "z": "6a61b64910c046bc",
+        "queryImagePrefrontalKey": "",
+        "targetImagePrefrontalKey": "",
+        "matchRatioThreshold": 0.76,
+        "scaleIncrement": 2,
+        "rotationBins": 20,
+        "outputImagePrefrontalKey": "",
+        "x": 1580,
+        "y": 440,
+        "wires": [
+            [
+                "58024a0bb271f0ff",
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "58024a0bb271f0ff",
+        "type": "debug",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1760,
+        "y": 440,
+        "wires": []
     }
 ]

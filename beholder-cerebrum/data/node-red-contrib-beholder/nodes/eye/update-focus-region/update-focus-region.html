@@ -1,0 +1,68 @@
+<script type="text/javascript">
+  RED.nodes.registerType('update-focus-region', {
+    category: 'beholder eye - observer',
+    color: '#D8BFD8',
+    defaults: {
+      hostname: { value: '' },
+      focusRegionName: { value: 'default' },
+      focusRegionX: { value: '200' },
+      focusRegionY: { value: '200' },
+      focusRegionWidth: { value: '640' },
+      focusRegionHeight: { value: '480' },
+      focusRegionMaxFps: { value: '0.25' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-eyedropper",
+    paletteLabel: "update focus region",
+    label: function () {
+      return this.name || "update focus region";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="update-focus-region">
+  <div class="form-row">
+    <label for="node-input-hostname">Hostname</label>
+    <input type="text" id="node-input-hostname" placeholder="hostname">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionName">Focus Region Name</label>
+    <input type="text" id="node-input-focusRegionName" placeholder="focus region name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionXPos">X</label>
+    <input type="text" id="node-input-focusRegionXPos" placeholder="x">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionYPos">Y</label>
+    <input type="text" id="node-input-focusRegionYPos" placeholder="y">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionWidth">Width</label>
+    <input type="text" id="node-input-focusRegionWidth" placeholder="width">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionHeight">Height</label>
+    <input type="text" id="node-input-focusRegionHeight" placeholder="height">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionMaxFps">Max Fps</label>
+    <input type="text" id="node-input-focusRegionMaxFps" placeholder="max fps">
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="update-focus-region">
+  <p>Adds or updates a named observer focus region</p>
+</script>

@@ -11,6 +11,9 @@
     "nodes": {
       "beholder-eye-start-observing": "nodes/eye/start-observing/start-observing.js",
       "beholder-eye-stop-observing": "nodes/eye/stop-observing/stop-observing.js",
+      "beholder-eye-update-focus-region": "nodes/eye/update-focus-region/update-focus-region.js",
+      "beholder-eye-remove-focus-region": "nodes/eye/remove-focus-region/remove-focus-region.js",
+      "beholder-occipital-detect-object": "nodes/occipital/detect-object/detect-object.js",
       "beholder-psionix-register-hotkey": "nodes/psionix/register-hotkey/register-hotkey.js",
       "beholder-psionix-unregister-hotkey": "nodes/psionix/unregister-hotkey/unregister-hotkey.js",
       "beholder-stalk-send-keys": "nodes/stalk/send-keys/send-keys.js",

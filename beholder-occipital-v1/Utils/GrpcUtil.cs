@@ -14,7 +14,7 @@
 
   public static class GrpcUtil
   {
-    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy() };
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     /// <summary>
     /// Invokes the specified method using the payload contained in a TopicEventRequest. If pubsubName and topicName are specified and the method return value is not empty, publishes the return value as an event.

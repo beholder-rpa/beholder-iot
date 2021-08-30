@@ -78,11 +78,12 @@
     /// <returns></returns>
     public async Task<TopicEventResponse> OnTopicEvent(TopicEventRequest request, ServerCallContext context)
     {
-      var topic = request.Topic.Replace($"beholder/occipital/{_hostName}/object_detection", "");
+      var topic = request.Topic.Replace($"beholder/occipital/{_hostName}/object_detection/", "");
+      _logger.LogInformation($"Invoking method for event topic {topic}");
       return topic switch
       {
         "detect" => await GrpcUtil.InvokeMethodFromEvent<ObjectDetectionRequest, ObjectDetectionReply>(_daprClient, request, (input) => Detect(input)),
-        _ => null,
+        _ => null
       };
     }
 
@@ -101,7 +102,15 @@
       _logger.LogInformation($"Performing Object Detection using {request.QueryImagePrefrontalKey}, {request.TargetImagePrefrontalKey}");
 
       var queryImageBytes = await _cacheClient.Base64ByteArrayGet(request.QueryImagePrefrontalKey);
+      if (queryImageBytes == default)
+      {
+        throw new InvalidOperationException($"Query Image from Cache using key {request.QueryImagePrefrontalKey} was empty");
+      }
       var targetImageBytes = await _cacheClient.Base64ByteArrayGet(request.TargetImagePrefrontalKey);
+      if (targetImageBytes == default)
+      {
+        throw new InvalidOperationException($"Target Image from Cache using key {request.TargetImagePrefrontalKey} was empty");
+      }
 
       using var queryImage = Cv2.ImDecode(queryImageBytes, ImreadModes.Color);
       using var trainImage = Cv2.ImDecode(targetImageBytes, ImreadModes.Color);

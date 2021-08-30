@@ -616,6 +616,39 @@
                 "module": "node-red-contrib-beholder",
                 "file": "/data/node_modules/node-red-contrib-beholder/nodes/eye/stop-observing/stop-observing.js"
             },
+            "beholder-eye-update-focus-region": {
+                "name": "beholder-eye-update-focus-region",
+                "types": [
+                    "update-focus-region"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/eye/update-focus-region/update-focus-region.js"
+            },
+            "beholder-eye-remove-focus-region": {
+                "name": "beholder-eye-remove-focus-region",
+                "types": [
+                    "remove-focus-region"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/eye/remove-focus-region/remove-focus-region.js"
+            },
+            "beholder-occipital-detect-object": {
+                "name": "beholder-occipital-detect-object",
+                "types": [
+                    "detect-object"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/occipital/detect-object/detect-object.js"
+            },
             "beholder-psionix-register-hotkey": {
                 "name": "beholder-psionix-register-hotkey",
                 "types": [

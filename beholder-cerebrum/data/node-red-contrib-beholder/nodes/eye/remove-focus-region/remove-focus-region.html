@@ -1,24 +1,30 @@
 <script type="text/javascript">
-  RED.nodes.registerType('stop-observing', {
+  RED.nodes.registerType('remove-focus-region', {
     category: 'beholder eye - observer',
     color: '#D8BFD8',
     defaults: {
       hostname: { value: '' },
+      focusRegionName: { value: '' },
     },
     inputs: 1,
     outputs: 1,
     icon: "font-awesome/fa-eye-slash",
-    paletteLabel: "stop observing",
+    paletteLabel: "remove focus region",
     label: function () {
-      return this.name || "stop observing";
+      return this.name || "remove focus region";
     }
   });
 </script>
 
-<script type="text/html" data-template-name="stop-observing">
+<script type="text/html" data-template-name="remove-focus-region">
   <div class="form-row">
     <label for="node-input-hostname">Hostname</label>
     <input type="text" id="node-input-hostname" placeholder="hostname">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-focusRegionName">Focus Region Name</label>
+    <input type="text" id="node-input-focusRegionName" placeholder="focus region name">
   </div>
   
   <div class="form-row">
@@ -27,6 +33,6 @@
   </div>
 </script>
 
-<script type="text/html" data-help-name="stop-observing">
-  <p>Stops observing the screen on the target host</p>
+<script type="text/html" data-help-name="remove-focus-region">
+  <p>Removes the indicated focus region from observation</p>
 </script>
