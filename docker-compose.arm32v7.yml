@@ -26,12 +26,6 @@ services:
   beholder-stalk-dapr:
     image: daprio/daprd:edge-linux-arm
   ###############################################
-  # Beholder Occipital
-  beholder-occipital:
-    image: beholderrpa/iot-occipital-v1-arm32v7:master
-  beholder-occipital-dapr:
-    image: daprio/daprd:edge-linux-arm
-  ###############################################
   # Beholder Epidermis
   beholder-epidermis:
     image: beholderrpa/iot-epidermis-v1-arm32v7:master

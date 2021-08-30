@@ -51,6 +51,7 @@
         "SendMouseRaw" => await GrpcUtil.InvokeMethodFromInvoke<SendMouseRawRequest, Empty>(request, (input) => SendMouseRaw(input)),
         "SendMouseReset" => await GrpcUtil.InvokeMethodFromInvoke<Empty, Empty>(request, (input) => SendMouseReset()),
         "SetAverageClickDuration" => await GrpcUtil.InvokeMethodFromInvoke<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(request, (input) => SetAverageMouseClickDuration(input)),
+        "MoveMouseTo" => await GrpcUtil.InvokeMethodFromInvoke<MoveMouseToRequest, Empty>(request, (input) => MoveMouseTo(input)),
         _ => null,
       };
     }
@@ -94,6 +95,12 @@
         Topic = $"beholder/stalk/{_hostName}/mouse/click_duration"
       });
 
+      result.Subscriptions.Add(new TopicSubscription
+      {
+        PubsubName = Consts.PubSubName,
+        Topic = $"beholder/stalk/{_hostName}/mouse/move_mouse_to"
+      });
+
       return Task.FromResult(result);
     }
 
@@ -113,6 +120,7 @@
         "raw" => await GrpcUtil.InvokeMethodFromEvent<SendMouseRawRequest, Empty>(_daprClient, request, (input) => SendMouseRaw(input)),
         "reset" => await GrpcUtil.InvokeMethodFromEvent<Empty, Empty>(_daprClient, request, (input) => SendMouseReset()),
         "click_duration" => await GrpcUtil.InvokeMethodFromEvent<SetAverageMouseClickDurationRequest, SetAverageMouseClickDurationReply>(_daprClient, request, (input) => SetAverageMouseClickDuration(input)),
+        "move_mouse_to" => await GrpcUtil.InvokeMethodFromEvent<MoveMouseToRequest, Empty>(_daprClient, request, (input) => MoveMouseTo(input)),
         _ => new TopicEventResponse(),
       };
     }
@@ -158,6 +166,13 @@
       {
         Duration = _mouse.AverageClickDuration
       });
+    }
+
+    public async Task<Empty> MoveMouseTo(MoveMouseToRequest request)
+    {
+      await _mouse.SendMouseMoveTo(request);
+      _logger.LogInformation($"Moved Mouse from {request.CurrentPosition.X},{request.CurrentPosition.Y} to {request.TargetPosition.X},{request.TargetPosition.Y} using {request.MovementType} behavior. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
+      return null;
     }
 
     public async Task OnStatusEvent()

@@ -18,7 +18,9 @@
       "beholder-psionix-unregister-hotkey": "nodes/psionix/unregister-hotkey/unregister-hotkey.js",
       "beholder-stalk-send-keys": "nodes/stalk/send-keys/send-keys.js",
       "beholder-stalk-send-keys-raw": "nodes/stalk/send-keys-raw/send-keys-raw.js",
-      "beholder-stalk-send-mouse-click": "nodes/stalk/send-mouse-click/send-mouse-click.js"
+      "beholder-stalk-send-mouse-click": "nodes/stalk/send-mouse-click/send-mouse-click.js",
+      "beholder-stalk-send-mouse-actions": "nodes/stalk/send-mouse-actions/send-mouse-actions.js",
+      "beholder-stalk-move-mouse-to": "nodes/stalk/move-mouse-to/move-mouse-to.js"
     }
   },
   "dependencies": {

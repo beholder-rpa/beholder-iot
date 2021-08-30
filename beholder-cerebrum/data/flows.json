@@ -46,7 +46,7 @@
         "expiry": "",
         "broker": "0b70dd4da53f0867",
         "x": 1100,
-        "y": 560,
+        "y": 720,
         "wires": []
     },
     {
@@ -98,7 +98,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 520,
+        "y": 580,
         "wires": [
             [
                 "2f36a5c4d50815d4"
@@ -147,7 +147,7 @@
         "z": "6a61b64910c046bc",
         "keys": "Asdf",
         "x": 800,
-        "y": 520,
+        "y": 580,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -162,7 +162,7 @@
         "click_direction": 0,
         "duration": null,
         "x": 770,
-        "y": 600,
+        "y": 660,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -182,7 +182,7 @@
         "topic": "",
         "payloadType": "str",
         "x": 370,
-        "y": 580,
+        "y": 640,
         "wires": [
             [
                 "694025d4212a209e"
@@ -227,7 +227,7 @@
         "payload": "stop",
         "payloadType": "str",
         "x": 370,
-        "y": 720,
+        "y": 780,
         "wires": [
             [
                 "694025d4212a209e"
@@ -246,7 +246,7 @@
         "finalize": "",
         "libs": [],
         "x": 590,
-        "y": 600,
+        "y": 660,
         "wires": [
             [
                 "92d2c5897081f7cd"
@@ -271,7 +271,7 @@
         "payload": "start",
         "payloadType": "str",
         "x": 370,
-        "y": 660,
+        "y": 720,
         "wires": [
             [
                 "694025d4212a209e"
@@ -286,7 +286,7 @@
         "modifiers": "^+",
         "key": "{Oemtilde}",
         "x": 780,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -305,7 +305,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "1e84eeba5db90a04"
@@ -340,7 +340,7 @@
         "modifiers": "^+",
         "key": "{Oemtilde}",
         "x": 770,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -359,7 +359,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
                 "a681df0fe35a76c8"
@@ -398,7 +398,7 @@
         "rap": true,
         "rh": 0,
         "x": 220,
-        "y": 440,
+        "y": 500,
         "wires": [
             [
                 "4ca0dd73db3eccac"
@@ -417,7 +417,7 @@
         "finalize": "",
         "libs": [],
         "x": 340,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "694025d4212a209e"
@@ -439,7 +439,7 @@
         "pointerImageStreamSettingsMaxFps": "0.5",
         "watchPointerPosition": "true",
         "x": 780,
-        "y": 880,
+        "y": 940,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -452,7 +452,7 @@
         "z": "6a61b64910c046bc",
         "hostname": "",
         "x": 780,
-        "y": 940,
+        "y": 1000,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -471,7 +471,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 880,
+        "y": 940,
         "wires": [
             [
                 "44f131939119e2b3"
@@ -490,7 +490,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 940,
+        "y": 1000,
         "wires": [
             [
                 "b954a2995a0b63f3"
@@ -522,7 +522,7 @@
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "pointer position",
-        "func": "const payload = msg.payload;\nnode.status({text: `X: ${payload.data.x} Y: ${payload.data.y}`});\n\nreturn msg;",
+        "func": "const payload = msg.payload;\nnode.status({text: `X: ${payload.data.x} Y: ${payload.data.y}`});\nglobal.set(\"beholder_pointer_current_position\", {\n    x: payload.data.x,\n    y: payload.data.y\n});\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -623,7 +623,7 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 1180,
+        "x": 1060,
         "y": 220,
         "wires": [
             [
@@ -657,14 +657,14 @@
         "id": "4c38ed9e60e155d6",
         "type": "function",
         "z": "6a61b64910c046bc",
-        "name": "",
+        "name": "create image url",
         "func": "const url = `http://beholder-epidermis/api/epidermis/download/${msg.payload.data.prefrontalImageKey}`;\nreturn {\n    url\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1380,
+        "x": 1400,
         "y": 220,
         "wires": [
             [
@@ -713,7 +713,7 @@
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "active process",
-        "func": "const payload = msg.payload;\nnode.status({text: `${payload.data.processName} - X: ${payload.data.windowPosition.x} Y: ${payload.data.windowPosition.y}`});\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
+        "func": "const payload = msg.payload;\nif (!payload.data) {\n    return null;\n}\nnode.status({text: `${payload.data.processName} - X: ${payload.data.windowPosition.x} Y: ${payload.data.windowPosition.y} Width: ${payload.data.windowPosition.width} Height: ${payload.data.windowPosition.height}`});\nglobal.set(\"beholder_active_process\", payload.data);\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -737,9 +737,9 @@
         "focusRegionY": "200",
         "focusRegionWidth": "640",
         "focusRegionHeight": "480",
-        "focusRegionMaxFps": "0.25",
+        "focusRegionMaxFps": "0.15",
         "x": 770,
-        "y": 440,
+        "y": 360,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -753,7 +753,7 @@
         "hostname": "",
         "focusRegionName": "default",
         "x": 760,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "7d9c49c23c8e96bf"
@@ -772,7 +772,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 590,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "ab3a064cde3f0484"
@@ -783,15 +783,15 @@
         "id": "3eb030707ceb7775",
         "type": "function",
         "z": "6a61b64910c046bc",
-        "name": "",
-        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2FgoldCookie\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          RatioThreshold: 0.76,\n          ScaleIncrement: 2.0,\n          RotationBins: 20,\n        },\n        outputImagePrefrontalKey: \"images/testOutput\",\n    }\n}",
+        "name": "create detection request",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2FgoldCookie\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.76,\n          scaleIncrement: 2.0,\n          rotationBins: 20,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1380,
-        "y": 340,
+        "x": 1370,
+        "y": 280,
         "wires": [
             [
                 "7f017b15dc34141a"
@@ -808,30 +808,336 @@
         "scaleIncrement": 2,
         "rotationBins": 20,
         "outputImagePrefrontalKey": "",
-        "x": 1580,
-        "y": 440,
+        "x": 1570,
+        "y": 280,
         "wires": [
             [
-                "58024a0bb271f0ff",
                 "7d9c49c23c8e96bf"
             ]
         ]
     },
     {
-        "id": "58024a0bb271f0ff",
+        "id": "672c39e45bca5a5e",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/occipital/+/detected_objects",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "4dfad642f6bb9b07"
+            ]
+        ]
+    },
+    {
+        "id": "90453e276b5226b4",
+        "type": "play audio",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "voice": "4",
+        "x": 1350,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "315bab55e385c844",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "determine center point",
+        "func": "const polys = msg.payload.data;\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.warn(JSON.stringify(midpoints));\n\nreturn {\n    payload: midpoints[0]\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 520,
+        "wires": [
+            [
+                "406a871364edf3e0"
+            ]
+        ]
+    },
+    {
+        "id": "4dfad642f6bb9b07",
+        "type": "switch",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "property": "payload.data.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 430,
+        "y": 420,
+        "wires": [
+            [
+                "5bae0d8e74e07605"
+            ],
+            [
+                "315bab55e385c844",
+                "7dc982b555fc5c4e"
+            ]
+        ]
+    },
+    {
+        "id": "c65677c5a4b9b7c8",
+        "type": "change",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Oh look, it's a golden cookie!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 460,
+        "wires": [
+            [
+                "954c42f73a1671e8"
+            ]
+        ]
+    },
+    {
+        "id": "7dc982b555fc5c4e",
+        "type": "change",
+        "z": "6a61b64910c046bc",
+        "name": "store detected objects",
+        "rules": [
+            {
+                "t": "set",
+                "p": "beholder_detected_objects",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 460,
+        "wires": [
+            [
+                "c65677c5a4b9b7c8"
+            ]
+        ]
+    },
+    {
+        "id": "5bae0d8e74e07605",
+        "type": "change",
+        "z": "6a61b64910c046bc",
+        "name": "clear detected objects",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "beholder_detected_objects",
+                "pt": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 420,
+        "wires": [
+            [
+                "6fa2fffd3ef8a0eb"
+            ]
+        ]
+    },
+    {
+        "id": "6fa2fffd3ef8a0eb",
+        "type": "change",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "no cookies found :(",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 420,
+        "wires": [
+            [
+                "954c42f73a1671e8"
+            ]
+        ]
+    },
+    {
+        "id": "cce6eaf9f1da39dd",
+        "type": "rbe",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1210,
+        "y": 440,
+        "wires": [
+            [
+                "90453e276b5226b4"
+            ]
+        ]
+    },
+    {
+        "id": "954c42f73a1671e8",
+        "type": "throttle",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "throttleType": "time",
+        "timeLimit": "1",
+        "timeLimitType": "seconds",
+        "countLimit": 0,
+        "blockSize": 0,
+        "locked": false,
+        "x": 1070,
+        "y": 440,
+        "wires": [
+            [
+                "cce6eaf9f1da39dd"
+            ]
+        ]
+    },
+    {
+        "id": "406a871364edf3e0",
+        "type": "change",
+        "z": "6a61b64910c046bc",
+        "name": "set global target position",
+        "rules": [
+            {
+                "t": "set",
+                "p": "beholder_pointer_target_position",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 520,
+        "wires": [
+            [
+                "4eccadb17f912ba3",
+                "133b2cc25a6689f1"
+            ]
+        ]
+    },
+    {
+        "id": "c71dd593831e1042",
+        "type": "move-mouse-to",
+        "z": "6a61b64910c046bc",
+        "preMoveActions": "",
+        "postMoveActions": "",
+        "x": 1360,
+        "y": 520,
+        "wires": [
+            [
+                "7d9c49c23c8e96bf"
+            ]
+        ]
+    },
+    {
+        "id": "18668d4cb0941d47",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "func": "\nreturn {\n    payload: null\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1200,
+        "y": 520,
+        "wires": [
+            [
+                "c71dd593831e1042"
+            ]
+        ]
+    },
+    {
+        "id": "4eccadb17f912ba3",
         "type": "debug",
         "z": "6a61b64910c046bc",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "topic",
-        "targetType": "msg",
+        "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1760,
-        "y": 440,
+        "x": 1460,
+        "y": 720,
         "wires": []
+    },
+    {
+        "id": "133b2cc25a6689f1",
+        "type": "throttle",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "throttleType": "time",
+        "timeLimit": "5",
+        "timeLimitType": "seconds",
+        "countLimit": 0,
+        "blockSize": 0,
+        "locked": false,
+        "x": 1070,
+        "y": 520,
+        "wires": [
+            [
+                "18668d4cb0941d47"
+            ]
+        ]
     }
 ]

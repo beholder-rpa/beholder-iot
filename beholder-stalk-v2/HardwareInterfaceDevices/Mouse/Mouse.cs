@@ -151,6 +151,69 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       }
     }
 
+    public async Task SendMouseMoveTo(MoveMouseToRequest request)
+    {
+      if (!string.IsNullOrWhiteSpace(request.PreMoveActions))
+      {
+        await SendMouseActions(request.PreMoveActions);
+      }
+
+      if (request.CurrentPosition == null)
+      {
+        request.CurrentPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
+      }
+
+      if (request.TargetPosition == null)
+      {
+        request.TargetPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
+      }
+
+      var estimatedPosition = new MoveMouseToRequest.Types.Point()
+      {
+        X = request.CurrentPosition.X,
+        Y = request.CurrentPosition.Y,
+      };
+
+      while (estimatedPosition.X != request.TargetPosition.X && estimatedPosition.Y != request.TargetPosition.Y)
+      {
+        short xAmount, yAmount;
+        if (estimatedPosition.X < request.TargetPosition.X)
+        {
+          xAmount = 1;
+        }
+        else if (estimatedPosition.X > request.TargetPosition.X)
+        {
+          xAmount = -1;
+        }
+        else
+        {
+          xAmount = 0;
+        }
+
+        if (estimatedPosition.Y < request.TargetPosition.Y)
+        {
+          yAmount = 1;
+        }
+        else if (estimatedPosition.Y > request.TargetPosition.Y)
+        {
+          yAmount = -1;
+        }
+        else
+        {
+          yAmount = 0;
+        }
+
+        SendMouseMove(xAmount, yAmount);
+        estimatedPosition.X += xAmount;
+        estimatedPosition.Y += yAmount;
+      }
+
+      if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
+      {
+        await SendMouseActions(request.PostMoveActions);
+      }
+    }
+
     public void SendMouseMove(short x, short y)
     {
       var xBytes = BitConverter.GetBytes(x);

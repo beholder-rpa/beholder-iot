@@ -4,7 +4,7 @@ export interface BeholderServiceInfo {
   key: string;
   hostName: string;
   ipAddresses: string;
-  serviceName: 'daemon' | 'occipital' | 'epidermis' | 'cortex' | 'stalk';
+  serviceName: 'daemon' | 'epidermis' | 'cortex' | 'stalk';
   version: string;
   lastSeen: Dayjs;
 }

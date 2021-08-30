@@ -703,6 +703,28 @@
                 "user": false,
                 "module": "node-red-contrib-beholder",
                 "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-mouse-click/send-mouse-click.js"
+            },
+            "beholder-stalk-send-mouse-actions": {
+                "name": "beholder-stalk-send-mouse-actions",
+                "types": [
+                    "send-mouse-actions"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/send-mouse-actions/send-mouse-actions.js"
+            },
+            "beholder-stalk-move-mouse-to": {
+                "name": "beholder-stalk-move-mouse-to",
+                "types": [
+                    "move-mouse-to"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/stalk/move-mouse-to/move-mouse-to.js"
             }
         }
     },
@@ -783,6 +805,25 @@
                 "user": false,
                 "module": "node-red-contrib-image-tools",
                 "file": "/data/node_modules/node-red-contrib-image-tools/app.js"
+            }
+        }
+    },
+    "node-red-contrib-play-audio": {
+        "name": "node-red-contrib-play-audio",
+        "version": "2.5.0",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "play-audio": {
+                "name": "play-audio",
+                "types": [
+                    "play audio"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-play-audio",
+                "file": "/data/node_modules/node-red-contrib-play-audio/play-audio.js"
             }
         }
     }

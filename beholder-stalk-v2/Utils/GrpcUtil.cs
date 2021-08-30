@@ -41,6 +41,7 @@
       switch (request.DataContentType)
       {
         case MediaTypeNames.Application.Json:
+          Console.WriteLine(request.Data.ToStringUtf8());
           var input = JsonSerializer.Deserialize<TRequest>(request.Data.ToStringUtf8(), JsonOptions);
           var reply = await method(input);
           response.Status = TopicEventResponse.Types.TopicEventResponseStatus.Success;

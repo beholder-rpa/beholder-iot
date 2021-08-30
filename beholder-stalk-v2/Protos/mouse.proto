@@ -60,3 +60,21 @@ message SetAverageMouseClickDurationRequest {
 message SetAverageMouseClickDurationReply {
   MouseClickDuration duration = 1;
 }
+
+message MoveMouseToRequest {
+    message Point {
+        int32 x = 1;
+        int32 y = 2;
+    }
+    Point current_position = 1;
+    Point target_position = 2;
+    enum MovementType {
+        Linear = 0;
+        Erratic = 1;
+        Bezier = 2;
+    };
+    MovementType movement_type = 3;
+    float movement_speed = 4;
+    string pre_move_actions = 5;
+    string post_move_actions = 6;
+}
