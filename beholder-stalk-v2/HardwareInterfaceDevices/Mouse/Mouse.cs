@@ -169,10 +169,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 SendMouseActions(request.PreMoveActions);
               }
 
-              var momementSpeed = 10;
+              var momementSpeed = 5;
               if (request.MovementSpeed > 0)
               {
-                momementSpeed = (int)(momementSpeed / request.MovementSpeed);
+                momementSpeed = request.MovementSpeed;
               }
 
               if (request.CurrentPosition == null)
@@ -196,11 +196,11 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 short xAmount, yAmount;
                 if (estimatedPosition.X < request.TargetPosition.X)
                 {
-                  xAmount = 1;
+                  xAmount = (short)momementSpeed;
                 }
                 else if (estimatedPosition.X > request.TargetPosition.X)
                 {
-                  xAmount = -1;
+                  xAmount = (short)(momementSpeed * -1);
                 }
                 else
                 {
@@ -209,11 +209,11 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
                 if (estimatedPosition.Y < request.TargetPosition.Y)
                 {
-                  yAmount = 1;
+                  yAmount = (short)momementSpeed;
                 }
                 else if (estimatedPosition.Y > request.TargetPosition.Y)
                 {
-                  yAmount = -1;
+                  yAmount = (short)(momementSpeed * -1);
                 }
                 else
                 {
@@ -223,8 +223,6 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 SendMouseMove(xAmount, yAmount);
                 estimatedPosition.X += xAmount;
                 estimatedPosition.Y += yAmount;
-
-                Thread.Sleep(momementSpeed);
               }
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
