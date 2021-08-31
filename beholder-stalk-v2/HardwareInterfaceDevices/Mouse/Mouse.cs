@@ -173,7 +173,6 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
       var line = new Line(request.CurrentPosition, request.TargetPosition);
       var pointCount = line.GetLength() / movementSpeed;
-      _logger.LogInformation($"{(int)Math.Ceiling(pointCount)}");
       var points = line.GetPoints((int)Math.Ceiling(pointCount));
 
       if (!_isMoving)
@@ -193,8 +192,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               {
                 var currentPoint = points[i - 1];
                 var nextPoint = points[i];
-                var deltaX = (short)((nextPoint.X - currentPoint.X) * 1000/_hres );
-                var deltaY = (short)((nextPoint.Y - currentPoint.Y) * 1000/_vres );
+                var deltaX = (short)((nextPoint.X - currentPoint.X) + 1 );
+                var deltaY = (short)((nextPoint.Y - currentPoint.Y) + 1 );
 
                 SendMouseMove((short)deltaX, (short)deltaY);
                 //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
