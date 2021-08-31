@@ -185,44 +185,34 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 request.TargetPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
               }
 
-              var estimatedPosition = new MoveMouseToRequest.Types.Point()
-              {
-                X = request.CurrentPosition.X,
-                Y = request.CurrentPosition.Y,
-              };
+              var estimatedPositionX = 0.0f;
+              var estimatedPositionY = 0.0f;
 
-              while (estimatedPosition.X != request.TargetPosition.X && estimatedPosition.Y != request.TargetPosition.Y)
+              while (Math.Floor(estimatedPositionX) != request.TargetPosition.X && Math.Floor(estimatedPositionY) != request.TargetPosition.Y)
               {
-                short xAmount, yAmount;
-                if (estimatedPosition.X < request.TargetPosition.X)
+                short xAmount = 0, yAmount = 0;
+                if (estimatedPositionX < request.TargetPosition.X)
                 {
                   xAmount = (short)momementSpeed;
                 }
-                else if (estimatedPosition.X > request.TargetPosition.X)
+                else if (estimatedPositionX > request.TargetPosition.X)
                 {
                   xAmount = (short)(momementSpeed * -1);
                 }
-                else
-                {
-                  xAmount = 0;
-                }
 
-                if (estimatedPosition.Y < request.TargetPosition.Y)
+                if (estimatedPositionY < request.TargetPosition.Y)
                 {
                   yAmount = (short)momementSpeed;
                 }
-                else if (estimatedPosition.Y > request.TargetPosition.Y)
+                else if (estimatedPositionY > request.TargetPosition.Y)
                 {
                   yAmount = (short)(momementSpeed * -1);
                 }
-                else
-                {
-                  yAmount = 0;
-                }
 
                 SendMouseMove(xAmount, yAmount);
-                estimatedPosition.X += xAmount;
-                estimatedPosition.Y += yAmount;
+                // TODO: Movement amount is a function of mouse resolution...
+                estimatedPositionX += (xAmount / 2);
+                estimatedPositionY += (yAmount / 2);
               }
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
