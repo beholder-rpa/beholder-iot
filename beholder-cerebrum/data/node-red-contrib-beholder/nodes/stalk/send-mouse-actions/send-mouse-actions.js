@@ -10,7 +10,7 @@ module.exports = function (RED) {
         body = msg.payload;
       } else {
         body = {
-          actions: config.actions,
+          actions: config.mouseActions,
         }
       }
       this.send({
