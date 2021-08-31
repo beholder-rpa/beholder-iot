@@ -7,7 +7,6 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   using System;
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
-  using System.Threading;
   using static beholder_stalk_v2.Protos.MouseClick.Types;
 
   /// <summary>
@@ -26,6 +25,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         , RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
     public event EventHandler<MouseResolutionChangedEventArgs> MouseResolutionChanged;
+    public int _hres = 800, _vres = 800;
 
     private readonly ILogger<Mouse> _logger;
     private readonly byte[] sizeBuffer = new byte[1];
@@ -83,9 +83,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         return;
       }
 
-      var hres = sizeBuffer[0] << 2;
-      var vres = sizeBuffer[0] << 4;
-      OnMouseResolutionChanged(new MouseResolutionChangedEventArgs(hres, vres));
+      _hres = sizeBuffer[0] << 2;
+      _vres = sizeBuffer[0] << 4;
+
+      OnMouseResolutionChanged(new MouseResolutionChangedEventArgs(_hres, _vres));
       WatchNext();
     }
 
@@ -192,14 +193,12 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               {
                 var currentPoint = points[i - 1];
                 var nextPoint = points[i];
-                var deltaX = (short)(nextPoint.X - currentPoint.X);
-                var deltaY = (short)(nextPoint.Y - currentPoint.Y);
+                var deltaX = (short)((nextPoint.X - currentPoint.X) * 1000/_hres );
+                var deltaY = (short)((nextPoint.Y - currentPoint.Y) * 1000/_vres );
 
                 SendMouseMove((short)deltaX, (short)deltaY);
-                _logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
+                //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
               }
-
-              _logger.LogInformation($"Steps: {points.Length}s. Speed: {movementSpeed}");
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
               {
