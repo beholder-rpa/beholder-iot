@@ -5,6 +5,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   using System;
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
+  using System.Threading;
   using System.Threading.Tasks;
   using static beholder_stalk_v2.Protos.MouseClick.Types;
 
@@ -206,6 +207,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         SendMouseMove(xAmount, yAmount);
         estimatedPosition.X += xAmount;
         estimatedPosition.Y += yAmount;
+
+        Thread.Sleep(10);
       }
 
       if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
