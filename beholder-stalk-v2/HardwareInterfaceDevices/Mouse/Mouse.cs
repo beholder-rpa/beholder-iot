@@ -192,9 +192,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               {
                 var currentPoint = points[i - 1];
                 var nextPoint = points[i];
-                var deltaX = (short)((nextPoint.X - currentPoint.X) + 1 );
-                var deltaY = (short)((nextPoint.Y - currentPoint.Y) + 1 );
+                var deltaX = (short)((nextPoint.X - currentPoint.X));
+                var deltaY = (short)((nextPoint.Y - currentPoint.Y));
 
+                SendMouseMove((short)deltaX, (short)deltaY);
                 SendMouseMove((short)deltaX, (short)deltaY);
                 //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
               }
