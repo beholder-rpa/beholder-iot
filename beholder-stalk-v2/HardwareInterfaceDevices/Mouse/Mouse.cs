@@ -1,6 +1,7 @@
 namespace beholder_stalk_v2.HardwareInterfaceDevices
 {
   using beholder_stalk_v2.Protos;
+  using beholder_stalk_v2.Utils;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
   using System;
@@ -163,6 +164,17 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         return;
       }
 
+      var movementSpeed = 1;
+      if (request.MovementSpeed > 0)
+      {
+        movementSpeed = request.MovementSpeed;
+      }
+
+      var line = new Line(request.CurrentPosition, request.TargetPosition);
+      var pointCount = line.GetLength() / movementSpeed;
+      _logger.LogInformation($"{(int)Math.Ceiling(pointCount)}");
+      var points = line.GetPoints((int)Math.Ceiling(pointCount));
+
       if (!_isMoving)
       {
         lock (_isMovingLock)
@@ -176,25 +188,18 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               {
                 SendMouseActions(request.PreMoveActions);
               }
-
-              var movementSpeed = 1;
-              if (request.MovementSpeed > 0)
+              for (int i = 1; i <= points.Length - 1; i++)
               {
-                movementSpeed = request.MovementSpeed;
-              }
-
-              var m = (double)(request.TargetPosition.Y - request.CurrentPosition.Y) / (double)(request.TargetPosition.X - request.CurrentPosition.X);
-              var d = request.TargetPosition.X > request.CurrentPosition.X ? 1 : -1;
-              for(int i = 1; i <= Math.Max(Math.Abs(request.TargetPosition.X - request.CurrentPosition.X), Math.Abs(request.TargetPosition.Y - request.CurrentPosition.Y)) / movementSpeed; i += movementSpeed)
-              {
-                var deltaX = ((request.CurrentPosition.X + (i * movementSpeed * d)) - (request.CurrentPosition.X + ((i - 1) * movementSpeed * d))) * movementSpeed;
-                var deltaY = ((short)(i * movementSpeed * m) - (short)((i - 1) * movementSpeed * m)) * movementSpeed;
+                var currentPoint = points[i - 1];
+                var nextPoint = points[i];
+                var deltaX = (short)(nextPoint.X - currentPoint.X);
+                var deltaY = (short)(nextPoint.Y - currentPoint.Y);
 
                 SendMouseMove((short)deltaX, (short)deltaY);
-                //_logger.LogInformation($"Move: {request.CurrentPosition.X + (i * movementSpeed * d)},{request.CurrentPosition.Y + (i * movementSpeed * m)} ({deltaX},{deltaY})");
+                _logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
               }
 
-              _logger.LogInformation($"Steps: {Math.Max(Math.Abs(request.TargetPosition.X - request.CurrentPosition.X), Math.Abs(request.TargetPosition.Y - request.CurrentPosition.Y)) / movementSpeed}. Speed: {movementSpeed}");
+              _logger.LogInformation($"Steps: {points.Length}s. Speed: {movementSpeed}");
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
               {

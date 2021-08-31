@@ -138,6 +138,12 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") build"
       Invoke-Expression $dockerComposeCommand
 
+      if ($environment -eq "dev") {
+        $null > ./usb-dev/hidg0
+        $null > ./usb-dev/hidg1
+        $null > ./usb-dev/hidg2
+      }
+
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
       Invoke-Expression $dockerComposeCommand
     }
