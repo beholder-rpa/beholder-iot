@@ -169,10 +169,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 SendMouseActions(request.PreMoveActions);
               }
 
-              var momementSpeed = 5;
+              var movementSpeed = 5;
               if (request.MovementSpeed > 0)
               {
-                momementSpeed = request.MovementSpeed;
+                movementSpeed = request.MovementSpeed;
               }
 
               if (request.CurrentPosition == null)
@@ -188,25 +188,25 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               var estimatedPositionX = 0.0f;
               var estimatedPositionY = 0.0f;
 
-              while (Math.Floor(estimatedPositionX) != request.TargetPosition.X && Math.Floor(estimatedPositionY) != request.TargetPosition.Y)
+              while ((Math.Abs(request.TargetPosition.X - estimatedPositionX) > movementSpeed) && (Math.Abs(request.TargetPosition.Y - estimatedPositionY) > movementSpeed))
               {
                 short xAmount = 0, yAmount = 0;
                 if (estimatedPositionX < request.TargetPosition.X)
                 {
-                  xAmount = (short)momementSpeed;
+                  xAmount = (short)movementSpeed;
                 }
                 else if (estimatedPositionX > request.TargetPosition.X)
                 {
-                  xAmount = (short)(momementSpeed * -1);
+                  xAmount = (short)(movementSpeed * -1);
                 }
 
                 if (estimatedPositionY < request.TargetPosition.Y)
                 {
-                  yAmount = (short)momementSpeed;
+                  yAmount = (short)movementSpeed;
                 }
                 else if (estimatedPositionY > request.TargetPosition.Y)
                 {
-                  yAmount = (short)(momementSpeed * -1);
+                  yAmount = (short)(movementSpeed * -1);
                 }
 
                 SendMouseMove(xAmount, yAmount);
