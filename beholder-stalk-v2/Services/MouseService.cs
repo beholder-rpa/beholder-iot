@@ -129,28 +129,28 @@
     {
       _mouse.SendMouseClick(request.MouseClick?.Button, request.MouseClick?.ClickDirection ?? MouseClick.Types.ClickDirection.PressAndRelease, request.MouseClick.Duration);
       _logger.LogInformation($"Sent Mouse Click {request.MouseClick}");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<Empty> SendMouseActions(SendMouseActionsRequest request)
     {
       _mouse.SendMouseActions(request.Actions);
       _logger.LogInformation($"Sent Mouse Actions {request.Actions}");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<Empty> SendMouseRaw(SendMouseRawRequest request)
     {
       _mouse.SendRaw(request.Report.ToByteArray());
       _logger.LogInformation($"Sent Raw Mouse Actions {request.Report}");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<Empty> SendMouseReset()
     {
       _mouse.SendMouseReset();
       _logger.LogInformation("Reset Mouse");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<SetAverageMouseClickDurationReply> SetAverageMouseClickDuration(SetAverageMouseClickDurationRequest request)
@@ -171,8 +171,8 @@
     public Task<Empty> MoveMouseTo(MoveMouseToRequest request)
     {
       _mouse.SendMouseMoveTo(request);
-      _logger.LogInformation($"Moved Mouse from {request.CurrentPosition.X},{request.CurrentPosition.Y} to {request.TargetPosition.X},{request.TargetPosition.Y} using {request.MovementType} behavior. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
-      return null;
+      _logger.LogInformation($"Moved Mouse from {request.CurrentPosition.X},{request.CurrentPosition.Y} to {request.TargetPosition.X},{request.TargetPosition.Y} using {request.MovementType} behavior and speed of {request.MovementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
+      return Task.FromResult<Empty>(null);
     }
 
     public async Task OnStatusEvent()

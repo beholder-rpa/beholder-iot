@@ -135,14 +135,14 @@
     {
       _keyboard.SendRaw(request.Report.ToByteArray());
       _logger.LogInformation($"Sent Raw Keys {request.Report}");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<Empty> SendKeysReset()
     {
       _keyboard.SendKeysReset();
       _logger.LogInformation("Reset Keys");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<SetAverageKeypressDurationReply> SetAverageKeypressDuration(SetAverageKeypressDurationRequest request)

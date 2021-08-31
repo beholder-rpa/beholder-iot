@@ -37,7 +37,7 @@ namespace beholder_stalk_v2
           try
           {
             await _daprClient.PublishEventAsync(Consts.PubSubName, "beholder/ctaf", _serviceInfo.Value, stoppingToken);
-            _logger.LogInformation("Stalk Pulsed");
+            //_logger.LogInformation("Stalk Pulsed");
           }
           catch (Exception ex)
           {

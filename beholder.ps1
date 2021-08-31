@@ -130,6 +130,17 @@ switch ($command)
       $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
       Invoke-Expression $dockerComposeCommand
     }
+    'rebuild-stalk'
+    {
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") rm -f -s beholder-stalk beholder-stalk-dapr"
+      Invoke-Expression $dockerComposeCommand
+      
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") build"
+      Invoke-Expression $dockerComposeCommand
+
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
+      Invoke-Expression $dockerComposeCommand
+    }
     default
     {
       throw "Unknown command: $command"

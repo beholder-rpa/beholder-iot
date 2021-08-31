@@ -628,7 +628,7 @@
         "wires": [
             [
                 "4c38ed9e60e155d6",
-                "3eb030707ceb7775"
+                "ae2f0433ea25035b"
             ]
         ]
     },
@@ -1031,7 +1031,7 @@
         "z": "6a61b64910c046bc",
         "name": "",
         "throttleType": "time",
-        "timeLimit": "1",
+        "timeLimit": "0",
         "timeLimitType": "seconds",
         "countLimit": 0,
         "blockSize": 0,
@@ -1067,7 +1067,6 @@
         "y": 520,
         "wires": [
             [
-                "4eccadb17f912ba3",
                 "133b2cc25a6689f1"
             ]
         ]
@@ -1106,22 +1105,6 @@
         ]
     },
     {
-        "id": "4eccadb17f912ba3",
-        "type": "debug",
-        "z": "6a61b64910c046bc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1460,
-        "y": 720,
-        "wires": []
-    },
-    {
         "id": "133b2cc25a6689f1",
         "type": "throttle",
         "z": "6a61b64910c046bc",
@@ -1137,6 +1120,25 @@
         "wires": [
             [
                 "18668d4cb0941d47"
+            ]
+        ]
+    },
+    {
+        "id": "ae2f0433ea25035b",
+        "type": "throttle",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "throttleType": "time",
+        "timeLimit": "1",
+        "timeLimitType": "seconds",
+        "countLimit": 0,
+        "blockSize": 0,
+        "locked": false,
+        "x": 1170,
+        "y": 280,
+        "wires": [
+            [
+                "3eb030707ceb7775"
             ]
         ]
     }

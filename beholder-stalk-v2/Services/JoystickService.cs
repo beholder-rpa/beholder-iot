@@ -128,14 +128,14 @@
     {
       _joystick.SendRaw(request.Report.ToByteArray());
       _logger.LogInformation($"Sent Raw Joystick Actions {request.Report}");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<Empty> SendJoystickReset()
     {
       _joystick.SendJoystickReset();
       _logger.LogInformation("Reset Joystick");
-      return null;
+      return Task.FromResult<Empty>(null);
     }
 
     public Task<SetAverageJoystickButtonPressDurationReply> SetAverageJoystickButtonPressDuration(SetAverageJoystickButtonPressDurationRequest request)

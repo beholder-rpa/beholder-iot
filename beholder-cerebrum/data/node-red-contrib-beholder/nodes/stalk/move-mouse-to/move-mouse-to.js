@@ -28,7 +28,7 @@ module.exports = function (RED) {
           current_position: currentPosition,
           target_position: targetPosition,
           movement_type: 0,
-          movement_speed: parseInt(config.movementSpeed),
+          movement_speed: parseInt(config.movementSpeed) || 2,
           pre_move_actions: config.preMoveActions,
           post_move_actions: config.postMoveActions,
         }

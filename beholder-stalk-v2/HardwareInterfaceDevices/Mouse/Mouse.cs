@@ -2,6 +2,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 {
   using beholder_stalk_v2.Protos;
   using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.Logging;
   using System;
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
@@ -25,13 +26,15 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
     public event EventHandler<MouseResolutionChangedEventArgs> MouseResolutionChanged;
 
+    private readonly ILogger<Mouse> _logger;
     private readonly byte[] sizeBuffer = new byte[1];
     private volatile bool _isMoving = false;
     private readonly object _isMovingLock = new object();
 
-    public Mouse(IConfiguration config)
+    public Mouse(IConfiguration config, ILogger<Mouse> logger)
         : base(config["hid:mouse:devPath"])
     {
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       uint mouseMin = 40;
       uint mouseMax = 141;
 
@@ -155,6 +158,11 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
     public void SendMouseMoveTo(MoveMouseToRequest request)
     {
+      if (request.CurrentPosition == null || request.TargetPosition == null)
+      {
+        return;
+      }
+
       if (!_isMoving)
       {
         lock (_isMovingLock)
@@ -169,51 +177,24 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 SendMouseActions(request.PreMoveActions);
               }
 
-              var movementSpeed = 5;
+              var movementSpeed = 1;
               if (request.MovementSpeed > 0)
               {
                 movementSpeed = request.MovementSpeed;
               }
 
-              if (request.CurrentPosition == null)
+              var m = (double)(request.TargetPosition.Y - request.CurrentPosition.Y) / (double)(request.TargetPosition.X - request.CurrentPosition.X);
+              var d = request.TargetPosition.X > request.CurrentPosition.X ? 1 : -1;
+              for(int i = 1; i <= Math.Max(Math.Abs(request.TargetPosition.X - request.CurrentPosition.X), Math.Abs(request.TargetPosition.Y - request.CurrentPosition.Y)) / movementSpeed; i += movementSpeed)
               {
-                request.CurrentPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
+                var deltaX = ((request.CurrentPosition.X + (i * movementSpeed * d)) - (request.CurrentPosition.X + ((i - 1) * movementSpeed * d))) * movementSpeed;
+                var deltaY = ((short)(i * movementSpeed * m) - (short)((i - 1) * movementSpeed * m)) * movementSpeed;
+
+                SendMouseMove((short)deltaX, (short)deltaY);
+                //_logger.LogInformation($"Move: {request.CurrentPosition.X + (i * movementSpeed * d)},{request.CurrentPosition.Y + (i * movementSpeed * m)} ({deltaX},{deltaY})");
               }
 
-              if (request.TargetPosition == null)
-              {
-                request.TargetPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
-              }
-
-              var estimatedPositionX = 0.0f;
-              var estimatedPositionY = 0.0f;
-
-              while ((Math.Abs(request.TargetPosition.X - estimatedPositionX) > movementSpeed) && (Math.Abs(request.TargetPosition.Y - estimatedPositionY) > movementSpeed))
-              {
-                short xAmount = 0, yAmount = 0;
-                if (estimatedPositionX < request.TargetPosition.X)
-                {
-                  xAmount = (short)movementSpeed;
-                }
-                else if (estimatedPositionX > request.TargetPosition.X)
-                {
-                  xAmount = (short)(movementSpeed * -1);
-                }
-
-                if (estimatedPositionY < request.TargetPosition.Y)
-                {
-                  yAmount = (short)movementSpeed;
-                }
-                else if (estimatedPositionY > request.TargetPosition.Y)
-                {
-                  yAmount = (short)(movementSpeed * -1);
-                }
-
-                SendMouseMove(xAmount, yAmount);
-                // TODO: Movement amount is a function of mouse resolution...
-                estimatedPositionX += (xAmount / 2);
-                estimatedPositionY += (yAmount / 2);
-              }
+              _logger.LogInformation($"Steps: {Math.Max(Math.Abs(request.TargetPosition.X - request.CurrentPosition.X), Math.Abs(request.TargetPosition.Y - request.CurrentPosition.Y)) / movementSpeed}. Speed: {movementSpeed}");
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
               {
