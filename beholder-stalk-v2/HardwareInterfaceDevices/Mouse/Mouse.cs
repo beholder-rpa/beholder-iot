@@ -159,6 +159,12 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         await SendMouseActions(request.PreMoveActions);
       }
 
+      var momementSpeed = 10;
+      if (request.MovementSpeed > 0)
+      {
+        momementSpeed = (int)(momementSpeed / request.MovementSpeed);
+      }
+
       if (request.CurrentPosition == null)
       {
         request.CurrentPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
@@ -208,7 +214,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         estimatedPosition.X += xAmount;
         estimatedPosition.Y += yAmount;
 
-        Thread.Sleep(10);
+        Thread.Sleep(momementSpeed);
       }
 
       if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
