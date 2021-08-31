@@ -5,6 +5,7 @@
     defaults: {
       preMoveActions: { value: "" },
       postMoveActions: { value: "" },
+      movementSpeed: { value: "1" },
     },
     inputs: 1,
     outputs: 1,
@@ -19,11 +20,15 @@
 <script type="text/html" data-template-name="move-mouse-to">
   <div class="form-row">
     <label for="node-input-preMoveActions">Pre-Move Actions</label>
-    <input type="number" id="node-input-preMoveActions" placeholder="pre-move actions">
+    <input type="text" id="node-input-preMoveActions" placeholder="pre-move actions">
   </div>
   <div class="form-row">
     <label for="node-input-postMoveActions">Post-Move Actions</label>
-    <input type="number" id="node-input-postMoveActions" placeholder="post-move actions">
+    <input type="text" id="node-input-postMoveActions" placeholder="post-move actions">
+  </div>
+  <div class="form-row">
+    <label for="node-input-movementSpeed">Movement Speed</label>
+    <input type="number" id="node-input-movementSpeed" placeholder="movement speed">
   </div>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

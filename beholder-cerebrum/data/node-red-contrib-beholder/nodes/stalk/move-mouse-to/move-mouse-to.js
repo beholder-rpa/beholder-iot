@@ -28,9 +28,9 @@ module.exports = function (RED) {
           current_position: currentPosition,
           target_position: targetPosition,
           movement_type: 0,
-          movement_speed: 0.5,
-          pre_move_actions: "",
-          post_move_actions: "",
+          movement_speed: config.movementSpeed,
+          pre_move_actions: config.preMoveActions,
+          post_move_actions: config.postMoveActions,
         }
       }
       this.send({
