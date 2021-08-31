@@ -125,16 +125,16 @@
       };
     }
 
-    public async Task<Empty> SendMouseClick(SendMouseClickRequest request)
+    public Task<Empty> SendMouseClick(SendMouseClickRequest request)
     {
-      await _mouse.SendMouseClick(request.MouseClick?.Button, request.MouseClick?.ClickDirection ?? MouseClick.Types.ClickDirection.PressAndRelease, request.MouseClick.Duration);
+      _mouse.SendMouseClick(request.MouseClick?.Button, request.MouseClick?.ClickDirection ?? MouseClick.Types.ClickDirection.PressAndRelease, request.MouseClick.Duration);
       _logger.LogInformation($"Sent Mouse Click {request.MouseClick}");
       return null;
     }
 
-    public async Task<Empty> SendMouseActions(SendMouseActionsRequest request)
+    public Task<Empty> SendMouseActions(SendMouseActionsRequest request)
     {
-      await _mouse.SendMouseActions(request.Actions);
+      _mouse.SendMouseActions(request.Actions);
       _logger.LogInformation($"Sent Mouse Actions {request.Actions}");
       return null;
     }
@@ -168,9 +168,9 @@
       });
     }
 
-    public async Task<Empty> MoveMouseTo(MoveMouseToRequest request)
+    public Task<Empty> MoveMouseTo(MoveMouseToRequest request)
     {
-      await _mouse.SendMouseMoveTo(request);
+      _mouse.SendMouseMoveTo(request);
       _logger.LogInformation($"Moved Mouse from {request.CurrentPosition.X},{request.CurrentPosition.Y} to {request.TargetPosition.X},{request.TargetPosition.Y} using {request.MovementType} behavior. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
       return null;
     }

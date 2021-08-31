@@ -6,7 +6,6 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
   using System.Threading;
-  using System.Threading.Tasks;
   using static beholder_stalk_v2.Protos.MouseClick.Types;
 
   /// <summary>
@@ -27,6 +26,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
     public event EventHandler<MouseResolutionChangedEventArgs> MouseResolutionChanged;
 
     private readonly byte[] sizeBuffer = new byte[1];
+    private volatile bool _isMoving = false;
+    private readonly object _isMovingLock = new object();
 
     public Mouse(IConfiguration config)
         : base(config["hid:mouse:devPath"])
@@ -114,7 +115,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       }
     }
 
-    public async Task SendMouseClick(string button, ClickDirection direction = ClickDirection.PressAndRelease, MouseClickDuration duration = null)
+    public void SendMouseClick(string button, ClickDirection direction = ClickDirection.PressAndRelease, MouseClickDuration duration = null)
     {
       if (string.IsNullOrEmpty(button))
       {
@@ -146,80 +147,97 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         case ClickDirection.PressAndRelease:
         default:
           SendButtonPress(buttonValue);
-          await DelayUtil.Think(duration);
+          DelayUtil.Think(duration).GetAwaiter().GetResult();
           SendButtonRelease(buttonValue);
           break;
       }
     }
 
-    public async Task SendMouseMoveTo(MoveMouseToRequest request)
+    public void SendMouseMoveTo(MoveMouseToRequest request)
     {
-      if (!string.IsNullOrWhiteSpace(request.PreMoveActions))
+      if (!_isMoving)
       {
-        await SendMouseActions(request.PreMoveActions);
-      }
-
-      var momementSpeed = 10;
-      if (request.MovementSpeed > 0)
-      {
-        momementSpeed = (int)(momementSpeed / request.MovementSpeed);
-      }
-
-      if (request.CurrentPosition == null)
-      {
-        request.CurrentPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
-      }
-
-      if (request.TargetPosition == null)
-      {
-        request.TargetPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
-      }
-
-      var estimatedPosition = new MoveMouseToRequest.Types.Point()
-      {
-        X = request.CurrentPosition.X,
-        Y = request.CurrentPosition.Y,
-      };
-
-      while (estimatedPosition.X != request.TargetPosition.X && estimatedPosition.Y != request.TargetPosition.Y)
-      {
-        short xAmount, yAmount;
-        if (estimatedPosition.X < request.TargetPosition.X)
+        lock (_isMovingLock)
         {
-          xAmount = 1;
-        }
-        else if (estimatedPosition.X > request.TargetPosition.X)
-        {
-          xAmount = -1;
-        }
-        else
-        {
-          xAmount = 0;
-        }
+          if (!_isMoving)
+          {
+            try
+            {
+              _isMoving = true;
+              if (!string.IsNullOrWhiteSpace(request.PreMoveActions))
+              {
+                SendMouseActions(request.PreMoveActions);
+              }
 
-        if (estimatedPosition.Y < request.TargetPosition.Y)
-        {
-          yAmount = 1;
-        }
-        else if (estimatedPosition.Y > request.TargetPosition.Y)
-        {
-          yAmount = -1;
-        }
-        else
-        {
-          yAmount = 0;
-        }
+              var momementSpeed = 10;
+              if (request.MovementSpeed > 0)
+              {
+                momementSpeed = (int)(momementSpeed / request.MovementSpeed);
+              }
 
-        SendMouseMove(xAmount, yAmount);
-        estimatedPosition.X += xAmount;
-        estimatedPosition.Y += yAmount;
+              if (request.CurrentPosition == null)
+              {
+                request.CurrentPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
+              }
 
-        Thread.Sleep(momementSpeed);
-      }
+              if (request.TargetPosition == null)
+              {
+                request.TargetPosition = new MoveMouseToRequest.Types.Point() { X = 0, Y = 0 };
+              }
 
-      if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
-      {
-        await SendMouseActions(request.PostMoveActions);
+              var estimatedPosition = new MoveMouseToRequest.Types.Point()
+              {
+                X = request.CurrentPosition.X,
+                Y = request.CurrentPosition.Y,
+              };
+
+              while (estimatedPosition.X != request.TargetPosition.X && estimatedPosition.Y != request.TargetPosition.Y)
+              {
+                short xAmount, yAmount;
+                if (estimatedPosition.X < request.TargetPosition.X)
+                {
+                  xAmount = 1;
+                }
+                else if (estimatedPosition.X > request.TargetPosition.X)
+                {
+                  xAmount = -1;
+                }
+                else
+                {
+                  xAmount = 0;
+                }
+
+                if (estimatedPosition.Y < request.TargetPosition.Y)
+                {
+                  yAmount = 1;
+                }
+                else if (estimatedPosition.Y > request.TargetPosition.Y)
+                {
+                  yAmount = -1;
+                }
+                else
+                {
+                  yAmount = 0;
+                }
+
+                SendMouseMove(xAmount, yAmount);
+                estimatedPosition.X += xAmount;
+                estimatedPosition.Y += yAmount;
+
+                Thread.Sleep(momementSpeed);
+              }
+
+              if (!string.IsNullOrWhiteSpace(request.PostMoveActions))
+              {
+                SendMouseActions(request.PostMoveActions);
+              }
+            }
+            finally
+            {
+              _isMoving = false;
+            }
+          }
+        }
       }
     }
 
@@ -288,7 +306,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       }
     }
 
-    public async Task SendMouseActions(string actions)
+    public void SendMouseActions(string actions)
     {
       var mouseActions = new List<IMouseAction>();
       foreach (Match m in MouseActionsRegex.Matches(actions))
@@ -378,7 +396,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         switch (mouseAction)
         {
           case MouseClick mouseClick:
-            await SendMouseClick(mouseClick.Button, mouseClick.ClickDirection, mouseClick.Duration);
+            SendMouseClick(mouseClick.Button, mouseClick.ClickDirection, mouseClick.Duration);
             break;
           case MouseMove mouseMove:
             SendMouseMove((short)mouseMove.X, (short)mouseMove.Y);
