@@ -166,13 +166,13 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         return;
       }
 
-      var movementScaleX = 1.5;
+      var movementScaleX = 1.15;
       if (request.MovementScaleX > 0)
       {
         movementScaleX = request.MovementScaleX;
       }
 
-      var movementScaleY = 1.5;
+      var movementScaleY = 1.15;
       if (request.MovementScaleY > 0)
       {
         movementScaleY = request.MovementScaleY;

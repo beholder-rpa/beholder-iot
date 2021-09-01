@@ -35,9 +35,9 @@
       services.AddSingleton<Mouse>();
       services.AddSingleton<Joystick>();
 
-      services.AddTransient<IHumanInterfaceService, KeyboardService>();
-      services.AddTransient<IHumanInterfaceService, MouseService>();
-      services.AddTransient<IHumanInterfaceService, JoystickService>();
+      services.AddSingleton<IHumanInterfaceService, KeyboardService>();
+      services.AddSingleton<IHumanInterfaceService, MouseService>();
+      services.AddSingleton<IHumanInterfaceService, JoystickService>();
 
       services.AddGrpc();
 
