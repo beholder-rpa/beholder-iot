@@ -178,10 +178,10 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         movementScaleY = request.MovementScaleY;
       }
 
-      var currentPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.CurrentPosition.X * movementScaleX), Y = (int)(request.CurrentPosition.Y * movementScaleY) };
+      var sourcePoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.CurrentPosition.X * movementScaleX), Y = (int)(request.CurrentPosition.Y * movementScaleY) };
       var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScaleX), Y = (int)(request.TargetPosition.Y * movementScaleY) };
 
-      _logger.LogInformation($"Using current point {currentPoint.X},{currentPoint.Y}, which is scaled from {request.CurrentPosition.X} * {movementScaleX},{request.CurrentPosition.Y} * {movementScaleY}");
+      _logger.LogInformation($"Using source point {sourcePoint.X},{sourcePoint.Y}, which is scaled from {request.CurrentPosition.X} * {movementScaleX},{request.CurrentPosition.Y} * {movementScaleY}");
       _logger.LogInformation($"Using target point {targetPoint.X},{targetPoint.Y}, which is scaled from {request.TargetPosition.X} * {movementScaleX},{request.TargetPosition.Y} * {movementScaleY}");
 
       var movementSpeed = 1;
@@ -200,7 +200,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
       _logger.LogInformation($"Using movement delay {movementDelayMs}");
 
-      var line = new Line(currentPoint, targetPoint);
+      var line = new Line(sourcePoint, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;
       var points = line.GetPoints((int)Math.Ceiling(pointCount));
 
