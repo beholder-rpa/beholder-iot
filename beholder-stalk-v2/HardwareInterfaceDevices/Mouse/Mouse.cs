@@ -177,13 +177,17 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         movementScaleY = request.MovementScaleY;
       }
 
+      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScaleX), Y = (int)(request.TargetPosition.Y * movementScaleY) };
+
+      _logger.LogInformation($"Using target point {targetPoint.X},{targetPoint.Y}, which is scaled from {request.TargetPosition.X} * {movementScaleX},{request.TargetPosition.Y} * {movementScaleY}");
+
       var movementSpeed = 1;
       if (request.MovementSpeed > 0)
       {
         movementSpeed = request.MovementSpeed;
       }
 
-      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScaleX), Y = (int)(request.TargetPosition.Y * movementScaleY) };
+      _logger.LogInformation($"Using movement speed {movementSpeed}");
 
       var line = new Line(request.CurrentPosition, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;
