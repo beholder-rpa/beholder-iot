@@ -165,10 +165,16 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         return;
       }
 
-      var movementScale = 1.5;
-      if (request.MovementScale > 0)
+      var movementScaleX = 1.5;
+      if (request.MovementScaleX > 0)
       {
-        movementScale = request.MovementScale;
+        movementScaleX = request.MovementScaleX;
+      }
+
+      var movementScaleY = 1.5;
+      if (request.MovementScaleY > 0)
+      {
+        movementScaleY = request.MovementScaleY;
       }
 
       var movementSpeed = 1;
@@ -177,7 +183,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         movementSpeed = request.MovementSpeed;
       }
 
-      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScale), Y = (int)(request.TargetPosition.Y * movementScale) };
+      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScaleX), Y = (int)(request.TargetPosition.Y * movementScaleY) };
 
       var line = new Line(request.CurrentPosition, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;

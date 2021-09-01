@@ -74,9 +74,10 @@ message MoveMouseToRequest {
         Bezier = 2;
     };
     MovementType movement_type = 3;
-    float movement_scale = 4;
-    int32 movement_speed = 5;
-    string pre_move_actions = 6;
-    string post_move_actions = 7;
+    float movement_scale_x = 4;
+    float movement_scale_y = 5;
+    int32 movement_speed = 6;
+    string pre_move_actions = 7;
+    string post_move_actions = 8;
     
 }
