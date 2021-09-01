@@ -41,16 +41,6 @@ services:
   beholder-traefik:
     environment: 
       - beholder_hostname=${BEHOLDER_HOSTNAME}
-  ###############################################
-  # Watchtower
-  watchtower:
-    image: containrrr/watchtower
-    container_name: beholder-watchtower
-    restart: unless-stopped
-    environment: 
-      - "WATCHTOWER_SCHEDULE=15 * * * * *"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes: 
   cerebrum_data:
