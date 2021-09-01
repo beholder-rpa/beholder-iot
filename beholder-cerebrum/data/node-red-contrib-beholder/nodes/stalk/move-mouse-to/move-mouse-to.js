@@ -32,11 +32,10 @@ module.exports = function (RED) {
           target_position: targetPosition,
           movement_type: 0,
           movement_speed: parseInt(config.movementSpeed) || 2,
-          movement_scale_x = parseInt(config.movementScaleX) || 1,
-          movement_scale_y = parseInt(config.movementScaleY) || 1,
+          movement_scale_x: parseInt(config.movementScaleX) || 1,
+          movement_scale_y: parseInt(config.movementScaleY) || 1,
           pre_move_actions: config.preMoveActions || "",
           post_move_actions: config.postMoveActions || "",
-          
         }
       }
       this.send({
