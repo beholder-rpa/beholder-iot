@@ -3,9 +3,13 @@
     category: 'beholder stalk - mouse',
     color: '#D8BFD8',
     defaults: {
+      targetPositionX: { value: 1500 },
+      targetPositionY: { value: 1500 },
       preMoveActions: { value: "" },
       postMoveActions: { value: "" },
       movementSpeed: { value: 2 },
+      movementScaleX: { value: 1 },
+      movementScaleY: { value: 1 },
     },
     inputs: 1,
     outputs: 1,
@@ -19,6 +23,20 @@
 
 <script type="text/html" data-template-name="move-mouse-to">
   <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <hr/>
+  <div class="form-row">
+    <label for="node-input-targetPositionX">Target Position X</label>
+    <input type="number" id="node-input-targetPositionX" placeholder="target position x">
+  </div>
+  <div class="form-row">
+    <label for="node-input-targetPositionY">Target Position Y</label>
+    <input type="number" id="node-input-targetPositionY" placeholder="target position y">
+  </div>
+  <hr/>
+  <div class="form-row">
     <label for="node-input-preMoveActions">Pre-Move Actions</label>
     <input type="text" id="node-input-preMoveActions" placeholder="pre-move actions">
   </div>
@@ -26,13 +44,19 @@
     <label for="node-input-postMoveActions">Post-Move Actions</label>
     <input type="text" id="node-input-postMoveActions" placeholder="post-move actions">
   </div>
+  <hr/>
   <div class="form-row">
     <label for="node-input-movementSpeed">Movement Speed</label>
     <input type="number" id="node-input-movementSpeed" placeholder="movement speed">
   </div>
+  <hr/>
   <div class="form-row">
-    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-    <input type="text" id="node-input-name" placeholder="Name">
+    <label for="node-input-movementScaleX">Movement Scale X</label>
+    <input type="number" id="node-input-movementScaleX" placeholder="movement scale x">
+  </div>
+  <div class="form-row">
+    <label for="node-input-movementScaleY">Movement Scale Y</label>
+    <input type="number" id="node-input-movementScaleY" placeholder="movement scale y">
   </div>
 </script>
 

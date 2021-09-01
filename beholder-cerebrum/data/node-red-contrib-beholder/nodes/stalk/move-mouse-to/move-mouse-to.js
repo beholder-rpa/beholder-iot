@@ -22,6 +22,9 @@ module.exports = function (RED) {
         if (globalTargetPosition) {
           targetPosition.x = globalTargetPosition.x;
           targetPosition.y = globalTargetPosition.y;
+        } else {
+          targetPosition.x = parseInt(config.targetPositionX);
+          targetPosition.y = parseInt(config.targetPositionY);
         }
 
         body = {
@@ -29,8 +32,11 @@ module.exports = function (RED) {
           target_position: targetPosition,
           movement_type: 0,
           movement_speed: parseInt(config.movementSpeed) || 2,
-          pre_move_actions: config.preMoveActions,
-          post_move_actions: config.postMoveActions,
+          movement_scale_x = parseInt(config.movementScaleX) || 1,
+          movement_scale_y = parseInt(config.movementScaleY) || 1,
+          pre_move_actions: config.preMoveActions || "",
+          post_move_actions: config.postMoveActions || "",
+          
         }
       }
       this.send({
