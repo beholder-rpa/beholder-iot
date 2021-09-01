@@ -165,13 +165,19 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         return;
       }
 
+      var movementScale = 1.5;
+      if (request.MovementScale > 0)
+      {
+        movementScale = request.MovementScale;
+      }
+
       var movementSpeed = 1;
       if (request.MovementSpeed > 0)
       {
         movementSpeed = request.MovementSpeed;
       }
 
-      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X + (request.TargetPosition.X * .8)), Y = (int)(request.TargetPosition.Y + (request.TargetPosition.Y * .8)) };
+      var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X * movementScale), Y = (int)(request.TargetPosition.Y * movementScale) };
 
       var line = new Line(request.CurrentPosition, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;
