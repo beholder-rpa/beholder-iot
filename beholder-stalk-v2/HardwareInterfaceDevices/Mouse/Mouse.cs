@@ -173,7 +173,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
       var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)(request.TargetPosition.X + (request.TargetPosition.X * .8)), Y = (int)(request.TargetPosition.Y + (request.TargetPosition.Y * .8)) };
 
-      var line = new Line(request.CurrentPosition, request.TargetPosition);
+      var line = new Line(request.CurrentPosition, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;
       var points = line.GetPoints((int)Math.Ceiling(pointCount));
 
