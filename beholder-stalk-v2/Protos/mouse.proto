@@ -77,7 +77,8 @@ message MoveMouseToRequest {
     float movement_scale_x = 4;
     float movement_scale_y = 5;
     int32 movement_speed = 6;
-    string pre_move_actions = 7;
-    string post_move_actions = 8;
+    int32 movement_delay_ms = 7;
+    string pre_move_actions = 8;
+    string post_move_actions = 9;
     
 }

@@ -7,6 +7,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   using System;
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
+  using System.Threading;
   using static beholder_stalk_v2.Protos.MouseClick.Types;
 
   /// <summary>
@@ -189,6 +190,14 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
       _logger.LogInformation($"Using movement speed {movementSpeed}");
 
+      var movementDelayMs = 0;
+      if (request.MovementDelayMs > 0)
+      {
+        movementDelayMs = request.MovementDelayMs;
+      }
+
+      _logger.LogInformation($"Using movement delay {movementDelayMs}");
+
       var line = new Line(request.CurrentPosition, targetPoint);
       var pointCount = line.GetLength() / movementSpeed;
       var points = line.GetPoints((int)Math.Ceiling(pointCount));
@@ -215,6 +224,11 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
                 SendMouseMove((short)deltaX, (short)deltaY);
                 //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
+
+                if (movementDelayMs > 0)
+                {
+                  Thread.Sleep(movementDelayMs);
+                }
               }
 
               if (!string.IsNullOrWhiteSpace(request.PostMoveActions))

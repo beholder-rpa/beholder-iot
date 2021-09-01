@@ -34,6 +34,7 @@ module.exports = function (RED) {
           movement_speed: parseInt(config.movementSpeed) || 2,
           movement_scale_x: parseInt(config.movementScaleX) || 1,
           movement_scale_y: parseInt(config.movementScaleY) || 1,
+          movement_delay_ms: parseInt(config.movementDelayMs) || 0,
           pre_move_actions: config.preMoveActions || "",
           post_move_actions: config.postMoveActions || "",
         }
