@@ -5,6 +5,7 @@
     defaults: {
       queryImagePrefrontalKey: { value: "" },
       targetImagePrefrontalKey: { value: "" },
+      scaleFactor: { value: 1.0 },
       matchRatioThreshold: { value: 0.76, required: true,  },
       scaleIncrement: { value: 2.0, required: true,  },
       rotationBins: { value: 20, required: true,  },
@@ -18,6 +19,11 @@
       return this.name || "detect object";
     },
     oneditprepare: function () {
+      $("#node-input-scaleFactor").typedInput({
+        type: "num",
+        types: ["num"],
+        typeField: "#node-input-scaleFactor-type"
+      });
       $("#node-input-matchRatioThreshold").typedInput({
         type: "num",
         types: ["num"],
@@ -54,13 +60,18 @@
   </div>
 
   <div class="form-row">
+    <label for="node-input-scaleFactor">Scale Factor</label>
+    <input type="number" step="0.01" id="node-input-scaleFactor" placeholder="scale factor">
+  </div>
+
+  <div class="form-row">
     <label for="node-input-matchRatioThreshold">Match Ratio Threshold</label>
-    <input type="number" id="node-input-matchRatioThreshold" placeholder="match ratio threshold">
+    <input type="number" step="0.01" id="node-input-matchRatioThreshold" placeholder="match ratio threshold">
   </div>
 
   <div class="form-row">
     <label for="node-input-scaleIncrement">Scale Increment</label>
-    <input type="number" id="node-input-scaleIncrement" placeholder="scale increment">
+    <input type="number" step="0.01" id="node-input-scaleIncrement" placeholder="scale increment">
   </div>
 
   <div class="form-row">

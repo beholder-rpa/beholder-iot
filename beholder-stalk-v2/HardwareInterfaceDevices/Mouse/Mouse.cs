@@ -241,6 +241,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
             finally
             {
               _isMoving = false;
+              _logger.LogInformation($"Moved Mouse from {sourcePoint.X},{sourcePoint.Y} to {targetPoint.X},{targetPoint.Y} using {request.MovementType} behavior, scale of {movementScaleX},{movementScaleY} and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
             }
           }
         }

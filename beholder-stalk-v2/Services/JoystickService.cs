@@ -16,10 +16,10 @@
   {
     private readonly Joystick _joystick;
     private readonly DaprClient _daprClient;
-    private readonly ILogger<KeyboardService> _logger;
+    private readonly ILogger<JoystickService> _logger;
     private readonly string _hostName;
 
-    public JoystickService(Joystick joystick, DaprClient daprClient, ILogger<KeyboardService> logger)
+    public JoystickService(Joystick joystick, DaprClient daprClient, ILogger<JoystickService> logger)
     {
       _joystick = joystick ?? throw new ArgumentNullException(nameof(joystick));
       _daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));

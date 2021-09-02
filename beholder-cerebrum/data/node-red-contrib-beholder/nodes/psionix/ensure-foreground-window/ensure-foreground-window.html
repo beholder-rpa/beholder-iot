@@ -1,0 +1,36 @@
+<script type="text/javascript">
+  RED.nodes.registerType('ensure-foreground-window', {
+    category: 'beholder psionix - process',
+    color: '#D8BFD8',
+    defaults: {
+      hostname: { value: '' },
+      processName: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-window-restore",
+    paletteLabel: "ensure foreground window",
+    label: function () {
+      return this.name || "ensure foreground window";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="ensure-foreground-window">
+  <div class="form-row">
+    <label for="node-input-hostname">Hostname</label>
+    <input type="text" id="node-input-hostname" placeholder="hostname">
+  </div>
+  <div class="form-row">
+    <label for="node-input-processName">Process Name</label>
+    <input type="text" id="node-input-processName" placeholder="process name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="ensure-foreground-window">
+  <p>Activates the process with the given name</p>
+</script>

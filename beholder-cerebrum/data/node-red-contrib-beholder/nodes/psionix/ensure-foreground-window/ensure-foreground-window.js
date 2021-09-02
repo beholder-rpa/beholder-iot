@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-  function DetectObject(config) {
+  function EnsureForegroundWindow(config) {
     RED.nodes.createNode(this, config);
     const node = this;
     const globalContext = this.context().global;
@@ -8,22 +8,7 @@ module.exports = function (RED) {
       if (msg.hasOwnProperty("payload")) {
         body = msg.payload;
       } else {
-        body = {
-          queryImagePrefrontalKey: config.queryImagePrefrontalKey,
-          targetImagePrefrontalKey: config.targetImagePrefrontalKey,
-          imagePreProcessors: [
-            {
-              kind: "scale",
-              scaleFactor: parseFloat(config.scaleFactor) || 1
-            }
-          ],
-          matchMaskSettings: {
-            RatioThreshold: parseFloat(config.matchRatioThreshold),
-            ScaleIncrement: parseFloat(config.scaleIncrement),
-            RotationBins: parseInt(config.rotationBins),
-          },
-          outputImagePrefrontalKey: config.outputImagePrefrontalKey,
-        };
+        body = config.processName;
       }
 
       let hostName = msg.hostname || config.hostname;
@@ -38,12 +23,12 @@ module.exports = function (RED) {
           return;
         }
       }
-
+      
       this.send({
-        topic: `beholder/occipital/${hostName}/object_detection/detect`,
+        topic: `beholder/psionix/${hostName}/ensure_foreground_window`,
         payload: body
       });
     });
   }
-  RED.nodes.registerType("detect-object", DetectObject);
+  RED.nodes.registerType("ensure-foreground-window", EnsureForegroundWindow);
 }

@@ -16,10 +16,10 @@
   {
     private readonly Mouse _mouse;
     private readonly DaprClient _daprClient;
-    private readonly ILogger<KeyboardService> _logger;
+    private readonly ILogger<MouseService> _logger;
     private readonly string _hostName;
 
-    public MouseService(Mouse mouse, DaprClient daprClient, ILogger<KeyboardService> logger)
+    public MouseService(Mouse mouse, DaprClient daprClient, ILogger<MouseService> logger)
     {
       _mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
       _mouse.MouseResolutionChanged += HandleMouseResolutionChanged;
@@ -171,7 +171,6 @@
     public Task<Empty> MoveMouseTo(MoveMouseToRequest request)
     {
       _mouse.SendMouseMoveTo(request);
-      _logger.LogInformation($"Moved Mouse from {request.CurrentPosition.X},{request.CurrentPosition.Y} to {request.TargetPosition.X},{request.TargetPosition.Y} using {request.MovementType} behavior and speed of {request.MovementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
       return Task.FromResult<Empty>(null);
     }
 

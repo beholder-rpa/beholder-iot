@@ -671,6 +671,17 @@
                 "module": "node-red-contrib-beholder",
                 "file": "/data/node_modules/node-red-contrib-beholder/nodes/psionix/unregister-hotkey/unregister-hotkey.js"
             },
+            "beholder-psionix-ensure-foreground-window": {
+                "name": "beholder-psionix-ensure-foreground-window",
+                "types": [
+                    "ensure-foreground-window"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-beholder",
+                "file": "/data/node_modules/node-red-contrib-beholder/nodes/psionix/ensure-foreground-window/ensure-foreground-window.js"
+            },
             "beholder-stalk-send-keys": {
                 "name": "beholder-stalk-send-keys",
                 "types": [

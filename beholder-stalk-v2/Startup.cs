@@ -31,6 +31,8 @@
         });
       });
 
+      //services.AddMqttControllers();
+
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
       services.AddSingleton<Joystick>();

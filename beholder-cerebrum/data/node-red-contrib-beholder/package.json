@@ -16,6 +16,7 @@
       "beholder-occipital-detect-object": "nodes/occipital/detect-object/detect-object.js",
       "beholder-psionix-register-hotkey": "nodes/psionix/register-hotkey/register-hotkey.js",
       "beholder-psionix-unregister-hotkey": "nodes/psionix/unregister-hotkey/unregister-hotkey.js",
+      "beholder-psionix-ensure-foreground-window": "nodes/psionix/ensure-foreground-window/ensure-foreground-window.js",
       "beholder-stalk-send-keys": "nodes/stalk/send-keys/send-keys.js",
       "beholder-stalk-send-keys-raw": "nodes/stalk/send-keys-raw/send-keys-raw.js",
       "beholder-stalk-send-mouse-click": "nodes/stalk/send-mouse-click/send-mouse-click.js",
