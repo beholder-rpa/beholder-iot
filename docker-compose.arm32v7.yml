@@ -13,8 +13,6 @@ services:
     image: beholderrpa/iot-cerebrum-v1:master
     volumes:
       - cerebrum_data:/data:rw
-  beholder-cerebrum-dapr:
-    image: daprio/daprd:edge-linux-arm
   ###############################################
   # Beholder Stalk
   beholder-stalk:

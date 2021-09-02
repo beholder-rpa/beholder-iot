@@ -57,21 +57,6 @@ services:
       - traefik.http.routers.beholder_cerebrum.tls=true
       - traefik.http.routers.beholder_cerebrum.service=beholder_cerebrum
       - traefik.http.services.beholder_cerebrum.loadbalancer.server.port=1880
-  # Dapr Sidecar
-  beholder-cerebrum-dapr:
-    << : *default-dapr
-    container_name: beholder-cerebrum-dapr
-    command: ["./daprd",
-      "-app-id", "cerebrum",
-      "-app-port", "1880",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
-    depends_on:
-      - beholder-cerebrum
-      - beholder-nexus
-    network_mode: "service:beholder-cerebrum"
   ###############################################
   # Beholder Nexus
   beholder-nexus:
