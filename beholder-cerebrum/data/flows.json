@@ -575,7 +575,7 @@
         "hostname": "",
         "modifiers": "^+",
         "key": "{Oemtilde}",
-        "x": 780,
+        "x": 820,
         "y": 880,
         "wires": [
             [
@@ -682,7 +682,7 @@
         "movementScaleX": "1.4",
         "movementScaleY": "1.4",
         "movementDelayMs": "",
-        "x": 1220,
+        "x": 1240,
         "y": 380,
         "wires": [
             [
@@ -720,8 +720,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 650,
-        "y": 840,
+        "x": 730,
+        "y": 820,
         "wires": [
             [
                 "bb1f72790d7d12db"
@@ -748,12 +748,12 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 310,
-        "y": 860,
+        "x": 270,
+        "y": 840,
         "wires": [
             [
-                "bb1f72790d7d12db",
-                "54677c7e9faec3c3"
+                "54677c7e9faec3c3",
+                "ab87dc17a8d8adea"
             ],
             [
                 "a13940027781617e"
@@ -866,11 +866,11 @@
         "countLimit": 0,
         "blockSize": 0,
         "locked": false,
-        "x": 910,
+        "x": 870,
         "y": 380,
         "wires": [
             [
-                "ca19638ec4477069"
+                "d09ada59b2398114"
             ]
         ]
     },
@@ -921,8 +921,8 @@
         "y": 760,
         "wires": [
             [
-                "7781cb1bfe5ed28d",
-                "f9b6966bc8513856"
+                "f9b6966bc8513856",
+                "99130e21a2a56664"
             ]
         ]
     },
@@ -958,7 +958,7 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "golden cookie location",
-        "func": "const polys = msg.payload.data;\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.warn(JSON.stringify(midpoints));\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: midpoints[0]\n};",
+        "func": "const polys = msg.payload.data;\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: midpoints[0]\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1626,7 +1626,7 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "current mouse location",
-        "func": "const pos = flow.get(\"cookie_position\") || 0;\nnode.status({text: `X: ${pos.x} Y: ${pos.y}`});\nreturn msg;",
+        "func": "const pos = global.get(\"beholder_pointer_current_position\") || 0;\nnode.status({text: `X: ${pos.x} Y: ${pos.y}`});\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1673,6 +1673,70 @@
         "y": 240,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "99130e21a2a56664",
+        "type": "rbe",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload.data.processName",
+        "topi": "topic",
+        "x": 150,
+        "y": 840,
+        "wires": [
+            [
+                "7781cb1bfe5ed28d"
+            ]
+        ]
+    },
+    {
+        "id": "ab87dc17a8d8adea",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 820,
+        "wires": [
+            [
+                "bb1f72790d7d12db"
+            ]
+        ]
+    },
+    {
+        "id": "d09ada59b2398114",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "set movement ",
+        "func": "\nreturn {\n    payload: {\n          current_position: global.get('beholder_pointer_current_position'),\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 3,\n          movement_scale_x: 1.4,\n          movement_scale_y: 1.4,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 380,
+        "wires": [
+            [
+                "ca19638ec4477069"
+            ]
         ]
     }
 ]
