@@ -14,7 +14,7 @@ module.exports = function (RED) {
           imagePreProcessors: [
             {
               kind: "scale",
-              scaleFactor: parseFloat(config.scaleFactor) || 1
+              scaleFactor: parseFloat(config.preScaleFactor) || 1
             }
           ],
           matchMaskSettings: {

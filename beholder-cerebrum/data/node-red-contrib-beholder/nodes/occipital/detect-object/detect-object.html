@@ -5,7 +5,7 @@
     defaults: {
       queryImagePrefrontalKey: { value: "" },
       targetImagePrefrontalKey: { value: "" },
-      scaleFactor: { value: 1.0 },
+      preScaleFactor: { value: 1.0 },
       matchRatioThreshold: { value: 0.76, required: true,  },
       scaleIncrement: { value: 2.0, required: true,  },
       rotationBins: { value: 20, required: true,  },
@@ -19,10 +19,10 @@
       return this.name || "detect object";
     },
     oneditprepare: function () {
-      $("#node-input-scaleFactor").typedInput({
+      $("#node-input-preScaleFactor").typedInput({
         type: "num",
         types: ["num"],
-        typeField: "#node-input-scaleFactor-type"
+        typeField: "#node-input-preScaleFactor-type"
       });
       $("#node-input-matchRatioThreshold").typedInput({
         type: "num",
@@ -60,8 +60,8 @@
   </div>
 
   <div class="form-row">
-    <label for="node-input-scaleFactor">Scale Factor</label>
-    <input type="number" step="0.01" id="node-input-scaleFactor" placeholder="scale factor">
+    <label for="node-input-preScaleFactor">Pre-Scale Factor</label>
+    <input type="number" step="0.01" id="node-input-preScaleFactor" placeholder="pre-scale factor">
   </div>
 
   <div class="form-row">
