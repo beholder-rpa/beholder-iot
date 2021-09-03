@@ -205,6 +205,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       var pointCount = line.GetLength() / movementSpeed;
       var points = line.GetPoints((int)Math.Ceiling(pointCount));
 
+      // Use double-check locking to ensure we're not attempting to move when we're already moving
       if (!_isMoving)
       {
         lock (_isMovingLock)
@@ -222,8 +223,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               {
                 var currentPoint = points[i - 1];
                 var nextPoint = points[i];
-                var deltaX = (short)((nextPoint.X - currentPoint.X));
-                var deltaY = (short)((nextPoint.Y - currentPoint.Y));
+                var deltaX = (short)(nextPoint.X - currentPoint.X);
+                var deltaY = (short)(nextPoint.Y - currentPoint.Y);
 
                 SendMouseMove((short)deltaX, (short)deltaY);
                 //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
@@ -242,11 +243,12 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
             finally
             {
               _isMoving = false;
-              _logger.LogInformation($"Moved Mouse from {sourcePoint.X},{sourcePoint.Y} to {targetPoint.X},{targetPoint.Y} using {request.MovementType} behavior, scale of {movementScaleX},{movementScaleY} and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
             }
           }
         }
       }
+
+      _logger.LogInformation($"Moved Mouse from {sourcePoint.X},{sourcePoint.Y} to {targetPoint.X},{targetPoint.Y} in {points.Length} steps using {request.MovementType} behavior, scale of {movementScaleX},{movementScaleY} and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
     }
 
     public void SendMouseMove(short x, short y)

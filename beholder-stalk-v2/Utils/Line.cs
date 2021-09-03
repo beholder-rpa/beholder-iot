@@ -20,6 +20,11 @@
 
     public Point[] GetPoints(int quantity)
     {
+      if (quantity == 0 || (p1.X == p2.X && p1.Y == p2.Y))
+      {
+        return Array.Empty<Point>();
+      }
+
       var points = new Point[quantity];
       int deltaY = p2.Y - p1.Y, deltaX = p2.X - p1.X;
       double slope = (double)(p2.Y - p1.Y) / (p2.X - p1.X);
