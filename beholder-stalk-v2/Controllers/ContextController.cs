@@ -5,6 +5,7 @@
   using System;
   using System.Threading.Tasks;
 
+  [MqttController]
   public class ContextController
   {
     private readonly BeholderContext _context;
