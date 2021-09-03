@@ -1857,7 +1857,47 @@
         "y": 960,
         "wires": [
             [
-                "8e607e666511b46b"
+                "8e607e666511b46b",
+                "a982fcc1e9c6d884"
+            ]
+        ]
+    },
+    {
+        "id": "dcdca7254b3d56da",
+        "type": "move-mouse-to",
+        "z": "6a61b64910c046bc",
+        "targetPositionX": "",
+        "targetPositionY": "",
+        "preMoveActions": "",
+        "postMoveActions": "{lclick}",
+        "movementSpeed": "3",
+        "movementScaleX": "1.4",
+        "movementScaleY": "1.4",
+        "movementDelayMs": "",
+        "x": 500,
+        "y": 1040,
+        "wires": [
+            [
+                "bde0df30871a605e"
+            ]
+        ]
+    },
+    {
+        "id": "a982fcc1e9c6d884",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement ",
+        "func": "\nreturn {\n    payload: {\n          current_position: global.get('beholder_pointer_current_position'),\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 3,\n          movement_scale_x: 1.4,\n          movement_scale_y: 1.4,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 1040,
+        "wires": [
+            [
+                "dcdca7254b3d56da"
             ]
         ]
     }

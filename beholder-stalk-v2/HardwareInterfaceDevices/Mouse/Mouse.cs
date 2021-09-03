@@ -163,6 +163,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
     {
       if (request.CurrentPosition == null || request.TargetPosition == null)
       {
+        _logger.LogWarning("CurrentPosition and TargetPosition were not specified, skipping moveto.");
         return;
       }
 

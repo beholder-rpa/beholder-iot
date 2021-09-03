@@ -23,7 +23,7 @@
     {
       if (pointerPosition.Data != null)
       {
-        _context.CurrentPointerPosition = pointerPosition.Data;
+        _context.EyeCurrentPointerPosition = pointerPosition.Data;
       }
 
       return Task.CompletedTask;
@@ -34,7 +34,7 @@
     {
       if (pointerPosition.Data != null)
       {
-        _context.CurrentPointerPosition = pointerPosition.Data;
+        _context.PsionixCurrentPointerPosition = pointerPosition.Data;
       }
       return Task.CompletedTask;
     }

@@ -86,13 +86,24 @@
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/move_mouse_to")]
     public Task MoveMouseTo(ICloudEvent<MoveMouseToRequest> message)
     {
-      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.CurrentPointerPosition != null)
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.PsionixCurrentPointerPosition != null)
       {
         message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
         {
-          X = _context.CurrentPointerPosition.X,
-          Y = _context.CurrentPointerPosition.Y,
+          X = _context.PsionixCurrentPointerPosition.X,
+          Y = _context.PsionixCurrentPointerPosition.Y,
         };
+        _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Psionix reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
+      }
+
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.EyeCurrentPointerPosition != null)
+      {
+        message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
+        {
+          X = _context.EyeCurrentPointerPosition.X,
+          Y = _context.EyeCurrentPointerPosition.Y,
+        };
+        _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Eye reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
 
       _mouse.SendMouseMoveTo(message.Data);
