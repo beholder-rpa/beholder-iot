@@ -18,7 +18,7 @@
     {
       _joystick = joystick ?? throw new ArgumentNullException(nameof(joystick));
       _client = client ?? throw new ArgumentNullException(nameof(client));
-      _logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/joystick/button_press")]

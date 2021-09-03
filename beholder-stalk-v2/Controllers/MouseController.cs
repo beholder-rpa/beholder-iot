@@ -11,15 +11,17 @@
   public class MouseController
   {
     private readonly Mouse _mouse;
+    private readonly BeholderContext _context;
     private readonly IBeholderMqttClient _client;
     private readonly ILogger<MouseController> _logger;
 
-    public MouseController(Mouse mouse, IBeholderMqttClient client, ILogger<MouseController> logger)
+    public MouseController(Mouse mouse, IBeholderMqttClient client, BeholderContext context, ILogger<MouseController> logger)
     {
       _mouse = mouse ?? throw new ArgumentNullException(nameof(mouse));
+      _context = context ?? throw new ArgumentNullException(nameof(context));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      
+
       _mouse.MouseResolutionChanged += new EventHandler<MouseResolutionChangedEventArgs>(async (sender, e) => await HandleMouseResolutionChanged(sender, e)); ;
     }
 
@@ -28,7 +30,8 @@
       await _client
         .PublishEventAsync(
           "beholder/stalk/{HOSTNAME}/status/mouse/resolution",
-          new MouseResolution() {
+          new MouseResolution()
+          {
             HorizontalResolution = (uint)e.HorizontalResolution,
             VerticalResolution = (uint)e.VerticalResolution
           }
@@ -83,6 +86,15 @@
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/move_mouse_to")]
     public Task MoveMouseTo(ICloudEvent<MoveMouseToRequest> message)
     {
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.CurrentPointerPosition != null)
+      {
+        message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
+        {
+          X = _context.CurrentPointerPosition.X,
+          Y = _context.CurrentPointerPosition.Y,
+        };
+      }
+
       _mouse.SendMouseMoveTo(message.Data);
       return Task.CompletedTask;
     }

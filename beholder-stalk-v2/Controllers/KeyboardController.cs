@@ -20,7 +20,7 @@
       _keyboard = keyboard ?? throw new ArgumentNullException(nameof(keyboard));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      
+
       _keyboard.KeyboardLedsChanged += new EventHandler<KeyboardLedsChangedEventArgs>(async (sender, e) => await HandleKeyboardLedsChanged(sender, e));
     }
 

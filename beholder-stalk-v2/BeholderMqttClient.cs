@@ -142,7 +142,7 @@
       {
       });
 
-      MqttClient.SubscribeControllers(_router);
+      SubscribeControllers();
 
       // Report that we've connected.
       await MqttClient.PublishAsync(new MqttApplicationMessageBuilder()
@@ -173,6 +173,20 @@
       {
         Topic = e.ApplicationMessage?.Topic,
       });
+    }
+
+    public void SubscribeControllers()
+    {
+      var filters = new List<MqttTopicFilter>();
+      foreach (var pattern in _router.RouteTable.Keys)
+      {
+        var patternFilter = new MqttTopicFilterBuilder()
+                    .WithTopic(pattern)
+                    .Build();
+        filters.Add(patternFilter);
+      }
+
+      MqttClient.SubscribeAsync(filters.ToArray());
     }
 
     /// <summary>

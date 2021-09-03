@@ -6,10 +6,12 @@
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
+  using Microsoft.Extensions.Caching.Memory;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
+  using System.Text.Json;
 
   public class Startup
   {
@@ -35,8 +37,17 @@
       var stalkOptions = Configuration.GetSection("Stalk").Get<StalkOptions>();
       services.Configure<StalkOptions>(Configuration.GetSection("Stalk"));
 
+      services.AddSingleton<BeholderServiceInfo>();
+      services.AddSingleton(sp => new JsonSerializerOptions
+      {
+        PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
+      });
+
+      services.AddSingleton<IMemoryCache, MemoryCache>();
+
       services.AddMqttControllers();
 
+      services.AddSingleton<BeholderContext>();
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
       services.AddSingleton<Joystick>();
