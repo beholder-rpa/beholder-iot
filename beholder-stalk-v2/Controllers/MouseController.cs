@@ -1,11 +1,11 @@
 ﻿namespace beholder_stalk_v2.Controllers
 {
-  using beholder_stalk_v2.HardwareInterfaceDevices;
   using beholder_stalk_v2.Models;
   using beholder_stalk_v2.Protos;
   using Microsoft.Extensions.Logging;
   using System;
   using System.Threading.Tasks;
+  using Mouse = HardwareInterfaceDevices.Mouse;
 
   [MqttController]
   public class MouseController
@@ -21,22 +21,6 @@
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-      _mouse.MouseResolutionChanged += new EventHandler<MouseResolutionChangedEventArgs>(async (sender, e) => await HandleMouseResolutionChanged(sender, e)); ;
-    }
-
-    private async Task HandleMouseResolutionChanged(object sender, MouseResolutionChangedEventArgs e)
-    {
-      await _client
-        .PublishEventAsync(
-          "beholder/stalk/{HOSTNAME}/status/mouse/resolution",
-          new MouseResolution()
-          {
-            HorizontalResolution = (uint)e.HorizontalResolution,
-            VerticalResolution = (uint)e.VerticalResolution
-          }
-        );
-      _logger.LogInformation($"Published mouse resolution changed");
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/click")]

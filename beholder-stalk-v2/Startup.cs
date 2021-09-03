@@ -30,7 +30,7 @@
       {
         options.AddSimpleConsole(c =>
         {
-          c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+          c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss:fff] ";
         });
       });
 
@@ -50,6 +50,7 @@
       services.AddSingleton<BeholderContext>();
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
+      services.AddSingleton<MouseObserver>();
       services.AddSingleton<Joystick>();
 
       services.AddGrpc();
@@ -71,6 +72,7 @@
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapGrpcService<KeyboardService>();
+        endpoints.MapGrpcService<MouseService>();
 
         endpoints.MapGet("/", async context =>
           {

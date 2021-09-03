@@ -4,6 +4,12 @@ option csharp_namespace = "beholder_stalk_v2.Protos";
 
 package stalk.mouse;
 
+// The stalk mouse service definition.
+service Mouse {
+  // Sends a mouse click
+  rpc SendMouseClick (SendMouseClickRequest) returns (SendMouseClickReply);
+}
+
 message MouseClickDuration {
     optional uint32 delay = 1;
     optional uint32 min = 2;
@@ -45,6 +51,9 @@ message SendMouseClickRequest {
   MouseClick mouseClick = 1;
 }
 
+message SendMouseClickReply {
+}
+
 message SendMouseActionsRequest {
   string actions = 1;
 }
@@ -80,5 +89,6 @@ message MoveMouseToRequest {
     int32 movement_delay_ms = 7;
     string pre_move_actions = 8;
     string post_move_actions = 9;
-    
+    // Indicates a message topic that, if specified, point data will be published for
+    string points_topic = 10;
 }

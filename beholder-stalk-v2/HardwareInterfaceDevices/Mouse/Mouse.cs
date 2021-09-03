@@ -5,9 +5,11 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.Logging;
   using System;
+  using System.Collections.Concurrent;
   using System.Collections.Generic;
   using System.Text.RegularExpressions;
   using System.Threading;
+  using System.Threading.Tasks;
   using static beholder_stalk_v2.Protos.MouseClick.Types;
 
   /// <summary>
@@ -16,7 +18,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
   /// <remarks>
   /// See: https://www.microchip.com/forums/m391435.aspx
   /// </remarks>
-  public partial class Mouse : HumanInterfaceDevice
+  public partial class Mouse : HumanInterfaceDevice, IObservable<MouseEvent>
   {
     private static readonly object s_reportLock = new object();
     private static readonly byte[] s_currentReport = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -26,6 +28,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         , RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
     public event EventHandler<MouseResolutionChangedEventArgs> MouseResolutionChanged;
+    private readonly ConcurrentDictionary<IObserver<MouseEvent>, MouseEventUnsubscriber> _observers = new ConcurrentDictionary<IObserver<MouseEvent>, MouseEventUnsubscriber>();
     public int _hres = 800, _vres = 800;
 
     private readonly ILogger<Mouse> _logger;
@@ -58,37 +61,6 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
     {
       get;
       set;
-    }
-
-    private void SendCurrentReport()
-    {
-      Stream.Write(s_currentReport);
-      Stream.Flush();
-    }
-
-    protected void OnMouseResolutionChanged(MouseResolutionChangedEventArgs e)
-    {
-      MouseResolutionChanged?.Invoke(this, e);
-    }
-
-    protected void WatchNext()
-    {
-      Stream.BeginRead(sizeBuffer, 0, 1, new AsyncCallback(ReadCallback), null);
-    }
-
-    private void ReadCallback(IAsyncResult ar)
-    {
-      int bytesRead = Stream.EndRead(ar);
-      if (bytesRead == 0)
-      {
-        return;
-      }
-
-      _hres = sizeBuffer[0] << 2;
-      _vres = sizeBuffer[0] << 4;
-
-      OnMouseResolutionChanged(new MouseResolutionChangedEventArgs(_hres, _vres));
-      WatchNext();
     }
 
     public void SendButtonPress(MouseButton button)
@@ -182,8 +154,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       var sourcePoint = new MoveMouseToRequest.Types.Point() { X = (int)Math.Round(request.CurrentPosition.X * movementScaleX), Y = (int)Math.Round(request.CurrentPosition.Y * movementScaleY) };
       var targetPoint = new MoveMouseToRequest.Types.Point() { X = (int)Math.Round(request.TargetPosition.X * movementScaleX), Y = (int)Math.Round(request.TargetPosition.Y * movementScaleY) };
 
-      _logger.LogInformation($"Using source point {sourcePoint.X},{sourcePoint.Y}, which is scaled from {request.CurrentPosition.X} * {movementScaleX},{request.CurrentPosition.Y} * {movementScaleY}");
-      _logger.LogInformation($"Using target point {targetPoint.X},{targetPoint.Y}, which is scaled from {request.TargetPosition.X} * {movementScaleX},{request.TargetPosition.Y} * {movementScaleY}");
+      _logger.LogTrace($"Using source point {sourcePoint.X},{sourcePoint.Y}, which is scaled from {request.CurrentPosition.X} * {movementScaleX},{request.CurrentPosition.Y} * {movementScaleY}");
+      _logger.LogTrace($"Using target point {targetPoint.X},{targetPoint.Y}, which is scaled from {request.TargetPosition.X} * {movementScaleX},{request.TargetPosition.Y} * {movementScaleY}");
 
       var movementSpeed = 1;
       if (request.MovementSpeed > 0)
@@ -191,19 +163,27 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         movementSpeed = request.MovementSpeed;
       }
 
-      _logger.LogInformation($"Using movement speed {movementSpeed}");
-
       var movementDelayMs = 0;
       if (request.MovementDelayMs > 0)
       {
         movementDelayMs = request.MovementDelayMs;
       }
 
-      _logger.LogInformation($"Using movement delay {movementDelayMs}");
-
       var line = new Line(sourcePoint, targetPoint);
-      var pointCount = line.GetLength() / movementSpeed;
-      var points = line.GetPoints((int)Math.Ceiling(pointCount));
+      MoveMouseToRequest.Types.Point[] points;
+      switch (request.MovementType)
+      {
+        default:
+        case MoveMouseToRequest.Types.MovementType.Linear:
+          var pointCount = line.GetLength() / movementSpeed;
+          points = line.GetPoints((int)Math.Ceiling(pointCount));
+          break;
+      }
+
+      if (!string.IsNullOrWhiteSpace(request.PointsTopic))
+      {
+        OnMouseEvent(new MouseMoveToPointsEvent() { Topic = request.PointsTopic, Points = points });
+      }
 
       // Use double-check locking to ensure we're not attempting to move when we're already moving
       if (!_isMoving)
@@ -226,7 +206,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 var deltaX = (short)(nextPoint.X - currentPoint.X);
                 var deltaY = (short)(nextPoint.Y - currentPoint.Y);
 
-                SendMouseMove((short)deltaX, (short)deltaY);
+                SendMouseMove(deltaX, deltaY);
                 //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
 
                 if (movementDelayMs > 0)
@@ -248,7 +228,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         }
       }
 
-      _logger.LogInformation($"Moved Mouse from {sourcePoint.X},{sourcePoint.Y} to {targetPoint.X},{targetPoint.Y} in {points.Length} steps using {request.MovementType} behavior, scale of {movementScaleX},{movementScaleY} and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
+      _logger.LogInformation($"Moved Mouse from ({sourcePoint.X},{sourcePoint.Y}) to ({targetPoint.X},{targetPoint.Y}) in {points.Length} steps using {request.MovementType} behavior, scale of ({movementScaleX},{movementScaleY}) and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
     }
 
     public void SendMouseMove(short x, short y)
@@ -421,6 +401,62 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       }
     }
 
+    public IDisposable Subscribe(IObserver<MouseEvent> observer)
+    {
+      return _observers.GetOrAdd(observer, new MouseEventUnsubscriber(this, observer));
+    }
+
+    private void SendCurrentReport()
+    {
+      Stream.Write(s_currentReport);
+      Stream.Flush();
+    }
+
+    protected void OnMouseResolutionChanged(MouseResolutionChangedEventArgs e)
+    {
+      MouseResolutionChanged?.Invoke(this, e);
+    }
+
+    protected void WatchNext()
+    {
+      Stream.BeginRead(sizeBuffer, 0, 1, new AsyncCallback(ReadCallback), null);
+    }
+
+    private void ReadCallback(IAsyncResult ar)
+    {
+      int bytesRead = Stream.EndRead(ar);
+      if (bytesRead == 0)
+      {
+        return;
+      }
+
+      _hres = sizeBuffer[0] << 2;
+      _vres = sizeBuffer[0] << 4;
+
+      OnMouseResolutionChanged(new MouseResolutionChangedEventArgs(_hres, _vres));
+      OnMouseEvent(new MouseResolutionChangedEvent(_hres, _vres));
+      WatchNext();
+    }
+
+    /// <summary>
+    /// Produces Mouse Events
+    /// </summary>
+    /// <param name="mouseEvent"></param>
+    private void OnMouseEvent(MouseEvent mouseEvent)
+    {
+      Parallel.ForEach(_observers.Keys, (observer) =>
+      {
+        try
+        {
+          observer.OnNext(mouseEvent);
+        }
+        catch (Exception)
+        {
+          // Do Nothing.
+        }
+      });
+    }
+
     protected override void Dispose(bool disposing)
     {
       if (disposing)
@@ -430,5 +466,27 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
 
       base.Dispose(disposing);
     }
+
+    #region Nested Classes
+    private sealed class MouseEventUnsubscriber : IDisposable
+    {
+      private readonly Mouse _parent;
+      private readonly IObserver<MouseEvent> _observer;
+
+      public MouseEventUnsubscriber(Mouse parent, IObserver<MouseEvent> observer)
+      {
+        _parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        _observer = observer ?? throw new ArgumentNullException(nameof(observer));
+      }
+
+      public void Dispose()
+      {
+        if (_observer != null && _parent._observers.ContainsKey(_observer))
+        {
+          _parent._observers.TryRemove(_observer, out _);
+        }
+      }
+    }
+    #endregion
   }
 }

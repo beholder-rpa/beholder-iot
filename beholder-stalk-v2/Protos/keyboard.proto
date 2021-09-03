@@ -4,16 +4,16 @@ option csharp_namespace = "beholder_stalk_v2.Protos";
 
 package stalk.keyboard;
 
-message KeypressDuration {
-    optional uint32 delay = 1;
-    optional uint32 min = 2;
-    optional uint32 max = 3;
-}
-
 // The stalk keyboard service definition.
 service Keyboard {
   // Sends a key
   rpc SendKey (SendKeyRequest) returns (SendKeyReply);
+}
+
+message KeypressDuration {
+    optional uint32 delay = 1;
+    optional uint32 min = 2;
+    optional uint32 max = 3;
 }
 
 message Keypress {
