@@ -53,7 +53,6 @@ export class BeholderClient {
       const cloudEvent = JSON.parse(strMessage);
       switch (topic) {
         case `beholder/ctaf`:
-          console.dir(cloudEvent);
           this.beholderStore.putBeholderService(cloudEvent.data);
           break;
       }
