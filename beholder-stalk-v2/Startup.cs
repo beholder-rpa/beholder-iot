@@ -1,6 +1,7 @@
 ﻿namespace beholder_stalk_v2
 {
   using beholder_stalk_v2.HardwareInterfaceDevices;
+  using beholder_stalk_v2.Models;
   using beholder_stalk_v2.Services;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
@@ -31,21 +32,19 @@
         });
       });
 
-      //services.AddMqttControllers();
+      var stalkOptions = Configuration.GetSection("Stalk").Get<StalkOptions>();
+      services.Configure<StalkOptions>(Configuration.GetSection("Stalk"));
+
+      services.AddMqttControllers();
 
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
       services.AddSingleton<Joystick>();
 
-      services.AddSingleton<IHumanInterfaceService, KeyboardService>();
-      services.AddSingleton<IHumanInterfaceService, MouseService>();
-      services.AddSingleton<IHumanInterfaceService, JoystickService>();
-
       services.AddGrpc();
 
-      services.AddDaprClient();
-
-      services.AddHostedService<PulseService>();
+      services.AddSingleton<BeholderServiceInfo>();
+      services.AddHostedService<BeholderStalkWorker>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,11 +57,9 @@
 
       app.UseRouting();
 
-      app.UseCloudEvents();
-
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapGrpcService<StalkGrpcService>();
+        endpoints.MapGrpcService<KeyboardService>();
 
         endpoints.MapGet("/", async context =>
           {

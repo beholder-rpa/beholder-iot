@@ -339,7 +339,8 @@
         "y": 400,
         "wires": [
             [
-                "bde0df30871a605e"
+                "bde0df30871a605e",
+                "2c16b004be86e6d2"
             ]
         ]
     },
@@ -1736,6 +1737,127 @@
         "wires": [
             [
                 "ca19638ec4477069"
+            ]
+        ]
+    },
+    {
+        "id": "2c16b004be86e6d2",
+        "type": "debug",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0b1b292ec05692be",
+        "type": "send-mouse-click",
+        "z": "6a61b64910c046bc",
+        "button": "lclick",
+        "click_direction": 0,
+        "duration": null,
+        "x": 310,
+        "y": 840,
+        "wires": [
+            [
+                "bde0df30871a605e"
+            ]
+        ]
+    },
+    {
+        "id": "3a13ec8bc013d02e",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 840,
+        "wires": [
+            [
+                "0b1b292ec05692be"
+            ]
+        ]
+    },
+    {
+        "id": "b15ee39c116e27c6",
+        "type": "send-mouse-actions",
+        "z": "6a61b64910c046bc",
+        "mouseActions": "{1,1}",
+        "x": 300,
+        "y": 900,
+        "wires": [
+            [
+                "bde0df30871a605e"
+            ]
+        ]
+    },
+    {
+        "id": "92e13384918276b5",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 900,
+        "wires": [
+            [
+                "b15ee39c116e27c6"
+            ]
+        ]
+    },
+    {
+        "id": "8e607e666511b46b",
+        "type": "move-mouse-to",
+        "z": "6a61b64910c046bc",
+        "targetPositionX": 1500,
+        "targetPositionY": 1500,
+        "preMoveActions": "",
+        "postMoveActions": "",
+        "movementSpeed": 2,
+        "movementScaleX": 1,
+        "movementScaleY": 1,
+        "movementDelayMs": 0,
+        "x": 320,
+        "y": 960,
+        "wires": [
+            [
+                "bde0df30871a605e"
+            ]
+        ]
+    },
+    {
+        "id": "c06ee4f0b14246a6",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 960,
+        "wires": [
+            [
+                "8e607e666511b46b"
             ]
         ]
     }

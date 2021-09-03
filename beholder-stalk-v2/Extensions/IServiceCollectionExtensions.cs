@@ -6,6 +6,7 @@
   using Microsoft.Extensions.DependencyInjection;
   using System.Collections.Generic;
   using System.Reflection;
+  using System.Text.Json;
 
   public static class IServiceCollectionExtensions
   {
@@ -20,10 +21,17 @@
         };
       }
 
+      services.AddSingleton(sp => new JsonSerializerOptions
+      {
+        PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
+      });
+
       services.AddSingleton<IMemoryCache, MemoryCache>();
       services.AddSingleton(sp => MqttRouteTableFactory.Create(assemblies, sp.GetRequiredService<BeholderServiceInfo>()));
       services.AddSingleton<ITypeActivatorCache>(new TypeActivatorCache());
       services.AddSingleton<MqttApplicationMessageRouter>();
+
+      services.AddSingleton<IBeholderMqttClient, BeholderMqttClient>();
 
       return services;
     }

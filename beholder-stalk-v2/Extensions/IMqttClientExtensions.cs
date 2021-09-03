@@ -25,36 +25,5 @@
 
       client.SubscribeAsync(filters.ToArray());
     }
-
-    public static async Task PublishEventAsync<T>(this IManagedMqttClient client, string pubSubName, string topic, T data, BeholderServiceInfo serviceInfo = null, CancellationToken cancellationToken = default)
-    {
-      if (serviceInfo == null)
-      {
-        serviceInfo = new BeholderServiceInfo();
-      }
-
-      // Replace tokens within the pattern
-      var pattern = Regex.Replace(topic, @"{\s*?hostname\s*?}", serviceInfo.HostName, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-      var cloudEvent = new CloudEvent<T>()
-      {
-        Data = data,
-        Source = "stalk",
-        Type = "com.dapr.event.sent",
-        ExtensionAttributes = new Dictionary<string, object>()
-        {
-          { "pubsubname", pubSubName },
-          { "topic", pattern },
-        }
-      };
-
-      await client.PublishAsync(
-                new MqttApplicationMessageBuilder()
-                    .WithTopic(pattern)
-                    .WithPayload(JsonSerializer.Serialize(cloudEvent))
-                    .Build(),
-                cancellationToken
-            );
-    }
   }
 }

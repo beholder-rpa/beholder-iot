@@ -6,25 +6,27 @@ namespace beholder_stalk_v2.Routing
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Logging;
   using MQTTnet;
-  using MQTTnet.Server;
   using System;
+  using System.Linq;
   using System.Reflection;
   using System.Text;
   using System.Text.Json;
   using System.Threading.Tasks;
 
-  public sealed class MqttApplicationMessageRouter : IMqttServerApplicationMessageInterceptor
+  public sealed class MqttApplicationMessageRouter
   {
-    private readonly ILogger<MqttApplicationMessageRouter> logger;
-    private readonly IServiceProvider applicationServices;
-    private readonly ITypeActivatorCache typeActivator;
+    private readonly IServiceProvider _applicationServices;
+    private readonly JsonSerializerOptions _serializerOptions;
+    private readonly ILogger<MqttApplicationMessageRouter> _logger;
+    private readonly ITypeActivatorCache _typeActivator;
 
-    public MqttApplicationMessageRouter(IServiceProvider applicationServices, ILogger<MqttApplicationMessageRouter> logger, MqttRouteTable routeTable, ITypeActivatorCache typeActivator)
+    public MqttApplicationMessageRouter(IServiceProvider applicationServices, JsonSerializerOptions serializerOptions, ILogger<MqttApplicationMessageRouter> logger, MqttRouteTable routeTable, ITypeActivatorCache typeActivator)
     {
-      this.applicationServices = applicationServices;
-      this.logger = logger;
-      this.typeActivator = typeActivator;
-      RouteTable = routeTable;
+      _applicationServices = applicationServices ?? throw new ArgumentNullException(nameof(applicationServices));
+      _serializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
+      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      _typeActivator = typeActivator ?? throw new ArgumentNullException(nameof(typeActivator));
+      RouteTable = routeTable ?? throw new ArgumentNullException(nameof(routeTable));
     }
 
     public MqttRouteTable RouteTable
@@ -34,15 +36,17 @@ namespace beholder_stalk_v2.Routing
 
     public async Task InterceptApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs e)
     {
+      _logger.LogTrace($"Processing message with topic '{e.ApplicationMessage.Topic}'.");
+
       var subscriptionMethods = RouteTable.GetTopicSubscriptions(e.ApplicationMessage);
       if (subscriptionMethods == null || subscriptionMethods.Length == 0)
       {
         // Route not found
-        logger.LogDebug($"Skipping message because '{e.ApplicationMessage.Topic}' did not match any known routes.");
+        _logger.LogDebug($"Skipping message because '{e.ApplicationMessage.Topic}' did not match any known routes.");
         return;
       }
 
-      using var scope = applicationServices.CreateScope();
+      using var scope = _applicationServices.CreateScope();
       foreach (var subscriptionMethod in subscriptionMethods)
       {
         Type? declaringType = subscriptionMethod.DeclaringType;
@@ -52,7 +56,7 @@ namespace beholder_stalk_v2.Routing
           throw new InvalidOperationException($"{subscriptionMethod} must have a declaring type.");
         }
 
-        var classInstance = typeActivator.CreateInstance<object>(scope.ServiceProvider, declaringType);
+        var classInstance = _typeActivator.CreateInstance<object>(scope.ServiceProvider, declaringType);
 
         ParameterInfo[] parameters = subscriptionMethod.GetParameters();
 
@@ -68,116 +72,67 @@ namespace beholder_stalk_v2.Routing
           }
           catch (ArgumentException ex)
           {
-            logger.LogError(ex, $"Unable to match route parameters to all arguments. See inner exception for details.");
+            _logger.LogError(ex, $"Unable to match route parameters to all arguments. See inner exception for details.");
             throw;
           }
           catch (TargetInvocationException ex)
           {
-            logger.LogError(ex.InnerException, $"Unhandled MQTT action exception. See inner exception for details.");
+            _logger.LogError(ex.InnerException, $"Unhandled MQTT action exception. See inner exception for details.");
             throw;
           }
           catch (Exception ex)
           {
-            logger.LogError(ex, "Unable to invoke Mqtt Action.  See inner exception for details.");
+            _logger.LogError(ex, "Unable to invoke Mqtt Action.  See inner exception for details.");
             throw;
           }
         }
-      }
-    }
-
-    public async Task InterceptApplicationMessagePublishAsync(MqttApplicationMessageInterceptorContext context)
-    {
-      // Don't process messages sent from the server itself. This avoids footguns like a server failing to publish
-      // a message because a route isn't found on a controller.
-      if (context.ClientId == null)
-      {
-        return;
-      }
-
-      var subscriptionMethods = RouteTable.GetTopicSubscriptions(context.ApplicationMessage);
-      if (subscriptionMethods == null || subscriptionMethods.Length == 0)
-      {
-        // Route not found
-        logger.LogDebug($"Rejecting message publish because '{context.ApplicationMessage.Topic}' did not match any known routes.");
-        return;
-      }
-
-      using var scope = applicationServices.CreateScope();
-      foreach (var subscriptionMethod in subscriptionMethods)
-      {
-        Type? declaringType = subscriptionMethod.DeclaringType;
-
-        if (declaringType == null)
-        {
-          throw new InvalidOperationException($"{subscriptionMethod} must have a declaring type.");
-        }
-
-        var classInstance = typeActivator.CreateInstance<object>(scope.ServiceProvider, declaringType);
-
-        ParameterInfo[] parameters = subscriptionMethod.GetParameters();
-
-        context.AcceptPublish = true;
-
-        if (parameters.Length == 0)
-        {
-          await HandlerInvoker(subscriptionMethod, classInstance, null).ConfigureAwait(false);
-        }
-        else if (parameters.Length == 1 && parameters[0].ParameterType == typeof(MqttApplicationMessage))
-        {
-          try
-          {
-            await HandlerInvoker(subscriptionMethod, classInstance, new object[] { context.ApplicationMessage }).ConfigureAwait(false);
-          }
-          catch (ArgumentException ex)
-          {
-            logger.LogError(ex, $"Unable to match route parameters to all arguments. See inner exception for details.");
-            throw;
-          }
-          catch (TargetInvocationException ex)
-          {
-            logger.LogError(ex.InnerException, $"Unhandled MQTT action exception. See inner exception for details.");
-            throw;
-          }
-          catch (Exception ex)
-          {
-            logger.LogError(ex, "Unable to invoke Mqtt Action.  See inner exception for details.");
-            throw;
-          }
-        }
-        else if (parameters.Length == 1 && parameters[0].ParameterType == typeof(ICloudEvent<>))
+        else if (parameters.Length == 1 && typeof(ICloudEvent).IsAssignableFrom(parameters[0].ParameterType))
         {
           object? cloudEvent = null;
           string requestJson = string.Empty;
+
+          var cloudEventType = typeof(CloudEvent);
+          if (parameters[0].ParameterType.IsGenericType && parameters[0].ParameterType.GetGenericTypeDefinition() == typeof(ICloudEvent<>))
+          {
+            var cloudEventDataType = parameters[0].ParameterType.GetGenericArguments().First();
+            cloudEventType = typeof(CloudEvent<>).MakeGenericType(cloudEventDataType);
+          }
+
           try
           {
-            requestJson = Encoding.UTF8.GetString(context.ApplicationMessage.Payload, 0, context.ApplicationMessage.Payload.Length);
-            cloudEvent = JsonSerializer.Deserialize(requestJson, parameters[0].ParameterType);
+            requestJson = Encoding.UTF8.GetString(e.ApplicationMessage.Payload, 0, e.ApplicationMessage.Payload.Length);
+            cloudEvent = JsonSerializer.Deserialize(requestJson, cloudEventType, _serializerOptions);
           }
           catch (Exception ex)
           {
-            logger.LogError(ex, $"Unable to deserialize cloud event - {ex.Message}: {requestJson}");
+            _logger.LogError(ex, $"Unable to deserialize cloud event - {ex.Message}: {requestJson}");
             throw;
           }
 
           try
           {
+            _logger.LogTrace($"Invoking method '{subscriptionMethod}' on type {declaringType} with ICloudEvent<T> - {requestJson}'.");
             await HandlerInvoker(subscriptionMethod, classInstance, new object?[] { cloudEvent }).ConfigureAwait(false);
           }
           catch (ArgumentException ex)
           {
-            logger.LogError(ex, $"Unable to match route parameters to all arguments. See inner exception for details.");
+            _logger.LogError(ex, $"Unable to match route parameters to all arguClass.csments. See inner exception for details.");
             throw;
           }
           catch (TargetInvocationException ex)
           {
-            logger.LogError(ex.InnerException, $"Unhandled MQTT action exception. See inner exception for details.");
+            _logger.LogError(ex.InnerException, $"Unhandled MQTT action exception. See inner exception for details.");
             throw;
           }
           catch (Exception ex)
           {
-            logger.LogError(ex, "Unable to invoke Mqtt Action.  See inner exception for details.");
+            _logger.LogError(ex, "Unable to invoke Mqtt Action.  See inner exception for details.");
             throw;
           }
+        }
+        else
+        {
+          _logger.LogWarning($"Unable to invoke Handler Function on type {declaringType}. Parameter Count: {parameters.Length} Parameter Types: {string.Join(",", parameters.Select(p => p.ParameterType.ToString()))}.");
         }
       }
     }
