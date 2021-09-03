@@ -10,6 +10,12 @@ message KeypressDuration {
     optional uint32 max = 3;
 }
 
+// The stalk keyboard service definition.
+service Keyboard {
+  // Sends a key
+  rpc SendKey (SendKeyRequest) returns (SendKeyReply);
+}
+
 message Keypress {
     string key = 1; // Indicates the key name
     // Indicates a key press direction
@@ -26,6 +32,9 @@ message Keypress {
 // The request message containing the single keypress
 message SendKeyRequest {
   Keypress keypress = 1;
+}
+
+message SendKeyReply {
 }
 
 message SendKeysRequest {

@@ -3,16 +3,8 @@
   using System;
   using System.Collections.Generic;
 
-  public interface ICloudEvent<T>
+  public interface ICloudEvent
   {
-    /// <summary>
-    /// Event data specific to the event type. 
-    /// </summary>
-    T Data
-    {
-      get;
-    }
-
     /// <summary>
     /// Content type of data value.
     /// </summary>
@@ -96,6 +88,17 @@
     /// Additional context attributes for the event. The Cloud Event specification refers to these as "extension attributes".
     /// </summary>
     IDictionary<string, object> ExtensionAttributes
+    {
+      get;
+    }
+  }
+
+  public interface ICloudEvent<T> : ICloudEvent
+  {
+    /// <summary>
+    /// Event data specific to the event type. 
+    /// </summary>
+    T Data
     {
       get;
     }

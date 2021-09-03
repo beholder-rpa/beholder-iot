@@ -12,21 +12,29 @@
   using MQTTnet.Extensions.ManagedClient;
   using System;
   using System.Collections.Concurrent;
+  using System.Collections.Generic;
+  using System.Text.Json;
+  using System.Text.RegularExpressions;
+  using System.Threading;
   using System.Threading.Tasks;
 
   public class BeholderMqttClient : IBeholderMqttClient
   {
     private readonly StalkOptions _options;
     private readonly MqttApplicationMessageRouter _router;
+    private readonly BeholderServiceInfo _serviceInfo;
+    private readonly JsonSerializerOptions _serializerOptions;
     private readonly ConcurrentDictionary<IObserver<MqttClientEvent>, MqttClientEventUnsubscriber> _observers = new ConcurrentDictionary<IObserver<MqttClientEvent>, MqttClientEventUnsubscriber>();
     private readonly IManagedMqttClientOptions _mqttClientOptions;
     private readonly ILogger<BeholderMqttClient> _logger;
 
-    public BeholderMqttClient(IOptions<StalkOptions> options, MqttApplicationMessageRouter router, BeholderServiceInfo serviceInfo, ILogger<BeholderMqttClient> logger)
+    public BeholderMqttClient(IOptions<StalkOptions> options, MqttApplicationMessageRouter router, BeholderServiceInfo serviceInfo, JsonSerializerOptions serializerOptions, ILogger<BeholderMqttClient> logger)
     {
       _options = (options ?? throw new ArgumentNullException(nameof(options))).Value;
       _router = router ?? throw new ArgumentNullException(nameof(router));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+      _serviceInfo = serviceInfo ?? throw new ArgumentNullException(nameof(serviceInfo));
+      _serializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
 
       _mqttClientOptions = new ManagedMqttClientOptionsBuilder()
          .WithAutoReconnectDelay(TimeSpan.FromMilliseconds(2500))
@@ -92,6 +100,32 @@
       await MqttClient.StopAsync();
     }
 
+    public async Task PublishEventAsync<T>(string topic, T data, CancellationToken cancellationToken = default)
+    {
+      // Replace tokens within the pattern
+      var pattern = Regex.Replace(topic, @"{\s*?hostname\s*?}", _serviceInfo.HostName, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+      var cloudEvent = new CloudEvent<T>()
+      {
+        Data = data,
+        Source = "stalk",
+        Type = "com.dapr.event.sent",
+        ExtensionAttributes = new Dictionary<string, object>()
+        {
+          { "pubsubname", Consts.PubSubName },
+          { "topic", pattern },
+        }
+      };
+
+      await MqttClient.PublishAsync(
+                new MqttApplicationMessageBuilder()
+                    .WithTopic(pattern)
+                    .WithPayload(JsonSerializer.Serialize(cloudEvent, _serializerOptions))
+                    .Build(),
+                cancellationToken
+            );
+    }
+
     #region IObservable<MqttClientEvent>
     IDisposable IObservable<MqttClientEvent>.Subscribe(IObserver<MqttClientEvent> observer)
     {
@@ -108,7 +142,7 @@
       {
       });
 
-      MqttClient.SubscribeControllers(_router);
+      SubscribeControllers();
 
       // Report that we've connected.
       await MqttClient.PublishAsync(new MqttApplicationMessageBuilder()
@@ -139,6 +173,20 @@
       {
         Topic = e.ApplicationMessage?.Topic,
       });
+    }
+
+    public void SubscribeControllers()
+    {
+      var filters = new List<MqttTopicFilter>();
+      foreach (var pattern in _router.RouteTable.Keys)
+      {
+        var patternFilter = new MqttTopicFilterBuilder()
+                    .WithTopic(pattern)
+                    .Build();
+        filters.Add(patternFilter);
+      }
+
+      MqttClient.SubscribeAsync(filters.ToArray());
     }
 
     /// <summary>

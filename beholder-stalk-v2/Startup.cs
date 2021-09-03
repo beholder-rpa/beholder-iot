@@ -1,14 +1,17 @@
 ﻿namespace beholder_stalk_v2
 {
   using beholder_stalk_v2.HardwareInterfaceDevices;
+  using beholder_stalk_v2.Models;
   using beholder_stalk_v2.Services;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Http;
+  using Microsoft.Extensions.Caching.Memory;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
+  using System.Text.Json;
 
   public class Startup
   {
@@ -31,21 +34,28 @@
         });
       });
 
-      //services.AddMqttControllers();
+      var stalkOptions = Configuration.GetSection("Stalk").Get<StalkOptions>();
+      services.Configure<StalkOptions>(Configuration.GetSection("Stalk"));
 
+      services.AddSingleton<BeholderServiceInfo>();
+      services.AddSingleton(sp => new JsonSerializerOptions
+      {
+        PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
+      });
+
+      services.AddSingleton<IMemoryCache, MemoryCache>();
+
+      services.AddMqttControllers();
+
+      services.AddSingleton<BeholderContext>();
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
       services.AddSingleton<Joystick>();
 
-      services.AddSingleton<IHumanInterfaceService, KeyboardService>();
-      services.AddSingleton<IHumanInterfaceService, MouseService>();
-      services.AddSingleton<IHumanInterfaceService, JoystickService>();
-
       services.AddGrpc();
 
-      services.AddDaprClient();
-
-      services.AddHostedService<PulseService>();
+      services.AddSingleton<BeholderServiceInfo>();
+      services.AddHostedService<BeholderStalkWorker>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,11 +68,9 @@
 
       app.UseRouting();
 
-      app.UseCloudEvents();
-
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapGrpcService<StalkGrpcService>();
+        endpoints.MapGrpcService<KeyboardService>();
 
         endpoints.MapGet("/", async context =>
           {

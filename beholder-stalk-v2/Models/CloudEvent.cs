@@ -4,7 +4,7 @@
   using System.Collections.Generic;
   using System.Text.Json.Serialization;
 
-  public record CloudEvent<T> : ICloudEvent<T>
+  public record CloudEvent : ICloudEvent
   {
     public CloudEvent()
     {
@@ -14,9 +14,6 @@
       SpecVersion = "1.0";
       ExtensionAttributes = new Dictionary<string, object>();
     }
-
-    [JsonPropertyName("data")]
-    public T Data { get; set; }
 
     [JsonPropertyName("datacontenttype")]
     public string DataContentType { get; init; }
@@ -44,5 +41,11 @@
 
     [JsonExtensionData]
     public IDictionary<string, object> ExtensionAttributes { get; init; }
+  }
+
+  public record CloudEvent<T> : CloudEvent, ICloudEvent<T>
+  {
+    [JsonPropertyName("data")]
+    public T Data { get; set; }
   }
 }

@@ -2,6 +2,7 @@
 {
   using MQTTnet.Extensions.ManagedClient;
   using System;
+  using System.Threading;
   using System.Threading.Tasks;
 
   public interface IBeholderMqttClient : IObservable<MqttClientEvent>
@@ -30,5 +31,15 @@
     /// Stops receiving messages from MQTT
     /// </summary>
     Task Disconnect();
+
+    /// <summary>
+    /// Publishes a message as a CloudEvent with the specified topic and data
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="topic"></param>
+    /// <param name="data"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task PublishEventAsync<T>(string topic, T data, CancellationToken cancellationToken = default);
   }
 }

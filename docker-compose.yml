@@ -117,22 +117,6 @@ services:
       - backend
     depends_on:
       - beholder-nexus
-  # Dapr Sidecar
-  beholder-stalk-dapr:
-    << : *default-dapr
-    container_name: beholder-stalk-dapr
-    command: ["./daprd",
-      "-app-id", "stalk",
-      "-app-port", "80",
-      "-app-protocol", "grpc",
-      "-dapr-http-max-request-size", "16",
-      "-placement-host-address", "beholder-dapr-placement:50006",
-      "-components-path", "/dapr/components",
-      "-config", "/dapr/config.yaml"]
-    depends_on:
-      - beholder-stalk
-      - beholder-nexus
-    network_mode: "service:beholder-stalk"
   ###############################################
   # Beholder Epidermis
   beholder-epidermis:

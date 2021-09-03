@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "beholder-stalk", "beholder-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "beholder-stalk-v2", "beholder-stalk-v2\beholder-stalk-v2.csproj", "{B9352B6B-5466-4151-A2E1-7120CF387577}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beholder-stalk-v2-tests", "beholder-stalk-v2-tests\beholder-stalk-v2-tests.csproj", "{4257E33E-AAB2-45AB-BA87-EAF52EF93EAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B9352B6B-5466-4151-A2E1-7120CF387577}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9352B6B-5466-4151-A2E1-7120CF387577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9352B6B-5466-4151-A2E1-7120CF387577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4257E33E-AAB2-45AB-BA87-EAF52EF93EAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4257E33E-AAB2-45AB-BA87-EAF52EF93EAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4257E33E-AAB2-45AB-BA87-EAF52EF93EAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4257E33E-AAB2-45AB-BA87-EAF52EF93EAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
