@@ -175,8 +175,9 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       {
         default:
         case MoveMouseToRequest.Types.MovementType.Linear:
-          var pointCount = line.GetLength() / movementSpeed;
-          points = line.GetPoints((int)Math.Ceiling(pointCount));
+          points = line.GetPoints();
+          var length = line.GetLength();
+          points = ArrayUtil.Resize((int)Math.Ceiling(length / movementSpeed), points);
           break;
       }
 

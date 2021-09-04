@@ -1,7 +1,6 @@
 namespace beholder_stalk_v2.Tests
 {
   using beholder_stalk_v2.Models;
-  using beholder_stalk_v2;
   using Xunit;
 
   public class TypeExtensionsTests
