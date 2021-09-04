@@ -2,6 +2,7 @@
 {
   using beholder_stalk_v2.Models;
   using beholder_stalk_v2.Protos;
+  using beholder_stalk_v2.Utils;
   using Microsoft.Extensions.Logging;
   using System;
   using System.Threading.Tasks;
@@ -89,6 +90,10 @@
         };
         _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Eye reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
+
+      var windowsPointerScaleFactor = WindowsMouseUtil.GetPointerScaleFactor(_context.SysInfo);
+      message.Data.MovementScaleX = message.Data.MovementScaleX * windowsPointerScaleFactor;
+      message.Data.MovementScaleY = message.Data.MovementScaleY * windowsPointerScaleFactor;
 
       _mouse.SendMouseMoveTo(message.Data);
       return Task.CompletedTask;

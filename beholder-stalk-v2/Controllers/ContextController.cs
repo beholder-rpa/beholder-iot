@@ -38,5 +38,15 @@
       }
       return Task.CompletedTask;
     }
+
+    [EventPattern("beholder/psionix/+/system_information")]
+    public Task UpdateSystemInformationFromPsionix(ICloudEvent<SysInfo> sysInfo)
+    {
+      if (sysInfo.Data != null)
+      {
+        _context.SysInfo = sysInfo.Data;
+      }
+      return Task.CompletedTask;
+    }
   }
 }

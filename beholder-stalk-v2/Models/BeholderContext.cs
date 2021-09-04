@@ -13,5 +13,11 @@
       get;
       set;
     }
+
+    public SysInfo SysInfo
+    {
+      get;
+      set;
+    }
   }
 }
