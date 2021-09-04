@@ -142,5 +142,15 @@
       var length = myLine.GetLength();
       Assert.Equal(142, Math.Ceiling(length));
     }
+
+    [Fact]
+    public void Test15()
+    {
+      var myLine = new Line(new Point() { X = 999, Y = 1000 }, new Point() { X = 1000, Y = 1000 });
+      var points = myLine.GetPoints();
+      Assert.Equal(2, points.Length);
+      Assert.Equal(myLine.p2.X, points[1].X);
+      Assert.Equal(myLine.p2.Y, points[1].Y);
+    }
   }
 }

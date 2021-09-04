@@ -176,8 +176,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         default:
         case MoveMouseToRequest.Types.MovementType.Linear:
           points = line.GetPoints();
-          var length = line.GetLength();
-          points = ArrayUtil.Resize((int)Math.Ceiling(length / movementSpeed), points);
+          var length = points.Length;
+          points = ArrayUtil.Resize((int)Math.Ceiling((double)length / movementSpeed), points);
           break;
       }
 
@@ -208,7 +208,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
                 var deltaY = (short)(nextPoint.Y - currentPoint.Y);
 
                 SendMouseMove(deltaX, deltaY);
-                //_logger.LogInformation($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
+                _logger.LogTrace($"Move: {nextPoint.X},{nextPoint.Y} ({deltaX},{deltaY})");
 
                 if (movementDelayMs > 0)
                 {

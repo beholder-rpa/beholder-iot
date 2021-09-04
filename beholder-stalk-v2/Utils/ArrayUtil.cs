@@ -17,6 +17,13 @@
         int pos = (int)Math.Floor(i * ((double)a.Length / size));
         new_array[i] = a[pos];
       }
+
+      // Always ensure that the first and last elements are the same as the origin
+      if (size > 0)
+      {
+        new_array[0] = a[0];
+        new_array[size - 1] = a[a.Length - 1];
+      }
       return new_array;
     }
   }
