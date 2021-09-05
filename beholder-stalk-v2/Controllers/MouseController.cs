@@ -9,7 +9,7 @@
   using Mouse = HardwareInterfaceDevices.Mouse;
 
   [MqttController]
-  public class MouseController
+  public class MouseController : IObserver<ContextEvent>
   {
     private readonly Mouse _mouse;
     private readonly BeholderContext _context;
@@ -22,6 +22,12 @@
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
+    public Point CurrentPointerPosition
+    {
+      get;
+      private set;
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/click")]
@@ -68,26 +74,25 @@
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/move_mouse_to")]
-    public Task MoveMouseTo(ICloudEvent<MoveMouseToRequest> message)
+    public async Task MoveMouseTo(ICloudEvent<MoveMouseToRequest> message)
     {
-      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.Data.PsionixCurrentPointerPosition != null)
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)))
       {
+        // Wait for the next pointer position update
+        CurrentPointerPosition = null;
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromSeconds(1));
+        if (updatedPointerPosition == false)
+        {
+          _logger.LogError("Did not retrieve an updated pointer position in the desired timeframe.");
+          return;
+        }
+
         message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
         {
-          X = _context.Data.PsionixCurrentPointerPosition.X,
-          Y = _context.Data.PsionixCurrentPointerPosition.Y,
+          X = CurrentPointerPosition.X,
+          Y = CurrentPointerPosition.Y,
         };
         _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Psionix reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
-      }
-
-      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.Data.EyeCurrentPointerPosition != null)
-      {
-        message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
-        {
-          X = _context.Data.EyeCurrentPointerPosition.X,
-          Y = _context.Data.EyeCurrentPointerPosition.Y,
-        };
-        _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Eye reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
 
       var lastMovementPosition = _context.Data.LastMovementPosition;
@@ -96,6 +101,13 @@
           lastMovementPosition.Y == message.Data.CurrentPosition.Y)
       {
         _logger.LogWarning($"Previously moved from {lastMovementPosition}. Skipping.");
+        return;
+      }
+
+      if (message.Data.CurrentPosition.X == message.Data.TargetPosition.X && message.Data.CurrentPosition.Y == message.Data.TargetPosition.Y)
+      {
+        _logger.LogWarning($"The current and target positions are the same ({message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}). Skipping.");
+        return;
       }
 
       var windowsPointerScaleFactor = WindowsMouseUtil.GetPointerScaleFactor(_context.Data.SysInfo);
@@ -112,10 +124,17 @@
             Y = message.Data.CurrentPosition.Y,
           }
         };
-        _logger.LogInformation($"Eye Indicated position after move: {_context.Data.EyeCurrentPointerPosition}");
-        _logger.LogInformation($"Psionix Indicated position after move: {_context.Data.PsionixCurrentPointerPosition}");
+
+        // Wait for the next pointer position update
+        CurrentPointerPosition = null;
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromSeconds(1));
+        if (updatedPointerPosition == false)
+        {
+          _logger.LogError("Did not retrieve an updated pointer position in the desired timeframe.");
+          return;
+        }
+        _logger.LogInformation($"Indicated position after move: {CurrentPointerPosition}");
       }
-      return Task.CompletedTask;
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/status")]
@@ -132,5 +151,27 @@
 
       _logger.LogInformation($"Published mouse status");
     }
+
+    #region IObserver<ContextEvent>
+    public void OnCompleted()
+    {
+      // Do Nothing
+    }
+
+    public void OnError(Exception error)
+    {
+      // Do Nothing
+    }
+
+    public void OnNext(ContextEvent contextEvent)
+    {
+      switch (contextEvent)
+      {
+        case PointerPositionChangedEvent pointerPositionChanged:
+          CurrentPointerPosition = pointerPositionChanged.NewPointerPosition;
+          break;
+      }
+    }
+    #endregion
   }
 }
