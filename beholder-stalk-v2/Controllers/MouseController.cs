@@ -81,7 +81,7 @@
         // Wait for the next pointer position update
         CurrentPointerPosition = null;
         await _client.PublishEventAsync($"beholder/psionix/{_context.Data.SysInfo.HostName}/mouse/publish_pointer_position");
-        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(500));
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(750));
         if (updatedPointerPosition == false)
         {
           _logger.LogError($"Did not recieve an updated pointer position from {_context.Data.SysInfo.HostName} in the desired timeframe.");
@@ -129,7 +129,7 @@
         // Wait for the next pointer position update
         CurrentPointerPosition = null;
         await _client.PublishEventAsync($"beholder/psionix/{_context.Data.SysInfo.HostName}/mouse/publish_pointer_position");
-        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(500));
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(750));
         if (updatedPointerPosition == false)
         {
           _logger.LogError($"Did not recieve an updated pointer position from {_context.Data.SysInfo.HostName} in the desired timeframe.");
