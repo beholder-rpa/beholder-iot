@@ -24,5 +24,10 @@
 
     /// <inheritdoc/>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the QoS of the subscription
+    /// </summary>
+    public int QoS { get; set; }
   }
 }

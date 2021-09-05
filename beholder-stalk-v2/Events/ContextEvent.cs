@@ -15,6 +15,8 @@ namespace beholder_stalk_v2
   /// </summary>
   public record PointerPositionChangedEvent : ContextEvent
   {
+    public string Source { get; init;  }
+
     public Point OldPointerPosition { get; init; }
 
     public Point NewPointerPosition { get; init; }

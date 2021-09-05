@@ -22,9 +22,11 @@
     [EventPattern("beholder/eye/+/pointer_position")]
     public Task UpdatePointerPositionFromEye(ICloudEvent<Point> pointerPosition)
     {
+      var currentContextData = _context.Data;
+
       if (pointerPosition.Data != null &&
-          (_context.Data.LastEyePointerUpdate.HasValue == false ||
-            _context.Data.LastEyePointerUpdate.Value < pointerPosition.Time
+          (currentContextData.LastEyePointerUpdate.HasValue == false ||
+            currentContextData.LastEyePointerUpdate.Value < pointerPosition.Time
           )
          )
       {
@@ -34,6 +36,13 @@
           EyeCurrentPointerPosition = pointerPosition.Data
         };
       }
+
+      OnContextEvent(new PointerPositionChangedEvent()
+      {
+        Source = "eye",
+        OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
+        NewPointerPosition = pointerPosition.Data,
+      });
       return Task.CompletedTask;
     }
 
@@ -53,13 +62,14 @@
           LastPsionixPointerUpdate = pointerPosition.Time,
           PsionixCurrentPointerPosition = pointerPosition.Data
         };
-
-        OnContextEvent(new PointerPositionChangedEvent()
-        {
-          OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
-          NewPointerPosition = pointerPosition.Data,
-        });
       }
+
+      OnContextEvent(new PointerPositionChangedEvent()
+      {
+        Source = "psionix",
+        OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
+        NewPointerPosition = pointerPosition.Data,
+      });
       return Task.CompletedTask;
     }
 
