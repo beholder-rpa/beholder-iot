@@ -1,6 +1,5 @@
 namespace beholder_stalk_v2
 {
-  using beholder_stalk_v2.Controllers;
   using beholder_stalk_v2.HardwareInterfaceDevices;
   using Microsoft.Extensions.Hosting;
   using Microsoft.Extensions.Logging;
@@ -16,9 +15,6 @@ namespace beholder_stalk_v2
     private readonly MouseObserver _mouseObserver;
     private readonly Joystick _joystick;
 
-    private readonly ContextController _contextController;
-    private readonly MouseController _mouseController;
-
     private readonly BeholderServiceInfo _serviceInfo;
     private readonly IBeholderMqttClient _client;
     private readonly ILogger<BeholderStalkWorker> _logger;
@@ -28,8 +24,6 @@ namespace beholder_stalk_v2
       Mouse mouse,
       MouseObserver mouseObserver,
       Joystick joystick,
-      ContextController contextController,
-      MouseController mouseController,
       BeholderServiceInfo beholderServiceInfo,
       IBeholderMqttClient client,
       ILogger<BeholderStalkWorker> logger
@@ -40,9 +34,6 @@ namespace beholder_stalk_v2
       _mouseObserver = mouseObserver ?? throw new ArgumentNullException(nameof(mouseObserver));
       _joystick = joystick ?? throw new ArgumentNullException(nameof(joystick));
 
-      _contextController = contextController ?? throw new ArgumentNullException(nameof(contextController));
-      _mouseController = mouseController ?? throw new ArgumentNullException(nameof(mouseController));
-
       _serviceInfo = beholderServiceInfo ?? throw new ArgumentNullException(nameof(beholderServiceInfo));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -52,8 +43,6 @@ namespace beholder_stalk_v2
     {
       await _client.StartAsync();
       _mouse.Subscribe(_mouseObserver);
-
-      _contextController.Subscribe(_mouseController);
 
       while (!stoppingToken.IsCancellationRequested)
       {

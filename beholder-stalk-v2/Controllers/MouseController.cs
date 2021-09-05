@@ -9,7 +9,7 @@
   using Mouse = HardwareInterfaceDevices.Mouse;
 
   [MqttController]
-  public class MouseController : IObserver<ContextEvent>
+  public class MouseController
   {
     private readonly Mouse _mouse;
     private readonly BeholderContext _context;
@@ -22,12 +22,6 @@
       _context = context ?? throw new ArgumentNullException(nameof(context));
       _client = client ?? throw new ArgumentNullException(nameof(client));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    }
-
-    public Point CurrentPointerPosition
-    {
-      get;
-      private set;
     }
 
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/click")]
@@ -79,9 +73,9 @@
       if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)))
       {
         // Wait for the next pointer position update
-        CurrentPointerPosition = null;
+        var lastUpdate = _context.Data.LastPsionixPointerUpdate;
         await _client.PublishEventAsync($"beholder/psionix/{_context.Data.SysInfo.HostName}/mouse/publish_pointer_position");
-        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(750));
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => lastUpdate != _context.Data.LastPsionixPointerUpdate, TimeSpan.FromMilliseconds(750));
         if (updatedPointerPosition == false)
         {
           _logger.LogError($"Did not recieve an updated pointer position from {_context.Data.SysInfo.HostName} in the desired timeframe.");
@@ -90,8 +84,8 @@
 
         message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
         {
-          X = CurrentPointerPosition.X,
-          Y = CurrentPointerPosition.Y,
+          X = _context.Data.PsionixCurrentPointerPosition.X,
+          Y = _context.Data.PsionixCurrentPointerPosition.Y,
         };
         _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Psionix reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
@@ -127,15 +121,15 @@
         };
 
         // Wait for the next pointer position update
-        CurrentPointerPosition = null;
+        var lastUpdate = _context.Data.LastPsionixPointerUpdate;
         await _client.PublishEventAsync($"beholder/psionix/{_context.Data.SysInfo.HostName}/mouse/publish_pointer_position");
-        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => CurrentPointerPosition != null, TimeSpan.FromMilliseconds(750));
+        var updatedPointerPosition = await Utils.RetryUntilSuccessOrTimeout(() => lastUpdate != _context.Data.LastPsionixPointerUpdate, TimeSpan.FromMilliseconds(750));
         if (updatedPointerPosition == false)
         {
           _logger.LogError($"Did not recieve an updated pointer position from {_context.Data.SysInfo.HostName} in the desired timeframe.");
           return;
         }
-        _logger.LogInformation($"Indicated position after move: {CurrentPointerPosition}");
+        _logger.LogInformation($"Indicated position after move: {_context.Data.PsionixCurrentPointerPosition}");
       }
     }
 
@@ -153,27 +147,5 @@
 
       _logger.LogInformation($"Published mouse status");
     }
-
-    #region IObserver<ContextEvent>
-    public void OnCompleted()
-    {
-      // Do Nothing
-    }
-
-    public void OnError(Exception error)
-    {
-      // Do Nothing
-    }
-
-    public void OnNext(ContextEvent contextEvent)
-    {
-      switch (contextEvent)
-      {
-        case PointerPositionChangedEvent pointerPositionChanged:
-          CurrentPointerPosition = pointerPositionChanged.NewPointerPosition;
-          break;
-      }
-    }
-    #endregion
   }
 }
