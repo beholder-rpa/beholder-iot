@@ -57,7 +57,7 @@
             VerticalResolution = (uint)mouseResolutionChanged.VerticalResolution
           }
         );
-      _logger.LogInformation($"Published mouse resolution changed");
+      _logger.LogTrace($"Published mouse resolution changed");
     }
 
     private async Task HandleMouseMoveToPoints(MouseMoveToPointsEvent mouseMoveToPoints)
@@ -74,7 +74,7 @@
           mouseMoveToPoints.Topic,
           sb.ToString()
         );
-      _logger.LogInformation($"Published mouse move to points");
+      _logger.LogTrace($"Published mouse move to points");
     }
 
     private async Task HandleMouseMoved(MovedMouseEvent mouseMoved)
@@ -84,7 +84,7 @@
           "beholder/stalk/{HOSTNAME}/status/mouse/moved",
           mouseMoved
         );
-      _logger.LogInformation($"Published mouse moved");
+      _logger.LogTrace($"Published mouse moved");
     }
   }
 }

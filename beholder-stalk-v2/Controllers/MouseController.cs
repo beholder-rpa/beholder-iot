@@ -112,6 +112,8 @@
             Y = message.Data.CurrentPosition.Y,
           }
         };
+        _logger.LogInformation($"Eye Indicated position after move: {_context.Data.EyeCurrentPointerPosition}");
+        _logger.LogInformation($"Psionix Indicated position after move: {_context.Data.PsionixCurrentPointerPosition}");
       }
       return Task.CompletedTask;
     }

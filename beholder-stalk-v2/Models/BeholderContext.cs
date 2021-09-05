@@ -2,7 +2,7 @@
 
 namespace beholder_stalk_v2.Models
 {
-  public record BeholderContext
+  public class BeholderContext
   {
     public BeholderContext()
     {
