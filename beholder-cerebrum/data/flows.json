@@ -21,6 +21,96 @@
         "info": ""
     },
     {
+        "id": "093549556932395f",
+        "type": "subflow",
+        "name": "Store Clicker",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "0af4bd966c7a2454"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 700,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "5218bcd9c9c06341",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 700,
+                "y": 440,
+                "wires": [
+                    {
+                        "id": "0af4bd966c7a2454",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "4d289f8513cee82f",
+        "type": "subflow",
+        "name": "determine if good cookie",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "61d91dd421e4d837"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 720,
+                "y": 300,
+                "wires": [
+                    {
+                        "id": "05b3caef80cd2ada",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1080,
+                "y": 360,
+                "wires": [
+                    {
+                        "id": "cec87ed245f42e30",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99",
+        "outputLabels": [
+            "dupe",
+            "good"
+        ]
+    },
+    {
         "id": "0b70dd4da53f0867",
         "type": "mqtt-broker",
         "name": "Beholder Nexus",
@@ -116,9 +206,7 @@
         "x": 140,
         "y": 120,
         "wires": [
-            [
-                "477da9ac4ee0c2c2"
-            ]
+            []
         ]
     },
     {
@@ -151,7 +239,7 @@
         "rap": true,
         "rh": 0,
         "x": 140,
-        "y": 160,
+        "y": 180,
         "wires": [
             [
                 "477da9ac4ee0c2c2"
@@ -204,6 +292,7 @@
         "id": "0f2638177f9ba6bd",
         "type": "mqtt in",
         "z": "13065b3553c3ca8f",
+        "d": true,
         "name": "on pointer image changed",
         "topic": "beholder/eye/+/pointer_image",
         "qos": "1",
@@ -239,6 +328,7 @@
         "id": "c0c6edf21f83149a",
         "type": "mqtt in",
         "z": "6a61b64910c046bc",
+        "d": true,
         "name": "",
         "topic": "beholder/stalk/+/keyboard/+",
         "qos": "1",
@@ -275,6 +365,7 @@
         "id": "1ff5b7565811c8d9",
         "type": "mqtt in",
         "z": "6a61b64910c046bc",
+        "d": true,
         "name": "",
         "topic": "beholder/stalk/+/mouse/+",
         "qos": "1",
@@ -339,8 +430,7 @@
         "y": 400,
         "wires": [
             [
-                "bde0df30871a605e",
-                "2c16b004be86e6d2"
+                "bde0df30871a605e"
             ]
         ]
     },
@@ -542,7 +632,7 @@
         "z": "5b3b16f7b12de95a",
         "name": "Beholder Nexus",
         "topic": "",
-        "qos": "1",
+        "qos": "0",
         "retain": "",
         "respTopic": "",
         "contentType": "",
@@ -550,8 +640,8 @@
         "correl": "",
         "expiry": "",
         "broker": "0b70dd4da53f0867",
-        "x": 1180,
-        "y": 700,
+        "x": 1660,
+        "y": 820,
         "wires": []
     },
     {
@@ -561,8 +651,8 @@
         "button": "lclick",
         "click_direction": 0,
         "duration": null,
-        "x": 830,
-        "y": 600,
+        "x": 930,
+        "y": 540,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -576,8 +666,8 @@
         "hostname": "",
         "modifiers": "^+",
         "key": "{Oemtilde}",
-        "x": 820,
-        "y": 880,
+        "x": 880,
+        "y": 920,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -591,8 +681,8 @@
         "hostname": "",
         "modifiers": "^+",
         "key": "{Oemtilde}",
-        "x": 770,
-        "y": 940,
+        "x": 870,
+        "y": 980,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -608,13 +698,13 @@
         "deviceIndex": "0",
         "regions": [],
         "streamDesktopThumbnail": "true",
-        "streamPointerImage": "true",
+        "streamPointerImage": "false",
         "desktopThumbnailStreamSettingsMaxFps": "0.5",
         "desktopThumbnailStreamSettingsScaleFactor": "0.15",
         "pointerImageStreamSettingsMaxFps": "0.5",
         "watchPointerPosition": "true",
-        "x": 780,
-        "y": 1040,
+        "x": 860,
+        "y": 1080,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -626,8 +716,8 @@
         "type": "stop-observing",
         "z": "5b3b16f7b12de95a",
         "hostname": "",
-        "x": 780,
-        "y": 1100,
+        "x": 860,
+        "y": 1140,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -645,8 +735,8 @@
         "focusRegionWidth": "640",
         "focusRegionHeight": "480",
         "focusRegionMaxFps": "0.15",
-        "x": 830,
-        "y": 760,
+        "x": 980,
+        "y": 820,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -663,8 +753,8 @@
         "scaleIncrement": 2,
         "rotationBins": 20,
         "outputImagePrefrontalKey": "",
-        "x": 910,
-        "y": 680,
+        "x": 950,
+        "y": 760,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -692,25 +782,6 @@
         ]
     },
     {
-        "id": "956b2ac37199efac",
-        "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "increment click count",
-        "func": "let clickCount = flow.get(\"cookie_clicker_click_count\") || 0;\nclickCount++;\nflow.set(\"cookie_clicker_click_count\", clickCount);\nnode.status({text: clickCount});\nreturn {}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 580,
-        "y": 600,
-        "wires": [
-            [
-                "a20509f002b98de9"
-            ]
-        ]
-    },
-    {
         "id": "099265f41f858ffa",
         "type": "inject",
         "z": "5b3b16f7b12de95a",
@@ -721,8 +792,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 730,
-        "y": 820,
+        "x": 710,
+        "y": 880,
         "wires": [
             [
                 "bb1f72790d7d12db"
@@ -749,16 +820,13 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 270,
-        "y": 840,
+        "x": 230,
+        "y": 920,
         "wires": [
             [
-                "54677c7e9faec3c3",
-                "ab87dc17a8d8adea"
+                "ba7436256873acd9"
             ],
-            [
-                "a13940027781617e"
-            ]
+            []
         ]
     },
     {
@@ -772,8 +840,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 590,
-        "y": 940,
+        "x": 690,
+        "y": 980,
         "wires": [
             [
                 "d47744512b474040"
@@ -791,8 +859,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 630,
-        "y": 1000,
+        "x": 690,
+        "y": 1040,
         "wires": [
             [
                 "54677c7e9faec3c3"
@@ -810,8 +878,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 630,
-        "y": 1140,
+        "x": 670,
+        "y": 1180,
         "wires": [
             [
                 "a13940027781617e"
@@ -823,14 +891,14 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "create focus region request for active process window",
-        "func": "const payload = msg.payload;\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
+        "func": "const payload = msg.payload;\nflow.set(\"cookie_clicker_process\", payload.data)\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width - 350,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
-        "y": 760,
+        "x": 640,
+        "y": 820,
         "wires": [
             [
                 "21d416d2262f1804"
@@ -848,8 +916,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
-        "y": 680,
+        "x": 730,
+        "y": 760,
         "wires": [
             [
                 "b074feee2745ba5c"
@@ -857,32 +925,18 @@
         ]
     },
     {
-        "id": "731fbb55b777bd7f",
-        "type": "throttle",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "throttleType": "time",
-        "timeLimit": "2",
-        "timeLimitType": "seconds",
-        "countLimit": 0,
-        "blockSize": 0,
-        "locked": false,
-        "x": 870,
-        "y": 380,
-        "wires": [
-            [
-                "d09ada59b2398114"
-            ]
-        ]
-    },
-    {
         "id": "d66ef2ded60e78cb",
         "type": "switch",
         "z": "5b3b16f7b12de95a",
-        "name": "switch",
+        "name": "state machine",
         "property": "cookie_clicker_state",
         "propertyType": "flow",
         "rules": [
+            {
+                "t": "eq",
+                "v": "idle",
+                "vt": "str"
+            },
             {
                 "t": "eq",
                 "v": "golden_cookie",
@@ -890,19 +944,30 @@
             },
             {
                 "t": "eq",
-                "v": "idle",
+                "v": "spending_spree",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hand_of_fate",
                 "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 370,
-        "y": 580,
+        "outputs": 4,
+        "x": 400,
+        "y": 560,
         "wires": [
+            [
+                "bee0b6cea281c197",
+                "7de61ce12026042a",
+                "cfd479fd322ea30f"
+            ],
+            [],
             [],
             [
-                "956b2ac37199efac"
+                "fabef2d366ccf21f"
             ]
         ]
     },
@@ -918,11 +983,10 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 150,
-        "y": 760,
+        "x": 130,
+        "y": 820,
         "wires": [
             [
-                "f9b6966bc8513856",
                 "99130e21a2a56664"
             ]
         ]
@@ -950,27 +1014,26 @@
         "y": 300,
         "wires": [
             [
-                "731fbb55b777bd7f"
+                "6de3353e96814b0b"
             ]
         ]
     },
     {
         "id": "d83c7c758a5df389",
         "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "golden cookie location",
+        "z": "4d289f8513cee82f",
+        "name": "get golden cookie midpoint",
         "func": "const polys = msg.payload.data;\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: midpoints[0]\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 380,
+        "x": 600,
+        "y": 140,
         "wires": [
             [
-                "731fbb55b777bd7f",
-                "89bc3e4e258a044d"
+                "85083e50b709ec34"
             ]
         ]
     },
@@ -986,7 +1049,7 @@
         "finalize": "",
         "libs": [],
         "x": 230,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
                 "d66ef2ded60e78cb"
@@ -1005,11 +1068,11 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 160,
-        "y": 680,
+        "x": 130,
+        "y": 760,
         "wires": [
             [
-                "1b80e1c1ed40addb"
+                "a083be4aca3b4be7"
             ]
         ]
     },
@@ -1051,6 +1114,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
+        "payloadType": "str",
         "x": 930,
         "y": 240,
         "wires": [
@@ -1062,13 +1126,13 @@
     {
         "id": "cec87ed245f42e30",
         "type": "change",
-        "z": "5b3b16f7b12de95a",
+        "z": "4d289f8513cee82f",
         "name": "set state to golden cookie",
         "rules": [
             {
                 "t": "set",
-                "p": "cookie_clicker_state",
-                "pt": "global",
+                "p": "$parent.cookie_clicker_state",
+                "pt": "flow",
                 "to": "golden_cookie",
                 "tot": "str"
             }
@@ -1078,32 +1142,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 210,
-        "y": 380,
+        "x": 890,
+        "y": 360,
         "wires": [
-            [
-                "d83c7c758a5df389"
-            ]
-        ]
-    },
-    {
-        "id": "89bc3e4e258a044d",
-        "type": "rbe",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "topic",
-        "x": 910,
-        "y": 440,
-        "wires": [
-            [
-                "d03982fe055c45b7"
-            ]
+            []
         ]
     },
     {
@@ -1118,8 +1160,8 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "str",
-        "x": 110,
-        "y": 580,
+        "x": 90,
+        "y": 560,
         "wires": [
             [
                 "e0a9264a325ca780",
@@ -1150,7 +1192,7 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 600,
+        "x": 640,
         "y": 300,
         "wires": [
             [
@@ -1164,9 +1206,9 @@
     {
         "id": "61d91dd421e4d837",
         "type": "switch",
-        "z": "5b3b16f7b12de95a",
+        "z": "4d289f8513cee82f",
         "name": "if cookie clicker is golden_cookie or idle",
-        "property": "cookie_clicker_state",
+        "property": "$parent.cookie_clicker_state",
         "propertyType": "flow",
         "rules": [
             {
@@ -1178,20 +1220,26 @@
                 "t": "eq",
                 "v": "idle",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "stopped",
+                "vt": "str"
             }
         ],
         "checkall": "false",
         "repair": false,
-        "outputs": 2,
-        "x": 220,
-        "y": 300,
+        "outputs": 3,
+        "x": 260,
+        "y": 140,
         "wires": [
             [
-                "cec87ed245f42e30"
+                "d83c7c758a5df389"
             ],
             [
-                "cec87ed245f42e30"
-            ]
+                "d83c7c758a5df389"
+            ],
+            []
         ]
     },
     {
@@ -1199,14 +1247,14 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "increment golden cookie count",
-        "func": "let cookieCount = flow.get(\"golden_cookie_click_count\") || 0;\ncookieCount++;\nflow.set(\"golden_cookie_click_count\", cookieCount);\nnode.status({text: cookieCount});\nreturn {}",
+        "func": "let cookieCount = flow.get(\"golden_cookie_click_count\") || 0;\ncookieCount++;\nflow.set(\"golden_cookie_click_count\", cookieCount);\nflow.set(\"last_golden_cookie\", new Date());\nnode.status({text: cookieCount});\nreturn {}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1150,
-        "y": 440,
+        "x": 670,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1222,8 +1270,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 470,
-        "y": 440,
+        "x": 370,
+        "y": 400,
         "wires": [
             []
         ]
@@ -1258,8 +1306,8 @@
                 "7095d80831f40f1f"
             ],
             [
-                "61d91dd421e4d837",
-                "9c4d192a3ffcc585"
+                "9c4d192a3ffcc585",
+                "86a028630078d835"
             ]
         ]
     },
@@ -1302,11 +1350,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 590,
         "y": 160,
         "wires": [
             [
-                "e35d532410d328b0"
+                "53165ee276212aa6"
             ]
         ]
     },
@@ -1329,27 +1377,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
+        "x": 590,
         "y": 220,
-        "wires": [
-            [
-                "e35d532410d328b0"
-            ]
-        ]
-    },
-    {
-        "id": "e35d532410d328b0",
-        "type": "throttle",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "throttleType": "time",
-        "timeLimit": "0",
-        "timeLimitType": "seconds",
-        "countLimit": 0,
-        "blockSize": 0,
-        "locked": false,
-        "x": 730,
-        "y": 160,
         "wires": [
             [
                 "53165ee276212aa6"
@@ -1514,7 +1543,7 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 510,
+        "x": 490,
         "y": 80,
         "wires": [
             [
@@ -1529,14 +1558,14 @@
         "id": "430fb44bf0d54d7a",
         "type": "function",
         "z": "5b3b16f7b12de95a",
-        "name": "set cookie clicker state",
+        "name": "toggle clicker",
         "func": "let state = flow.get(\"cookie_clicker_state\") || \"stopped\";\n\nif (state === \"stopped\") {\n    state = 'idle';\n} else {\n    state = 'stopped';\n    flow.set(\"cookie_clicker_click_count\", 0);\n}\n\nflow.set(\"cookie_clicker_state\", state);\n\nreturn {\n    payload: state\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 320,
+        "x": 290,
         "y": 80,
         "wires": [
             [
@@ -1584,38 +1613,18 @@
         ]
     },
     {
-        "id": "1b80e1c1ed40addb",
-        "type": "rbe",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "topic",
-        "x": 350,
-        "y": 680,
-        "wires": [
-            [
-                "a083be4aca3b4be7"
-            ]
-        ]
-    },
-    {
         "id": "a083be4aca3b4be7",
         "type": "throttle",
         "z": "5b3b16f7b12de95a",
         "name": "",
         "throttleType": "time",
-        "timeLimit": "1.0",
+        "timeLimit": ".5",
         "timeLimitType": "seconds",
         "countLimit": 0,
         "blockSize": 0,
         "locked": false,
-        "x": 490,
-        "y": 680,
+        "x": 360,
+        "y": 760,
         "wires": [
             [
                 "bcf433b5e9bab1fd"
@@ -1633,8 +1642,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 500,
+        "x": 390,
+        "y": 460,
         "wires": [
             []
         ]
@@ -1652,7 +1661,7 @@
         "rap": true,
         "rh": 0,
         "x": 150,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
                 "c44c213017bc5f6d"
@@ -1671,7 +1680,7 @@
         "finalize": "",
         "libs": [],
         "x": 460,
-        "y": 240,
+        "y": 260,
         "wires": [
             []
         ]
@@ -1688,16 +1697,187 @@
         "septopics": true,
         "property": "payload.data.processName",
         "topi": "topic",
-        "x": 150,
-        "y": 840,
+        "x": 330,
+        "y": 820,
         "wires": [
             [
+                "f9b6966bc8513856",
                 "7781cb1bfe5ed28d"
             ]
         ]
     },
     {
-        "id": "ab87dc17a8d8adea",
+        "id": "d09ada59b2398114",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "set movement ",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 4,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 380,
+        "wires": [
+            [
+                "ca19638ec4477069"
+            ]
+        ]
+    },
+    {
+        "id": "5dfbc808a4b753e7",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 530,
+        "y": 740,
+        "wires": [
+            [
+                "0b117ae57c8296b2"
+            ]
+        ]
+    },
+    {
+        "id": "0b117ae57c8296b2",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to shopping_spree",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "shopping_spree",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 680,
+        "wires": [
+            [
+                "4485aebd18d852d2"
+            ]
+        ]
+    },
+    {
+        "id": "bee0b6cea281c197",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "on the big cookie",
+        "func": "const cookiePos = flow.get(\"cookie_position\");\nconst cursorPos = global.get(\"beholder_pointer_current_position\") || 0;\n\nlet clickCount = flow.get(\"cookie_clicker_click_count\") || 0;\n\nif (!cookiePos || !cursorPos) {\n    node.status({fill: 'red', text: `clicks: ${clickCount}`});\n    return null;\n}\n\nif (\n    (cursorPos.x < (cookiePos.x + 75)) &&\n    (cursorPos.x > (cookiePos.x - 75)) &&\n    (cursorPos.y < (cookiePos.y + 75)) &&\n    (cursorPos.y > (cookiePos.y - 75))\n   ) {\n       clickCount++;\n       flow.set(\"cookie_clicker_click_count\", clickCount);\n\n       node.status({fill: 'green', text: `clicks: ${clickCount}`});\n       return msg;\n   }\n\nnode.status({fill: 'red', text: `clicks: ${clickCount}`});\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "a20509f002b98de9"
+            ]
+        ]
+    },
+    {
+        "id": "2ffc1fe1d1661d78",
+        "type": "subflow:093549556932395f",
+        "z": "5b3b16f7b12de95a",
+        "name": "click items in store",
+        "env": [],
+        "x": 1350,
+        "y": 680,
+        "wires": [
+            [
+                "a452ecc746b49b31"
+            ],
+            [
+                "ac8819d740727ef6"
+            ]
+        ]
+    },
+    {
+        "id": "d852d5e7d14e458f",
+        "type": "change",
+        "z": "093549556932395f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "$parent.cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 990,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de25f883adb8526d",
+        "type": "delay",
+        "z": "093549556932395f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "750",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 730,
+        "y": 240,
+        "wires": [
+            [
+                "d852d5e7d14e458f"
+            ]
+        ]
+    },
+    {
+        "id": "5218bcd9c9c06341",
+        "type": "move-mouse-to",
+        "z": "093549556932395f",
+        "targetPositionX": "",
+        "targetPositionY": "",
+        "preMoveActions": "",
+        "postMoveActions": "{lclick}",
+        "movementSpeed": "3",
+        "movementScaleX": "1.4",
+        "movementScaleY": "1.4",
+        "movementDelayMs": "",
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "de25f883adb8526d"
+            ]
+        ]
+    },
+    {
+        "id": "ba7436256873acd9",
         "type": "change",
         "z": "5b3b16f7b12de95a",
         "name": "",
@@ -1713,157 +1893,55 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 510,
-        "y": 820,
+        "x": 410,
+        "y": 920,
         "wires": [
             [
-                "bb1f72790d7d12db"
+                "bb1f72790d7d12db",
+                "54677c7e9faec3c3"
             ]
         ]
     },
     {
-        "id": "d09ada59b2398114",
+        "id": "85083e50b709ec34",
         "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "set movement ",
-        "func": "\nreturn {\n    payload: {\n          current_position: global.get('beholder_pointer_current_position'),\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 3,\n          movement_scale_x: 1.4,\n          movement_scale_y: 1.4,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "z": "4d289f8513cee82f",
+        "name": "check for dupe",
+        "func": "const lastCookiePos = flow.get('last_golden_cookie_pos');\nconst newCookiePos = msg.payload;\n\nif (!lastCookiePos) {\n    flow.set('last_golden_cookie_pos', newCookiePos);\n    return msg;\n}\n\nconst range = 15;\n\nif (\n    (newCookiePos.x < (lastCookiePos.x + range)) &&\n    (newCookiePos.x > (lastCookiePos.x - range)) &&\n    (newCookiePos.y < (lastCookiePos.y + range)) &&\n    (newCookiePos.y > (lastCookiePos.y - range))\n   ) {\n       return {\n           payload: null\n       };\n   }\n\nflow.set('last_golden_cookie_pos', newCookiePos);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1040,
-        "y": 380,
+        "x": 840,
+        "y": 140,
         "wires": [
             [
-                "ca19638ec4477069"
+                "05b3caef80cd2ada"
             ]
         ]
     },
     {
-        "id": "2c16b004be86e6d2",
-        "type": "debug",
+        "id": "0deb7194453e647f",
+        "type": "function",
         "z": "6a61b64910c046bc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 820,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "0b1b292ec05692be",
-        "type": "send-mouse-click",
-        "z": "6a61b64910c046bc",
-        "button": "lclick",
-        "click_direction": 0,
-        "duration": null,
-        "x": 310,
-        "y": 840,
+        "name": "reset",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 0, y: 0 },\n          movement_type: 0,\n          movement_speed: 1,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 800,
         "wires": [
             [
-                "bde0df30871a605e"
+                "cba4a5bc08b9e565"
             ]
         ]
     },
     {
-        "id": "3a13ec8bc013d02e",
-        "type": "inject",
-        "z": "6a61b64910c046bc",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 110,
-        "y": 840,
-        "wires": [
-            [
-                "0b1b292ec05692be"
-            ]
-        ]
-    },
-    {
-        "id": "b15ee39c116e27c6",
-        "type": "send-mouse-actions",
-        "z": "6a61b64910c046bc",
-        "mouseActions": "{1,1}",
-        "x": 300,
-        "y": 900,
-        "wires": [
-            [
-                "bde0df30871a605e"
-            ]
-        ]
-    },
-    {
-        "id": "92e13384918276b5",
-        "type": "inject",
-        "z": "6a61b64910c046bc",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 110,
-        "y": 900,
-        "wires": [
-            [
-                "b15ee39c116e27c6"
-            ]
-        ]
-    },
-    {
-        "id": "8e607e666511b46b",
-        "type": "move-mouse-to",
-        "z": "6a61b64910c046bc",
-        "targetPositionX": 1500,
-        "targetPositionY": 1500,
-        "preMoveActions": "",
-        "postMoveActions": "",
-        "movementSpeed": 2,
-        "movementScaleX": 1,
-        "movementScaleY": 1,
-        "movementDelayMs": 0,
-        "x": 320,
-        "y": 960,
-        "wires": [
-            [
-                "bde0df30871a605e"
-            ]
-        ]
-    },
-    {
-        "id": "c06ee4f0b14246a6",
-        "type": "inject",
-        "z": "6a61b64910c046bc",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 110,
-        "y": 960,
-        "wires": [
-            [
-                "8e607e666511b46b",
-                "a982fcc1e9c6d884"
-            ]
-        ]
-    },
-    {
-        "id": "dcdca7254b3d56da",
+        "id": "cba4a5bc08b9e565",
         "type": "move-mouse-to",
         "z": "6a61b64910c046bc",
         "targetPositionX": "",
@@ -1874,8 +1952,8 @@
         "movementScaleX": "1.4",
         "movementScaleY": "1.4",
         "movementDelayMs": "",
-        "x": 500,
-        "y": 1040,
+        "x": 580,
+        "y": 800,
         "wires": [
             [
                 "bde0df30871a605e"
@@ -1883,21 +1961,750 @@
         ]
     },
     {
-        "id": "a982fcc1e9c6d884",
+        "id": "065e45722df9cbe8",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 800,
+        "wires": [
+            [
+                "0deb7194453e647f"
+            ]
+        ]
+    },
+    {
+        "id": "41eec896c41e8b33",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x1",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 1,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 860,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "97ee88f55af769a2",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 860,
+        "wires": [
+            [
+                "41eec896c41e8b33"
+            ]
+        ]
+    },
+    {
+        "id": "f51b644360f1b573",
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "set movement ",
-        "func": "\nreturn {\n    payload: {\n          current_position: global.get('beholder_pointer_current_position'),\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 3,\n          movement_scale_x: 1.4,\n          movement_scale_y: 1.4,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 2000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 1,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n        }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 300,
+        "y": 1240,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "7117d407c75fa546",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 1240,
+        "wires": [
+            [
+                "f51b644360f1b573"
+            ]
+        ]
+    },
+    {
+        "id": "6de3353e96814b0b",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "if not on the big cookie, move",
+        "func": "const cookiePos = flow.get(\"cookie_position\");\nconst cursorPos = global.get(\"beholder_pointer_current_position\") || 0;\nnode.status({text: `X: ${cursorPos.x} Y: ${cursorPos.y}`});\n\nif (!cookiePos || !cursorPos) {\n    return null;\n}\n\nif (\n    (cursorPos.x < (cookiePos.x + 75)) &&\n    (cursorPos.x > (cookiePos.x - 75)) &&\n    (cursorPos.y < (cookiePos.y + 75)) &&\n    (cursorPos.y > (cookiePos.y - 75))\n   ) {\n       return null;\n   }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 300,
+        "wires": [
+            [
+                "d09ada59b2398114"
+            ]
+        ]
+    },
+    {
+        "id": "795a1a536a854748",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/points",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 820,
+        "y": 160,
+        "wires": [
+            [
+                "0f74733491ec5331"
+            ]
+        ]
+    },
+    {
+        "id": "0f74733491ec5331",
+        "type": "debug",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "dfc59881fe83612a",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "current pointer position",
+        "func": "const payload = msg.payload;\nnode.status({text: `X: ${payload.data.x} Y: ${payload.data.y}`});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2f4a73d292524b3",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "on pointer position changed",
+        "topic": "beholder/psionix/+/pointer_position",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 780,
+        "y": 40,
+        "wires": [
+            [
+                "dfc59881fe83612a"
+            ]
+        ]
+    },
+    {
+        "id": "0439c5ecb5a44c02",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x2",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 2,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 920,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "6d1e3d59fb73a87b",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 920,
+        "wires": [
+            [
+                "0439c5ecb5a44c02"
+            ]
+        ]
+    },
+    {
+        "id": "020fb4472c47f7f8",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 980,
+        "wires": [
+            [
+                "31c15119bb66828b"
+            ]
+        ]
+    },
+    {
+        "id": "31c15119bb66828b",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x3",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 3,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 980,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "a9b5fe072f130b4a",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
         "y": 1040,
         "wires": [
             [
-                "dcdca7254b3d56da"
+                "4260a2cc1d5e73a8"
+            ]
+        ]
+    },
+    {
+        "id": "4260a2cc1d5e73a8",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x4",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 4,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1040,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "e41f8957a576fb9b",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 1160,
+        "wires": [
+            [
+                "6f8c7aa0f65a95af"
+            ]
+        ]
+    },
+    {
+        "id": "6f8c7aa0f65a95af",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x6",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 6,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1160,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "0234167cd4ec169e",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "set movement x5",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 1000, y: 1000 },\n          movement_type: 0,\n          movement_speed: 5,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n          points_topic: \"beholder/points\"\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 1100,
+        "wires": [
+            [
+                "cba4a5bc08b9e565"
+            ]
+        ]
+    },
+    {
+        "id": "2613b23a321fe317",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 1100,
+        "wires": [
+            [
+                "0234167cd4ec169e"
+            ]
+        ]
+    },
+    {
+        "id": "c510c1f1e9a97ccd",
+        "type": "function",
+        "z": "093549556932395f",
+        "name": "create movement",
+        "func": "const cookieClickerProcess = flow.get(\"$parent.cookie_clicker_process\");\nif (!cookieClickerProcess) {\n    return;\n}\n\n\nreturn {\n    payload: {\n      current_position: null,\n      target_position: {\n            x: cookieClickerProcess.windowPosition.width - 175,\n            y: cookieClickerProcess.windowPosition.y + 230 + (msg.payload * 62),\n        },\n      movement_type: 0,\n      movement_speed: 4,\n      movement_scale_x: 1,\n      movement_scale_y: 1,\n      movement_delay_ms: 0,\n      pre_move_actions: \"\",\n      post_move_actions: \"{lclick}\",\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "5218bcd9c9c06341"
+            ]
+        ]
+    },
+    {
+        "id": "0af4bd966c7a2454",
+        "type": "random",
+        "z": "093549556932395f",
+        "name": "",
+        "low": "0",
+        "high": "13",
+        "inte": "true",
+        "property": "payload",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "c510c1f1e9a97ccd"
+            ]
+        ]
+    },
+    {
+        "id": "4485aebd18d852d2",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "shopping - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "let's go shopping!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1090,
+        "y": 680,
+        "wires": [
+            [
+                "2ffc1fe1d1661d78",
+                "3db1e1b770048671"
+            ]
+        ]
+    },
+    {
+        "id": "7de61ce12026042a",
+        "type": "random",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "low": 1,
+        "high": "750",
+        "inte": "true",
+        "property": "payload",
+        "x": 240,
+        "y": 680,
+        "wires": [
+            [
+                "7c16802ce7d64fad"
+            ]
+        ]
+    },
+    {
+        "id": "7c16802ce7d64fad",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 680,
+        "wires": [
+            [
+                "e6e02ff77f9a16f6"
+            ]
+        ]
+    },
+    {
+        "id": "e6e02ff77f9a16f6",
+        "type": "throttle",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "throttleType": "time",
+        "timeLimit": "30",
+        "timeLimitType": "seconds",
+        "countLimit": 0,
+        "blockSize": 0,
+        "locked": false,
+        "x": 540,
+        "y": 680,
+        "wires": [
+            [
+                "0b117ae57c8296b2"
+            ]
+        ]
+    },
+    {
+        "id": "cfd479fd322ea30f",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "recently clicked on cookie",
+        "func": "const lastGoldenCookie = flow.get(\"last_golden_cookie\");\n\nif (!lastGoldenCookie) {\n    return null;\n}\n\nconst diff = (new Date()) - lastGoldenCookie;\nnode.status({text: diff / 1000});\n\nif (diff <= 3000) {\n    return {\n        payload: diff,\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 480,
+        "wires": [
+            [
+                "9387d0e01d441108"
+            ]
+        ]
+    },
+    {
+        "id": "ac8819d740727ef6",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "set purchase TTS",
+        "func": "const items = [\n    'Cursor',\n    'Grandma',\n    'Farm',\n    'Mine',\n    'Factory',\n    'Bank',\n    'Temple',\n    'Wizard Tower',\n    'Shipment',\n    'Alchemy Lab',\n    'Portal',\n    'Time Machine',\n    'Antimatter Condenser',\n    'Prism',\n];\n\nreturn {\n    payload: `bought a ${items[msg.payload]}`\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 240,
+        "wires": [
+            [
+                "3db1e1b770048671"
+            ]
+        ]
+    },
+    {
+        "id": "05b3caef80cd2ada",
+        "type": "switch",
+        "z": "4d289f8513cee82f",
+        "name": "is dupe",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 600,
+        "y": 360,
+        "wires": [
+            [],
+            [
+                "cec87ed245f42e30",
+                "e5848c5ba7ee0fdd"
+            ]
+        ]
+    },
+    {
+        "id": "e5848c5ba7ee0fdd",
+        "type": "delay",
+        "z": "4d289f8513cee82f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 940,
+        "y": 280,
+        "wires": [
+            [
+                "923f20f76bee541e"
+            ]
+        ]
+    },
+    {
+        "id": "923f20f76bee541e",
+        "type": "change",
+        "z": "4d289f8513cee82f",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "last_golden_cookie_pos",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1180,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86a028630078d835",
+        "type": "subflow:4d289f8513cee82f",
+        "z": "5b3b16f7b12de95a",
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "b7e9b05dec62e1d0"
+            ],
+            [
+                "d03982fe055c45b7",
+                "d09ada59b2398114"
+            ]
+        ]
+    },
+    {
+        "id": "d9ca6579edf19e7b",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to hand_of_fate",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "hand_of_fate",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fabef2d366ccf21f",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "move to hand of fate",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\nif (lastHandOfFate) {\n    const diff = (new Date()) - lastHandOfFate;\n    node.status({text: diff / 1000});\n}\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 5 * 60 * 1000) {\n        flow.set(\"cookie_clicker_state\", \"idle\")\n        return null;\n    }\n}\n\n\nreturn {\n    payload: {\n        x: 900,\n        y: 1090\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 600,
+        "wires": [
+            [
+                "4a0267f0f443486a",
+                "aa48b956f274aa14",
+                "d09ada59b2398114"
+            ]
+        ]
+    },
+    {
+        "id": "4a0267f0f443486a",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "last_hand_of_fate",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa48b956f274aa14",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "set HOF TTS",
+        "func": "return {\n    payload: `tempting the hand of fate`\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 180,
+        "wires": [
+            [
+                "3db1e1b770048671"
+            ]
+        ]
+    },
+    {
+        "id": "9387d0e01d441108",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "hand of fate is available",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    node.status({text: hofDiff / 1000});\n    if (hofDiff <= 5 * 60 * 1000) {\n        return null;\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 480,
+        "wires": [
+            [
+                "d9ca6579edf19e7b"
             ]
         ]
     }
