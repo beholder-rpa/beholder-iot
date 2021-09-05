@@ -33,6 +33,15 @@
     Task Disconnect();
 
     /// <summary>
+    /// Publishes a message as a CloudEvent with the specified topic and no data
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="topic"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task PublishEventAsync(string topic, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Publishes a message as a CloudEvent with the specified topic and data
     /// </summary>
     /// <typeparam name="T"></typeparam>

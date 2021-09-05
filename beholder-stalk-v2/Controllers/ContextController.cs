@@ -35,14 +35,14 @@
           LastEyePointerUpdate = pointerPosition.Time,
           EyeCurrentPointerPosition = pointerPosition.Data
         };
-      }
 
-      OnContextEvent(new PointerPositionChangedEvent()
-      {
-        Source = "eye",
-        OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
-        NewPointerPosition = pointerPosition.Data,
-      });
+        OnContextEvent(new PointerPositionChangedEvent()
+        {
+          Source = "eye",
+          OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
+          NewPointerPosition = pointerPosition.Data,
+        });
+      }
       return Task.CompletedTask;
     }
 
@@ -62,14 +62,14 @@
           LastPsionixPointerUpdate = pointerPosition.Time,
           PsionixCurrentPointerPosition = pointerPosition.Data
         };
-      }
 
-      OnContextEvent(new PointerPositionChangedEvent()
-      {
-        Source = "psionix",
-        OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
-        NewPointerPosition = pointerPosition.Data,
-      });
+        OnContextEvent(new PointerPositionChangedEvent()
+        {
+          Source = "psionix",
+          OldPointerPosition = currentContextData.PsionixCurrentPointerPosition,
+          NewPointerPosition = pointerPosition.Data,
+        });
+      }
       return Task.CompletedTask;
     }
 

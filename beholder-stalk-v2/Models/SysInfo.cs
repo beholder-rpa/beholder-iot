@@ -39,6 +39,13 @@
       init;
     }
 
+    [JsonPropertyName("hostName")]
+    public string HostName
+    {
+      get;
+      init;
+    }
+
     [JsonPropertyName("keyboardDelay")]
     public int KeyboardDelay
     {

@@ -100,22 +100,44 @@
       await MqttClient.StopAsync();
     }
 
+    public Task PublishEventAsync(string topic,  CancellationToken cancellationToken = default)
+    {
+      return PublishEventAsync<object>(topic, null, cancellationToken);
+    }
+
     public async Task PublishEventAsync<T>(string topic, T data, CancellationToken cancellationToken = default)
     {
       // Replace tokens within the pattern
       var pattern = Regex.Replace(topic, @"{\s*?hostname\s*?}", _serviceInfo.HostName, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-      var cloudEvent = new CloudEvent<T>()
+      ICloudEvent cloudEvent;
+      if (data == null)
       {
-        Data = data,
-        Source = "stalk",
-        Type = "com.dapr.event.sent",
-        ExtensionAttributes = new Dictionary<string, object>()
+        cloudEvent = new CloudEvent()
+        {
+          Source = "stalk",
+          Type = "com.dapr.event.sent",
+          ExtensionAttributes = new Dictionary<string, object>()
         {
           { "pubsubname", Consts.PubSubName },
           { "topic", pattern },
         }
-      };
+        };
+      }
+      else
+      {
+        cloudEvent = new CloudEvent<T>()
+        {
+          Data = data,
+          Source = "stalk",
+          Type = "com.dapr.event.sent",
+          ExtensionAttributes = new Dictionary<string, object>()
+        {
+          { "pubsubname", Consts.PubSubName },
+          { "topic", pattern },
+        }
+        };
+      }
 
       await MqttClient.PublishAsync(
                 new MqttApplicationMessageBuilder()
