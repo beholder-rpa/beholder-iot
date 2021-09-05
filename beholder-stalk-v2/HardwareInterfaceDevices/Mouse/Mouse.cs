@@ -133,7 +133,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       _logger.LogTrace($"Sent Mouse Click: Button {button} Direction: {direction} Duration: {duration}");
     }
 
-    public void SendMouseMoveTo(MoveMouseToRequest request)
+    public bool SendMouseMoveTo(MoveMouseToRequest request)
     {
       if (request.CurrentPosition == null || request.TargetPosition == null)
       {
@@ -188,6 +188,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
         OnMouseEvent(new MouseMoveToPointsEvent() { Topic = request.PointsTopic, Points = points });
       }
 
+      var movedMouse = false;
+
       // Use double-check locking to ensure we're not attempting to move when we're already moving
       if (!_isMoving)
       {
@@ -233,11 +235,20 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
               From = sourcePoint,
               To = targetPoint,
             });
+
+            movedMouse = true;
           }
         }
       }
 
-      _logger.LogInformation($"Moved Mouse from ({sourcePoint.X},{sourcePoint.Y}) to ({targetPoint.X},{targetPoint.Y}) in {points.Length} steps using {request.MovementType} behavior, scale of ({movementScaleX},{movementScaleY}) and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
+      if (movedMouse)
+      {
+        _logger.LogInformation($"Moved Mouse from ({sourcePoint.X},{sourcePoint.Y}) to ({targetPoint.X},{targetPoint.Y}) in {points.Length} steps using {request.MovementType} behavior, scale of ({movementScaleX},{movementScaleY}) and speed of {movementSpeed}. With Pre-Move Actions {request.PreMoveActions} and Post-Move Actions {request.PostMoveActions}");
+      }
+      else
+      {
+        _logger.LogWarning($"Skipped movement - mouse was already moving.");
+      }
     }
 
     public void SendMouseMove(short x, short y)
