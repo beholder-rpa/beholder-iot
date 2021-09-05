@@ -4,6 +4,11 @@ namespace beholder_stalk_v2.Models
 {
   public record BeholderContext
   {
+    public BeholderContext()
+    {
+      Data = new BeholderContextData();
+    }
+
     public BeholderContextData Data
     {
       get;
