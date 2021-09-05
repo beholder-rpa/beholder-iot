@@ -53,6 +53,7 @@
           LastPsionixPointerUpdate = pointerPosition.Time,
           PsionixCurrentPointerPosition = pointerPosition.Data
         };
+        _logger.LogInformation($"Recieved Updated Psionix Pointer Position {pointerPosition.Data} at {pointerPosition.Time}");
       }
       return Task.CompletedTask;
     }
