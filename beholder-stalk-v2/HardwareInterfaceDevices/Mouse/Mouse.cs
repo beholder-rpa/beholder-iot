@@ -129,6 +129,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
           SendButtonRelease(buttonValue);
           break;
       }
+
+      _logger.LogTrace($"Sent Mouse Click: Button {button} Direction: {direction} Duration: {duration}");
     }
 
     public void SendMouseMoveTo(MoveMouseToRequest request)
@@ -225,6 +227,12 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
             {
               _isMoving = false;
             }
+
+            OnMouseEvent(new MovedMouseEvent()
+            {
+              From = sourcePoint,
+              To = targetPoint,
+            });
           }
         }
       }

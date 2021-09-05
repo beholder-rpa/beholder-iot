@@ -37,6 +37,9 @@
         case MouseMoveToPointsEvent mouseMoveToPoints:
           HandleMouseMoveToPoints(mouseMoveToPoints).Forget();
           break;
+        case MovedMouseEvent movedMouse:
+          HandleMouseMoved(movedMouse).Forget();
+          break;
         default:
           _logger.LogWarning($"Unhandled or unknown MouseEvent: {mouseEvent}");
           break;
@@ -72,6 +75,16 @@
           sb.ToString()
         );
       _logger.LogInformation($"Published mouse move to points");
+    }
+
+    private async Task HandleMouseMoved(MovedMouseEvent mouseMoved)
+    {
+      await _beholderClient
+        .PublishEventAsync(
+          "beholder/stalk/{HOSTNAME}/status/mouse/moved",
+          mouseMoved
+        );
+      _logger.LogInformation($"Published mouse moved");
     }
   }
 }

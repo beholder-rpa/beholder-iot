@@ -21,13 +21,16 @@
     public Task UpdatePointerPositionFromEye(ICloudEvent<Point> pointerPosition)
     {
       if (pointerPosition.Data != null &&
-          (_context.LastEyePointerUpdate.HasValue == false ||
-            _context.LastEyePointerUpdate.Value < pointerPosition.Time
+          (_context.Data.LastEyePointerUpdate.HasValue == false ||
+            _context.Data.LastEyePointerUpdate.Value < pointerPosition.Time
           )
          )
       {
-        _context.LastEyePointerUpdate = pointerPosition.Time;
-        _context.EyeCurrentPointerPosition = pointerPosition.Data;
+        _context.Data = _context.Data with
+        {
+          LastEyePointerUpdate = pointerPosition.Time,
+          EyeCurrentPointerPosition = pointerPosition.Data
+        };
       }
       return Task.CompletedTask;
     }
@@ -36,13 +39,16 @@
     public Task UpdatePointerPositionFromPsionix(ICloudEvent<Point> pointerPosition)
     {
       if (pointerPosition.Data != null &&
-          (_context.LastPsionixPointerUpdate.HasValue == false ||
-            _context.LastPsionixPointerUpdate.Value < pointerPosition.Time
+          (_context.Data.LastPsionixPointerUpdate.HasValue == false ||
+            _context.Data.LastPsionixPointerUpdate.Value < pointerPosition.Time
           )
          )
       {
-        _context.LastPsionixPointerUpdate = pointerPosition.Time;
-        _context.PsionixCurrentPointerPosition = pointerPosition.Data;
+        _context.Data = _context.Data with
+        {
+          LastPsionixPointerUpdate = pointerPosition.Time,
+          PsionixCurrentPointerPosition = pointerPosition.Data
+        };
       }
       return Task.CompletedTask;
     }
@@ -52,7 +58,10 @@
     {
       if (sysInfo.Data != null)
       {
-        _context.SysInfo = sysInfo.Data;
+        _context.Data = _context.Data with
+        {
+          SysInfo = sysInfo.Data
+        };
       }
       return Task.CompletedTask;
     }

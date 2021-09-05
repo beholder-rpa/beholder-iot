@@ -4,34 +4,52 @@ namespace beholder_stalk_v2.Models
 {
   public record BeholderContext
   {
-    public Point EyeCurrentPointerPosition
+    public BeholderContextData Data
     {
       get;
       set;
+    }
+  }
+
+  public record BeholderContextData
+  {
+    public Point EyeCurrentPointerPosition
+    {
+      get;
+      init;
     }
 
     public DateTime? LastEyePointerUpdate
     {
       get;
-      set;
+      init;
     }
 
     public Point PsionixCurrentPointerPosition
     {
       get;
-      set;
+      init;
     }
 
     public DateTime? LastPsionixPointerUpdate
     {
       get;
-      set;
+      init;
+    }
+
+    /// <summary>
+    /// Gets the position that the most previous movement request started from
+    /// </summary>
+    public Point LastMovementPosition
+    {
+      get;
+      init;
     }
 
     public SysInfo SysInfo
     {
       get;
-      set;
+      init;
     }
   }
 }

@@ -40,4 +40,21 @@
     [JsonPropertyName("points")]
     public Point[] Points { get; init; }
   }
+
+  public record MovedMouseEvent : MouseEvent
+  {
+    [JsonPropertyName("from")]
+    public Point From
+    {
+      get;
+      set;
+    }
+
+    [JsonPropertyName("to")]
+    public Point To
+    {
+      get;
+      set;
+    }
+  }
 }

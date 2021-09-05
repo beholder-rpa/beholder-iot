@@ -28,7 +28,6 @@
     public Task SendMouseClick(ICloudEvent<SendMouseClickRequest> message)
     {
       _mouse.SendMouseClick(message.Data.MouseClick?.Button, message.Data.MouseClick?.ClickDirection ?? MouseClick.Types.ClickDirection.PressAndRelease, message.Data.MouseClick.Duration);
-      _logger.LogInformation($"Sent Mouse Click {message.Data.MouseClick}");
       return Task.CompletedTask;
     }
 
@@ -71,31 +70,48 @@
     [EventPattern("beholder/stalk/{HOSTNAME}/mouse/move_mouse_to")]
     public Task MoveMouseTo(ICloudEvent<MoveMouseToRequest> message)
     {
-      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.PsionixCurrentPointerPosition != null)
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.Data.PsionixCurrentPointerPosition != null)
       {
         message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
         {
-          X = _context.PsionixCurrentPointerPosition.X,
-          Y = _context.PsionixCurrentPointerPosition.Y,
+          X = _context.Data.PsionixCurrentPointerPosition.X,
+          Y = _context.Data.PsionixCurrentPointerPosition.Y,
         };
         _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Psionix reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
 
-      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.EyeCurrentPointerPosition != null)
+      if ((message.Data.CurrentPosition == null || (message.Data.CurrentPosition.X == -1 && message.Data.CurrentPosition.Y == -1)) && _context.Data.EyeCurrentPointerPosition != null)
       {
         message.Data.CurrentPosition = new MoveMouseToRequest.Types.Point()
         {
-          X = _context.EyeCurrentPointerPosition.X,
-          Y = _context.EyeCurrentPointerPosition.Y,
+          X = _context.Data.EyeCurrentPointerPosition.X,
+          Y = _context.Data.EyeCurrentPointerPosition.Y,
         };
         _logger.LogInformation($"Current position was not specified in the message, however is contained in the current context from Eye reports. Using {message.Data.CurrentPosition.X},{message.Data.CurrentPosition.Y}");
       }
 
-      var windowsPointerScaleFactor = WindowsMouseUtil.GetPointerScaleFactor(_context.SysInfo);
+      var lastMovementPosition = _context.Data.LastMovementPosition;
+      if (lastMovementPosition != null &&
+          lastMovementPosition.X == message.Data.CurrentPosition.X &&
+          lastMovementPosition.Y == message.Data.CurrentPosition.Y)
+      {
+        _logger.LogWarning($"Previously moved from {lastMovementPosition}. Skipping.");
+      }
+
+      var windowsPointerScaleFactor = WindowsMouseUtil.GetPointerScaleFactor(_context.Data.SysInfo);
       message.Data.MovementScaleX = message.Data.MovementScaleX * windowsPointerScaleFactor;
       message.Data.MovementScaleY = message.Data.MovementScaleY * windowsPointerScaleFactor;
 
       _mouse.SendMouseMoveTo(message.Data);
+      _context.Data = _context.Data with
+      {
+        LastMovementPosition = new Point
+        {
+          X = message.Data.CurrentPosition.X,
+          Y = message.Data.CurrentPosition.Y,
+        }
+      };
+
       return Task.CompletedTask;
     }
 
