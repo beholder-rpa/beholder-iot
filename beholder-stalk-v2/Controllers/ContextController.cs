@@ -17,23 +17,31 @@
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-
     [EventPattern("beholder/eye/+/pointer_position")]
     public Task UpdatePointerPositionFromEye(ICloudEvent<Point> pointerPosition)
     {
-      if (pointerPosition.Data != null)
+      if (pointerPosition.Data != null &&
+          (_context.LastEyePointerUpdate.HasValue == false ||
+            _context.LastEyePointerUpdate.Value < pointerPosition.Time
+          )
+         )
       {
+        _context.LastEyePointerUpdate = pointerPosition.Time;
         _context.EyeCurrentPointerPosition = pointerPosition.Data;
       }
-
       return Task.CompletedTask;
     }
 
     [EventPattern("beholder/psionix/+/pointer_position")]
     public Task UpdatePointerPositionFromPsionix(ICloudEvent<Point> pointerPosition)
     {
-      if (pointerPosition.Data != null)
+      if (pointerPosition.Data != null &&
+          (_context.LastPsionixPointerUpdate.HasValue == false ||
+            _context.LastPsionixPointerUpdate.Value < pointerPosition.Time
+          )
+         )
       {
+        _context.LastPsionixPointerUpdate = pointerPosition.Time;
         _context.PsionixCurrentPointerPosition = pointerPosition.Data;
       }
       return Task.CompletedTask;

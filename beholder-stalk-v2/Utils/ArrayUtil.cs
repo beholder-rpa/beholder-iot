@@ -11,7 +11,7 @@
     public static T[] Resize<T>(int size, T[] a)
     {
       var new_array = new T[size];
-      
+
       for (int i = 0; i < size; i++)
       {
         int pos = (int)Math.Floor(i * ((double)a.Length / size));

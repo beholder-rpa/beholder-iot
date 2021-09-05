@@ -1,4 +1,6 @@
-﻿namespace beholder_stalk_v2.Models
+﻿using System;
+
+namespace beholder_stalk_v2.Models
 {
   public record BeholderContext
   {
@@ -8,7 +10,19 @@
       set;
     }
 
+    public DateTime? LastEyePointerUpdate
+    {
+      get;
+      set;
+    }
+
     public Point PsionixCurrentPointerPosition
+    {
+      get;
+      set;
+    }
+
+    public DateTime? LastPsionixPointerUpdate
     {
       get;
       set;
