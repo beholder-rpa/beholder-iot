@@ -102,16 +102,17 @@
       message.Data.MovementScaleX = message.Data.MovementScaleX * windowsPointerScaleFactor;
       message.Data.MovementScaleY = message.Data.MovementScaleY * windowsPointerScaleFactor;
 
-      _mouse.SendMouseMoveTo(message.Data);
-      _context.Data = _context.Data with
+      if (_mouse.SendMouseMoveTo(message.Data))
       {
-        LastMovementPosition = new Point
+        _context.Data = _context.Data with
         {
-          X = message.Data.CurrentPosition.X,
-          Y = message.Data.CurrentPosition.Y,
-        }
-      };
-
+          LastMovementPosition = new Point
+          {
+            X = message.Data.CurrentPosition.X,
+            Y = message.Data.CurrentPosition.Y,
+          }
+        };
+      }
       return Task.CompletedTask;
     }
 

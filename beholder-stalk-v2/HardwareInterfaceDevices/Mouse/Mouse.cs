@@ -138,7 +138,7 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       if (request.CurrentPosition == null || request.TargetPosition == null)
       {
         _logger.LogWarning("CurrentPosition and TargetPosition were not specified, skipping moveto.");
-        return;
+        return false;
       }
 
       var movementScaleX = 1.0f;
@@ -249,6 +249,8 @@ namespace beholder_stalk_v2.HardwareInterfaceDevices
       {
         _logger.LogWarning($"Skipped movement - mouse was already moving.");
       }
+
+      return movedMouse;
     }
 
     public void SendMouseMove(short x, short y)
