@@ -15,7 +15,7 @@
     private readonly IBeholderMqttClient _client;
     private readonly ILogger<MouseController> _logger;
 
-    private Point _lastMovementPosition;
+    private Point _lastMovementPosition = new Point();
 
     public MouseController(Mouse mouse, IBeholderMqttClient client, ILogger<MouseController> logger)
     {
