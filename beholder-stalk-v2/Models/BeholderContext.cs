@@ -1,22 +1,8 @@
-﻿using System;
-
-namespace beholder_stalk_v2.Models
+﻿namespace beholder_stalk_v2.Models
 {
-  public class BeholderContext
-  {
-    public BeholderContext()
-    {
-      Data = new BeholderContextData();
-    }
+  using System;
 
-    public BeholderContextData Data
-    {
-      get;
-      set;
-    }
-  }
-
-  public record BeholderContextData
+  public record BeholderContext
   {
     public Point EyeCurrentPointerPosition
     {

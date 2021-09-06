@@ -40,7 +40,11 @@
          .WithAutoReconnectDelay(TimeSpan.FromMilliseconds(2500))
          .WithClientOptions(new MqttClientOptionsBuilder()
             .WithClientId($"stalk-v2-{serviceInfo.HostName}")
+#if DEBUG
+            .WithWebSocketServer($"wss://{_options.MqttBrokerAddress}/nexus/mqtt")
+#else
             .WithTcpServer(_options.MqttBrokerAddress, _options.MqttBrokerPort)
+#endif
             .WithCredentials(_options.Username, _options.Password)
             .WithKeepAlivePeriod(TimeSpan.FromMilliseconds(_options.KeepAlivePeriodMs ?? 10000))
             .WithCommunicationTimeout(TimeSpan.FromMilliseconds(_options.CommunicationTimeoutMs ?? 15000))
@@ -100,7 +104,7 @@
       await MqttClient.StopAsync();
     }
 
-    public Task PublishEventAsync(string topic,  CancellationToken cancellationToken = default)
+    public Task PublishEventAsync(string topic, CancellationToken cancellationToken = default)
     {
       return PublishEventAsync<object>(topic, null, cancellationToken);
     }

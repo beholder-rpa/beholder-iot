@@ -47,7 +47,6 @@
 
       services.AddMqttControllers();
 
-      services.AddSingleton<BeholderContext>();
       services.AddSingleton<Keyboard>();
       services.AddSingleton<Mouse>();
       services.AddSingleton<MouseObserver>();

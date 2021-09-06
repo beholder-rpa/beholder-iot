@@ -17,8 +17,8 @@
         };
       }
 
-      services.AddSingleton(sp => MqttRouteTableFactory.Create(assemblies, sp.GetRequiredService<BeholderServiceInfo>()));
-      services.AddSingleton<ITypeActivatorCache>(new TypeActivatorCache());
+      var routeTable = MqttRouteTableFactory.Create(assemblies, services, new BeholderServiceInfo());
+      services.AddSingleton(routeTable);
       services.AddSingleton<MqttApplicationMessageRouter>();
 
       services.AddSingleton<IBeholderMqttClient, BeholderMqttClient>();

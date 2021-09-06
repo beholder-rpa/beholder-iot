@@ -18,14 +18,12 @@ namespace beholder_stalk_v2.Routing
     private readonly IServiceProvider _applicationServices;
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly ILogger<MqttApplicationMessageRouter> _logger;
-    private readonly ITypeActivatorCache _typeActivator;
 
-    public MqttApplicationMessageRouter(IServiceProvider applicationServices, JsonSerializerOptions serializerOptions, ILogger<MqttApplicationMessageRouter> logger, MqttRouteTable routeTable, ITypeActivatorCache typeActivator)
+    public MqttApplicationMessageRouter(IServiceProvider applicationServices, JsonSerializerOptions serializerOptions, ILogger<MqttApplicationMessageRouter> logger, MqttRouteTable routeTable)
     {
       _applicationServices = applicationServices ?? throw new ArgumentNullException(nameof(applicationServices));
       _serializerOptions = serializerOptions ?? throw new ArgumentNullException(nameof(serializerOptions));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _typeActivator = typeActivator ?? throw new ArgumentNullException(nameof(typeActivator));
       RouteTable = routeTable ?? throw new ArgumentNullException(nameof(routeTable));
     }
 
@@ -56,7 +54,7 @@ namespace beholder_stalk_v2.Routing
           throw new InvalidOperationException($"{subscriptionMethod} must have a declaring type.");
         }
 
-        var classInstance = _typeActivator.CreateInstance<object>(scope.ServiceProvider, declaringType);
+        var classInstance = _applicationServices.GetRequiredService(declaringType);
 
         ParameterInfo[] parameters = subscriptionMethod.GetParameters();
 

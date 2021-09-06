@@ -1,8 +1,8 @@
 ﻿namespace beholder_stalk_v2.Routing
 {
   using beholder_stalk_v2.Models;
+  using Microsoft.Extensions.DependencyInjection;
   using System;
-  using System.Collections.Concurrent;
   using System.Collections.Generic;
   using System.Linq;
   using System.Reflection;
@@ -10,24 +10,15 @@
 
   public static class MqttRouteTableFactory
   {
-    private static readonly ConcurrentDictionary<Key, MqttRouteTable> Cache = new ConcurrentDictionary<Key, MqttRouteTable>();
-
     /// <summary>
     /// Given a list of assemblies, find all instances of MqttControllers and wire up routing for them. Instances of
-    /// controllers must inherit from MqttBaseController and be decorated with an MqttRoute attribute.
+    /// controllers must be decorated with an MqttController attribute.
     /// </summary>
     /// <param name="assembly">Assemblies to scan for routes</param>
     /// <returns></returns>
-    internal static MqttRouteTable Create(IEnumerable<Assembly> assemblies, BeholderServiceInfo serviceInfo)
+    internal static MqttRouteTable Create(IEnumerable<Assembly> assemblies, IServiceCollection serviceCollection, BeholderServiceInfo serviceInfo)
     {
       assemblies ??= new Assembly[] { Assembly.GetCallingAssembly() };
-
-      var key = new Key(assemblies.OrderBy(a => a.FullName).ToArray());
-
-      if (Cache.TryGetValue(key, out var resolvedComponents))
-      {
-        return resolvedComponents;
-      }
 
       // From the collection of assemblies, get all public instance methods decorated with the EventPatternAttribute within types decorated within types decorated with the MqttControllerAttribute
       var subscriptionCallbackMethods = assemblies.SelectMany(a => a.GetTypes())
@@ -37,7 +28,18 @@
 
       var routeTable = Create(subscriptionCallbackMethods, serviceInfo);
 
-      Cache.TryAdd(key, routeTable);
+      var addedTypes = new List<Type>();
+      foreach (var route in routeTable)
+      {
+        foreach (var methodInfo in route.Value)
+        {
+          if (!addedTypes.Contains(methodInfo.DeclaringType))
+          {
+            serviceCollection.AddSingleton(methodInfo.DeclaringType);
+            addedTypes.Add(methodInfo.DeclaringType);
+          }
+        }
+      }
 
       return routeTable;
     }
@@ -69,62 +71,6 @@
       }
 
       return routeTable;
-    }
-
-    private readonly struct Key : IEquatable<Key>
-    {
-      public readonly Assembly[] Assemblies;
-
-      public Key(Assembly[] assemblies)
-      {
-        Assemblies = assemblies;
-      }
-
-      public override bool Equals(object obj)
-      {
-        return obj is Key other ? base.Equals(other) : false;
-      }
-
-      public bool Equals(Key other)
-      {
-        if (Assemblies == null && other.Assemblies == null)
-        {
-          return true;
-        }
-        else if ((Assemblies == null) || (other.Assemblies == null))
-        {
-          return false;
-        }
-        else if (Assemblies.Length != other.Assemblies.Length)
-        {
-          return false;
-        }
-
-        for (var i = 0; i < Assemblies.Length; i++)
-        {
-          if (!Assemblies[i].Equals(other.Assemblies[i]))
-          {
-            return false;
-          }
-        }
-
-        return true;
-      }
-
-      public override int GetHashCode()
-      {
-        var hash = new HashCode();
-
-        if (Assemblies != null)
-        {
-          for (var i = 0; i < Assemblies.Length; i++)
-          {
-            hash.Add(Assemblies[i]);
-          }
-        }
-
-        return hash.ToHashCode();
-      }
     }
   }
 }

@@ -15,10 +15,18 @@ namespace beholder_stalk_v2
   /// </summary>
   public record PointerPositionChangedEvent : ContextEvent
   {
-    public string Source { get; init;  }
+    public string Source { get; init; }
 
     public Point OldPointerPosition { get; init; }
 
     public Point NewPointerPosition { get; init; }
+  }
+
+  /// <summary>
+  /// Represents an event that is raised when the system information has changed
+  /// </summary>
+  public record SystemInformationChangedEvent : ContextEvent
+  {
+    public SysInfo SysInfo { get; init; }
   }
 }
