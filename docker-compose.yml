@@ -16,6 +16,8 @@ services:
     restart: always
     networks:
       - backend
+    depends_on:
+      - beholder-nexus
     labels: 
       - traefik.enable=true
       - traefik.http.routers.cortex.rule=Host(`${BEHOLDER_CORTEX_HOSTNAME}`)
@@ -49,6 +51,8 @@ services:
       - BEHOLDER_STALK_NAME=${BEHOLDER_SHORT_HOSTNAME}
     networks:
       - backend
+    depends_on:
+      - beholder-nexus
     labels:
       - traefik.enable=true
       # Proxy to authenticated content
