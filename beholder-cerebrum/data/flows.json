@@ -21,49 +21,6 @@
         "info": ""
     },
     {
-        "id": "093549556932395f",
-        "type": "subflow",
-        "name": "Store Clicker",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 40,
-                "y": 340,
-                "wires": [
-                    {
-                        "id": "0af4bd966c7a2454"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 700,
-                "y": 340,
-                "wires": [
-                    {
-                        "id": "5218bcd9c9c06341",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 700,
-                "y": 440,
-                "wires": [
-                    {
-                        "id": "0af4bd966c7a2454",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
         "id": "4d289f8513cee82f",
         "type": "subflow",
         "name": "determine if good cookie",
@@ -73,41 +30,27 @@
             {
                 "x": 40,
                 "y": 140,
-                "wires": [
-                    {
-                        "id": "61d91dd421e4d837"
-                    }
-                ]
+                "wires": []
             }
         ],
         "out": [
             {
-                "x": 720,
-                "y": 300,
-                "wires": [
-                    {
-                        "id": "05b3caef80cd2ada",
-                        "port": 0
-                    }
-                ]
+                "x": 800,
+                "y": 100,
+                "wires": []
             },
             {
-                "x": 1080,
-                "y": 360,
-                "wires": [
-                    {
-                        "id": "cec87ed245f42e30",
-                        "port": 0
-                    }
-                ]
+                "x": 800,
+                "y": 180,
+                "wires": []
             }
         ],
         "env": [],
         "meta": {},
         "color": "#DDAA99",
         "outputLabels": [
-            "dupe",
-            "good"
+            "duplicate cookie",
+            "good cookie"
         ]
     },
     {
@@ -338,7 +281,7 @@
         "rap": true,
         "rh": 0,
         "x": 220,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -375,7 +318,7 @@
         "rap": true,
         "rh": 0,
         "x": 230,
-        "y": 80,
+        "y": 40,
         "wires": [
             [
                 "ec0798c50e445d70"
@@ -640,8 +583,8 @@
         "correl": "",
         "expiry": "",
         "broker": "0b70dd4da53f0867",
-        "x": 1660,
-        "y": 820,
+        "x": 1640,
+        "y": 1780,
         "wires": []
     },
     {
@@ -651,11 +594,11 @@
         "button": "lclick",
         "click_direction": 0,
         "duration": null,
-        "x": 930,
-        "y": 540,
+        "x": 1210,
+        "y": 680,
         "wires": [
             [
-                "a452ecc746b49b31"
+                "dd786e4d487621fc"
             ]
         ]
     },
@@ -666,8 +609,8 @@
         "hostname": "",
         "modifiers": "^+",
         "key": "{Oemtilde}",
-        "x": 880,
-        "y": 920,
+        "x": 900,
+        "y": 1740,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -681,8 +624,8 @@
         "hostname": "",
         "modifiers": "^+",
         "key": "{Oemtilde}",
-        "x": 870,
-        "y": 980,
+        "x": 890,
+        "y": 1800,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -703,8 +646,8 @@
         "desktopThumbnailStreamSettingsScaleFactor": "0.15",
         "pointerImageStreamSettingsMaxFps": "0.5",
         "watchPointerPosition": "true",
-        "x": 860,
-        "y": 1080,
+        "x": 880,
+        "y": 1900,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -716,8 +659,8 @@
         "type": "stop-observing",
         "z": "5b3b16f7b12de95a",
         "hostname": "",
-        "x": 860,
-        "y": 1140,
+        "x": 880,
+        "y": 1960,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -735,8 +678,8 @@
         "focusRegionWidth": "640",
         "focusRegionHeight": "480",
         "focusRegionMaxFps": "0.15",
-        "x": 980,
-        "y": 820,
+        "x": 1000,
+        "y": 1640,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -753,28 +696,8 @@
         "scaleIncrement": 2,
         "rotationBins": 20,
         "outputImagePrefrontalKey": "",
-        "x": 950,
-        "y": 760,
-        "wires": [
-            [
-                "a452ecc746b49b31"
-            ]
-        ]
-    },
-    {
-        "id": "ca19638ec4477069",
-        "type": "move-mouse-to",
-        "z": "5b3b16f7b12de95a",
-        "targetPositionX": "",
-        "targetPositionY": "",
-        "preMoveActions": "",
-        "postMoveActions": "{lclick}",
-        "movementSpeed": "3",
-        "movementScaleX": "1.4",
-        "movementScaleY": "1.4",
-        "movementDelayMs": "",
-        "x": 1240,
-        "y": 380,
+        "x": 970,
+        "y": 1580,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -792,8 +715,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 710,
-        "y": 880,
+        "x": 730,
+        "y": 1700,
         "wires": [
             [
                 "bb1f72790d7d12db"
@@ -820,8 +743,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 230,
-        "y": 920,
+        "x": 250,
+        "y": 1740,
         "wires": [
             [
                 "ba7436256873acd9"
@@ -840,8 +763,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 690,
-        "y": 980,
+        "x": 710,
+        "y": 1800,
         "wires": [
             [
                 "d47744512b474040"
@@ -859,8 +782,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 690,
-        "y": 1040,
+        "x": 710,
+        "y": 1860,
         "wires": [
             [
                 "54677c7e9faec3c3"
@@ -878,8 +801,8 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 670,
-        "y": 1180,
+        "x": 690,
+        "y": 2000,
         "wires": [
             [
                 "a13940027781617e"
@@ -897,8 +820,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
-        "y": 820,
+        "x": 660,
+        "y": 1640,
         "wires": [
             [
                 "21d416d2262f1804"
@@ -909,15 +832,15 @@
         "id": "bcf433b5e9bab1fd",
         "type": "function",
         "z": "5b3b16f7b12de95a",
-        "name": "create detection request",
-        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2FgoldCookie\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.76,\n          scaleIncrement: 2.0,\n          rotationBins: 20,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
+        "name": "create golden cookie detection request",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2FgoldCookie\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.76,\n          scaleIncrement: 2.2,\n          rotationBins: 20,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 730,
-        "y": 760,
+        "x": 700,
+        "y": 1580,
         "wires": [
             [
                 "b074feee2745ba5c"
@@ -939,35 +862,54 @@
             },
             {
                 "t": "eq",
+                "v": "big_cookie",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
                 "v": "golden_cookie",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "spending_spree",
+                "v": "shopping_spree",
                 "vt": "str"
             },
             {
                 "t": "eq",
                 "v": "hand_of_fate",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "wrinkler",
+                "vt": "str"
             }
         ],
-        "checkall": "true",
+        "checkall": "false",
         "repair": false,
-        "outputs": 4,
-        "x": 400,
-        "y": 560,
+        "outputs": 6,
+        "x": 380,
+        "y": 760,
         "wires": [
             [
                 "bee0b6cea281c197",
-                "7de61ce12026042a",
-                "cfd479fd322ea30f"
+                "44b5a6839c7f5ae1"
             ],
-            [],
-            [],
+            [
+                "317cd6185c5c2421"
+            ],
+            [
+                "fb1758771042a801"
+            ],
+            [
+                "b133d14f08304048"
+            ],
             [
                 "fabef2d366ccf21f"
+            ],
+            [
+                "447eae51864e9a0c"
             ]
         ]
     },
@@ -983,8 +925,8 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 130,
-        "y": 820,
+        "x": 150,
+        "y": 1640,
         "wires": [
             [
                 "99130e21a2a56664"
@@ -995,7 +937,7 @@
         "id": "317cd6185c5c2421",
         "type": "change",
         "z": "5b3b16f7b12de95a",
-        "name": "set target position to cookie position",
+        "name": "move to big cookie",
         "rules": [
             {
                 "t": "set",
@@ -1010,30 +952,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1200,
-        "y": 300,
+        "x": 650,
+        "y": 740,
         "wires": [
             [
-                "6de3353e96814b0b"
-            ]
-        ]
-    },
-    {
-        "id": "d83c7c758a5df389",
-        "type": "function",
-        "z": "4d289f8513cee82f",
-        "name": "get golden cookie midpoint",
-        "func": "const polys = msg.payload.data;\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: midpoints[0]\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 600,
-        "y": 140,
-        "wires": [
-            [
-                "85083e50b709ec34"
+                "c3b701df788fdf42"
             ]
         ]
     },
@@ -1041,19 +964,17 @@
         "id": "e0a9264a325ca780",
         "type": "function",
         "z": "5b3b16f7b12de95a",
-        "name": "state",
+        "name": "Clicker State",
         "func": "const state = flow.get(\"cookie_clicker_state\") || \"stopped\";\nnode.status({text: state});\nreturn {};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 230,
-        "y": 560,
+        "x": 350,
+        "y": 860,
         "wires": [
-            [
-                "d66ef2ded60e78cb"
-            ]
+            []
         ]
     },
     {
@@ -1068,11 +989,12 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 130,
-        "y": 760,
+        "x": 150,
+        "y": 1580,
         "wires": [
             [
-                "a083be4aca3b4be7"
+                "bcf433b5e9bab1fd",
+                "fd06cc09f8b0d126"
             ]
         ]
     },
@@ -1095,12 +1017,10 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 920,
-        "y": 300,
+        "x": 1140,
+        "y": 940,
         "wires": [
-            [
-                "317cd6185c5c2421"
-            ]
+            []
         ]
     },
     {
@@ -1115,37 +1035,12 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "str",
-        "x": 930,
-        "y": 240,
+        "x": 110,
+        "y": 1060,
         "wires": [
             [
-                "317cd6185c5c2421"
+                "342f7ba66ee8b4b1"
             ]
-        ]
-    },
-    {
-        "id": "cec87ed245f42e30",
-        "type": "change",
-        "z": "4d289f8513cee82f",
-        "name": "set state to golden cookie",
-        "rules": [
-            {
-                "t": "set",
-                "p": "$parent.cookie_clicker_state",
-                "pt": "flow",
-                "to": "golden_cookie",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 890,
-        "y": 360,
-        "wires": [
-            []
         ]
     },
     {
@@ -1161,85 +1056,17 @@
         "topic": "",
         "payloadType": "str",
         "x": 90,
-        "y": 560,
+        "y": 760,
         "wires": [
             [
                 "e0a9264a325ca780",
                 "19b5ecd572239ea7",
-                "53683ee1a6f5a550"
+                "53683ee1a6f5a550",
+                "1d4b5171f0af4fea",
+                "7c018bd558d4463c",
+                "d66ef2ded60e78cb",
+                "84fd0606909232e7"
             ]
-        ]
-    },
-    {
-        "id": "b7e9b05dec62e1d0",
-        "type": "switch",
-        "z": "5b3b16f7b12de95a",
-        "name": "if cookie clicker is golden_cookie or idle",
-        "property": "cookie_clicker_state",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "golden_cookie",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "idle",
-                "vt": "str"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 640,
-        "y": 300,
-        "wires": [
-            [
-                "e39d080b5092207c"
-            ],
-            [
-                "e39d080b5092207c"
-            ]
-        ]
-    },
-    {
-        "id": "61d91dd421e4d837",
-        "type": "switch",
-        "z": "4d289f8513cee82f",
-        "name": "if cookie clicker is golden_cookie or idle",
-        "property": "$parent.cookie_clicker_state",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "golden_cookie",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "idle",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "stopped",
-                "vt": "str"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 3,
-        "x": 260,
-        "y": 140,
-        "wires": [
-            [
-                "d83c7c758a5df389"
-            ],
-            [
-                "d83c7c758a5df389"
-            ],
-            []
         ]
     },
     {
@@ -1253,8 +1080,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
-        "y": 380,
+        "x": 1150,
+        "y": 980,
         "wires": [
             []
         ]
@@ -1271,7 +1098,7 @@
         "finalize": "",
         "libs": [],
         "x": 370,
-        "y": 400,
+        "y": 580,
         "wires": [
             []
         ]
@@ -1280,34 +1107,24 @@
         "id": "eae5f482832ae37c",
         "type": "switch",
         "z": "5b3b16f7b12de95a",
-        "name": "detected count",
+        "name": "> 0",
         "property": "payload.data.length",
         "propertyType": "msg",
         "rules": [
             {
-                "t": "lte",
-                "v": "0",
-                "vt": "num"
-            },
-            {
                 "t": "gt",
                 "v": "0",
-                "vt": "jsonata"
+                "vt": "num"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
-        "x": 320,
-        "y": 200,
+        "outputs": 1,
+        "x": 290,
+        "y": 260,
         "wires": [
             [
-                "b7e9b05dec62e1d0",
-                "7095d80831f40f1f"
-            ],
-            [
-                "9c4d192a3ffcc585",
-                "86a028630078d835"
+                "713f68f2fdfa79ed"
             ]
         ]
     },
@@ -1324,10 +1141,12 @@
         "rap": true,
         "rh": 0,
         "x": 110,
-        "y": 200,
+        "y": 220,
         "wires": [
             [
-                "eae5f482832ae37c"
+                "eae5f482832ae37c",
+                "aaa42866ac54eb84",
+                "30f1193c7914a8a4"
             ]
         ]
     },
@@ -1350,70 +1169,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 590,
-        "y": 160,
+        "x": 690,
+        "y": 140,
         "wires": [
             [
-                "53165ee276212aa6"
+                "7f048d725b0e5e4e"
             ]
         ]
-    },
-    {
-        "id": "9c4d192a3ffcc585",
-        "type": "change",
-        "z": "5b3b16f7b12de95a",
-        "name": "> 0 - set TTS msg",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "Oh look, it's a golden cookie!",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 590,
-        "y": 220,
-        "wires": [
-            [
-                "53165ee276212aa6"
-            ]
-        ]
-    },
-    {
-        "id": "53165ee276212aa6",
-        "type": "rbe",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "topic",
-        "x": 910,
-        "y": 160,
-        "wires": [
-            [
-                "3db1e1b770048671"
-            ]
-        ]
-    },
-    {
-        "id": "3db1e1b770048671",
-        "type": "play audio",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "voice": "49",
-        "x": 1230,
-        "y": 80,
-        "wires": []
     },
     {
         "id": "b753cf068a58b8de",
@@ -1434,11 +1196,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 960,
+        "x": 940,
         "y": 40,
         "wires": [
             [
-                "3db1e1b770048671"
+                "a3080a01cc5497db"
             ]
         ]
     },
@@ -1461,11 +1223,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 960,
+        "x": 940,
         "y": 100,
         "wires": [
             [
-                "3db1e1b770048671"
+                "a3080a01cc5497db"
             ]
         ]
     },
@@ -1473,7 +1235,7 @@
         "id": "47619e55c4a24c53",
         "type": "change",
         "z": "5b3b16f7b12de95a",
-        "name": "set known cookie position",
+        "name": "set big cookie position",
         "rules": [
             {
                 "t": "set",
@@ -1488,7 +1250,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 710,
+        "x": 700,
         "y": 40,
         "wires": [
             [
@@ -1500,7 +1262,7 @@
         "id": "0cad2766305c17d0",
         "type": "change",
         "z": "5b3b16f7b12de95a",
-        "name": "clear known cookie position",
+        "name": "clear big cookie position",
         "rules": [
             {
                 "t": "delete",
@@ -1513,7 +1275,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
+        "x": 710,
         "y": 100,
         "wires": [
             [
@@ -1613,25 +1375,6 @@
         ]
     },
     {
-        "id": "a083be4aca3b4be7",
-        "type": "throttle",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "throttleType": "time",
-        "timeLimit": ".5",
-        "timeLimitType": "seconds",
-        "countLimit": 0,
-        "blockSize": 0,
-        "locked": false,
-        "x": 360,
-        "y": 760,
-        "wires": [
-            [
-                "bcf433b5e9bab1fd"
-            ]
-        ]
-    },
-    {
         "id": "53683ee1a6f5a550",
         "type": "function",
         "z": "5b3b16f7b12de95a",
@@ -1643,7 +1386,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 460,
+        "y": 640,
         "wires": [
             []
         ]
@@ -1660,11 +1403,12 @@
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 150,
+        "x": 130,
         "y": 260,
         "wires": [
             [
-                "c44c213017bc5f6d"
+                "c44c213017bc5f6d",
+                "73cdb3bb27e53215"
             ]
         ]
     },
@@ -1697,50 +1441,13 @@
         "septopics": true,
         "property": "payload.data.processName",
         "topi": "topic",
-        "x": 330,
-        "y": 820,
+        "x": 350,
+        "y": 1640,
         "wires": [
             [
                 "f9b6966bc8513856",
-                "7781cb1bfe5ed28d"
-            ]
-        ]
-    },
-    {
-        "id": "d09ada59b2398114",
-        "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "set movement ",
-        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: msg.payload,\n          movement_type: 0,\n          movement_speed: 4,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1060,
-        "y": 380,
-        "wires": [
-            [
-                "ca19638ec4477069"
-            ]
-        ]
-    },
-    {
-        "id": "5dfbc808a4b753e7",
-        "type": "inject",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 530,
-        "y": 740,
-        "wires": [
-            [
-                "0b117ae57c8296b2"
+                "7781cb1bfe5ed28d",
+                "2dfc03e34ccbe26e"
             ]
         ]
     },
@@ -1763,116 +1470,28 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 820,
-        "y": 680,
+        "x": 1440,
+        "y": 580,
         "wires": [
-            [
-                "4485aebd18d852d2"
-            ]
+            []
         ]
     },
     {
         "id": "bee0b6cea281c197",
         "type": "function",
         "z": "5b3b16f7b12de95a",
-        "name": "on the big cookie",
-        "func": "const cookiePos = flow.get(\"cookie_position\");\nconst cursorPos = global.get(\"beholder_pointer_current_position\") || 0;\n\nlet clickCount = flow.get(\"cookie_clicker_click_count\") || 0;\n\nif (!cookiePos || !cursorPos) {\n    node.status({fill: 'red', text: `clicks: ${clickCount}`});\n    return null;\n}\n\nif (\n    (cursorPos.x < (cookiePos.x + 75)) &&\n    (cursorPos.x > (cookiePos.x - 75)) &&\n    (cursorPos.y < (cookiePos.y + 75)) &&\n    (cursorPos.y > (cookiePos.y - 75))\n   ) {\n       clickCount++;\n       flow.set(\"cookie_clicker_click_count\", clickCount);\n\n       node.status({fill: 'green', text: `clicks: ${clickCount}`});\n       return msg;\n   }\n\nnode.status({fill: 'red', text: `clicks: ${clickCount}`});\nreturn null;",
+        "name": "on the big cookie?",
+        "func": "const cookiePos = flow.get(\"cookie_position\");\nconst cursorPos = global.get(\"beholder_pointer_current_position\") || 0;\n\nlet clickCount = flow.get(\"cookie_clicker_click_count\") || 0;\n\nif (!cookiePos || !cursorPos) {\n    node.status({fill: 'red', text: `clicks: ${clickCount}`});\n    return { payload: 'big_cookie' };\n}\n\nif (\n    (cursorPos.x < (cookiePos.x + 75)) &&\n    (cursorPos.x > (cookiePos.x - 75)) &&\n    (cursorPos.y < (cookiePos.y + 75)) &&\n    (cursorPos.y > (cookiePos.y - 75))\n   ) {\n       clickCount++;\n       flow.set(\"cookie_clicker_click_count\", clickCount);\n\n       node.status({fill: 'green', text: `clicks: ${clickCount}`});\n       return { payload: null };\n   }\n\nnode.status({fill: 'red', text: `clicks: ${clickCount}`});\nreturn { payload: 'big_cookie' };",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
-        "y": 540,
+        "x": 650,
+        "y": 660,
         "wires": [
             [
-                "a20509f002b98de9"
-            ]
-        ]
-    },
-    {
-        "id": "2ffc1fe1d1661d78",
-        "type": "subflow:093549556932395f",
-        "z": "5b3b16f7b12de95a",
-        "name": "click items in store",
-        "env": [],
-        "x": 1350,
-        "y": 680,
-        "wires": [
-            [
-                "a452ecc746b49b31"
-            ],
-            [
-                "ac8819d740727ef6"
-            ]
-        ]
-    },
-    {
-        "id": "d852d5e7d14e458f",
-        "type": "change",
-        "z": "093549556932395f",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "$parent.cookie_clicker_state",
-                "pt": "flow",
-                "to": "idle",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 990,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "de25f883adb8526d",
-        "type": "delay",
-        "z": "093549556932395f",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "750",
-        "timeoutUnits": "milliseconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "x": 730,
-        "y": 240,
-        "wires": [
-            [
-                "d852d5e7d14e458f"
-            ]
-        ]
-    },
-    {
-        "id": "5218bcd9c9c06341",
-        "type": "move-mouse-to",
-        "z": "093549556932395f",
-        "targetPositionX": "",
-        "targetPositionY": "",
-        "preMoveActions": "",
-        "postMoveActions": "{lclick}",
-        "movementSpeed": "3",
-        "movementScaleX": "1.4",
-        "movementScaleY": "1.4",
-        "movementDelayMs": "",
-        "x": 540,
-        "y": 340,
-        "wires": [
-            [
-                "de25f883adb8526d"
+                "3d8aba661d4c087a"
             ]
         ]
     },
@@ -1893,8 +1512,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 410,
-        "y": 920,
+        "x": 430,
+        "y": 1740,
         "wires": [
             [
                 "bb1f72790d7d12db",
@@ -1903,30 +1522,11 @@
         ]
     },
     {
-        "id": "85083e50b709ec34",
-        "type": "function",
-        "z": "4d289f8513cee82f",
-        "name": "check for dupe",
-        "func": "const lastCookiePos = flow.get('last_golden_cookie_pos');\nconst newCookiePos = msg.payload;\n\nif (!lastCookiePos) {\n    flow.set('last_golden_cookie_pos', newCookiePos);\n    return msg;\n}\n\nconst range = 15;\n\nif (\n    (newCookiePos.x < (lastCookiePos.x + range)) &&\n    (newCookiePos.x > (lastCookiePos.x - range)) &&\n    (newCookiePos.y < (lastCookiePos.y + range)) &&\n    (newCookiePos.y > (lastCookiePos.y - range))\n   ) {\n       return {\n           payload: null\n       };\n   }\n\nflow.set('last_golden_cookie_pos', newCookiePos);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 840,
-        "y": 140,
-        "wires": [
-            [
-                "05b3caef80cd2ada"
-            ]
-        ]
-    },
-    {
         "id": "0deb7194453e647f",
         "type": "function",
         "z": "6a61b64910c046bc",
         "name": "reset",
-        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 0, y: 0 },\n          movement_type: 0,\n          movement_speed: 1,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"{lclick}\",\n        }\n}",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: { x: 0, y: 0 },\n          movement_type: 0,\n          movement_speed: 1,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: \"\",\n        }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2052,25 +1652,6 @@
         "wires": [
             [
                 "f51b644360f1b573"
-            ]
-        ]
-    },
-    {
-        "id": "6de3353e96814b0b",
-        "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "if not on the big cookie, move",
-        "func": "const cookiePos = flow.get(\"cookie_position\");\nconst cursorPos = global.get(\"beholder_pointer_current_position\") || 0;\nnode.status({text: `X: ${cursorPos.x} Y: ${cursorPos.y}`});\n\nif (!cookiePos || !cursorPos) {\n    return null;\n}\n\nif (\n    (cursorPos.x < (cookiePos.x + 75)) &&\n    (cursorPos.x > (cookiePos.x - 75)) &&\n    (cursorPos.y < (cookiePos.y + 75)) &&\n    (cursorPos.y > (cookiePos.y - 75))\n   ) {\n       return null;\n   }\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1500,
-        "y": 300,
-        "wires": [
-            [
-                "d09ada59b2398114"
             ]
         ]
     },
@@ -2339,42 +1920,6 @@
         ]
     },
     {
-        "id": "c510c1f1e9a97ccd",
-        "type": "function",
-        "z": "093549556932395f",
-        "name": "create movement",
-        "func": "const cookieClickerProcess = flow.get(\"$parent.cookie_clicker_process\");\nif (!cookieClickerProcess) {\n    return;\n}\n\n\nreturn {\n    payload: {\n      current_position: null,\n      target_position: {\n            x: cookieClickerProcess.windowPosition.width - 175,\n            y: cookieClickerProcess.windowPosition.y + 230 + (msg.payload * 62),\n        },\n      movement_type: 0,\n      movement_speed: 4,\n      movement_scale_x: 1,\n      movement_scale_y: 1,\n      movement_delay_ms: 0,\n      pre_move_actions: \"\",\n      post_move_actions: \"{lclick}\",\n    }\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 340,
-        "wires": [
-            [
-                "5218bcd9c9c06341"
-            ]
-        ]
-    },
-    {
-        "id": "0af4bd966c7a2454",
-        "type": "random",
-        "z": "093549556932395f",
-        "name": "",
-        "low": "0",
-        "high": "13",
-        "inte": "true",
-        "property": "payload",
-        "x": 160,
-        "y": 340,
-        "wires": [
-            [
-                "c510c1f1e9a97ccd"
-            ]
-        ]
-    },
-    {
         "id": "4485aebd18d852d2",
         "type": "change",
         "z": "5b3b16f7b12de95a",
@@ -2393,12 +1938,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1090,
-        "y": 680,
+        "x": 870,
+        "y": 1040,
         "wires": [
             [
-                "2ffc1fe1d1661d78",
-                "3db1e1b770048671"
+                "09553eaec24ff556"
             ]
         ]
     },
@@ -2407,12 +1951,12 @@
         "type": "random",
         "z": "5b3b16f7b12de95a",
         "name": "",
-        "low": 1,
-        "high": "750",
+        "low": "1",
+        "high": "75",
         "inte": "true",
         "property": "payload",
-        "x": 240,
-        "y": 680,
+        "x": 1000,
+        "y": 580,
         "wires": [
             [
                 "7c16802ce7d64fad"
@@ -2436,49 +1980,11 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 370,
-        "y": 680,
+        "x": 1130,
+        "y": 580,
         "wires": [
             [
-                "e6e02ff77f9a16f6"
-            ]
-        ]
-    },
-    {
-        "id": "e6e02ff77f9a16f6",
-        "type": "throttle",
-        "z": "5b3b16f7b12de95a",
-        "name": "",
-        "throttleType": "time",
-        "timeLimit": "30",
-        "timeLimitType": "seconds",
-        "countLimit": 0,
-        "blockSize": 0,
-        "locked": false,
-        "x": 540,
-        "y": 680,
-        "wires": [
-            [
-                "0b117ae57c8296b2"
-            ]
-        ]
-    },
-    {
-        "id": "cfd479fd322ea30f",
-        "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "recently clicked on cookie",
-        "func": "const lastGoldenCookie = flow.get(\"last_golden_cookie\");\n\nif (!lastGoldenCookie) {\n    return null;\n}\n\nconst diff = (new Date()) - lastGoldenCookie;\nnode.status({text: diff / 1000});\n\nif (diff <= 3000) {\n    return {\n        payload: diff,\n    }\n}\n\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 710,
-        "y": 480,
-        "wires": [
-            [
-                "9387d0e01d441108"
+                "dfcf6a8bd2c59eb9"
             ]
         ]
     },
@@ -2487,108 +1993,17 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "set purchase TTS",
-        "func": "const items = [\n    'Cursor',\n    'Grandma',\n    'Farm',\n    'Mine',\n    'Factory',\n    'Bank',\n    'Temple',\n    'Wizard Tower',\n    'Shipment',\n    'Alchemy Lab',\n    'Portal',\n    'Time Machine',\n    'Antimatter Condenser',\n    'Prism',\n];\n\nreturn {\n    payload: `bought a ${items[msg.payload]}`\n}",
+        "func": "const items = [\n    'Cursor',\n    'Grandma',\n    'Farm',\n    'Mine',\n    'Factory',\n    'Bank',\n    'Temple',\n    'Wizard Tower',\n    'Shipment',\n    'Alchemy Lab',\n    'Portal',\n    'Time Machine',\n    'Antimatter Condenser',\n    'Prism',\n    'Chancemaker',\n    'Fractal Engine'\n];\n\nif (msg.payload < 0) {\n    return {\n        payload: `bought a fancy item`,\n    }\n}\n\nreturn {\n    payload: `bought a ${items[msg.payload]}`,\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1240,
-        "y": 240,
+        "x": 1190,
+        "y": 1120,
         "wires": [
             [
-                "3db1e1b770048671"
-            ]
-        ]
-    },
-    {
-        "id": "05b3caef80cd2ada",
-        "type": "switch",
-        "z": "4d289f8513cee82f",
-        "name": "is dupe",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "null"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 2,
-        "x": 600,
-        "y": 360,
-        "wires": [
-            [],
-            [
-                "cec87ed245f42e30",
-                "e5848c5ba7ee0fdd"
-            ]
-        ]
-    },
-    {
-        "id": "e5848c5ba7ee0fdd",
-        "type": "delay",
-        "z": "4d289f8513cee82f",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "3",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "x": 940,
-        "y": 280,
-        "wires": [
-            [
-                "923f20f76bee541e"
-            ]
-        ]
-    },
-    {
-        "id": "923f20f76bee541e",
-        "type": "change",
-        "z": "4d289f8513cee82f",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "last_golden_cookie_pos",
-                "pt": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1180,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "86a028630078d835",
-        "type": "subflow:4d289f8513cee82f",
-        "z": "5b3b16f7b12de95a",
-        "x": 290,
-        "y": 320,
-        "wires": [
-            [
-                "b7e9b05dec62e1d0"
-            ],
-            [
-                "d03982fe055c45b7",
-                "d09ada59b2398114"
+                "09553eaec24ff556"
             ]
         ]
     },
@@ -2611,8 +2026,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1230,
-        "y": 480,
+        "x": 1310,
+        "y": 540,
         "wires": [
             []
         ]
@@ -2622,19 +2037,19 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "move to hand of fate",
-        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\nif (lastHandOfFate) {\n    const diff = (new Date()) - lastHandOfFate;\n    node.status({text: diff / 1000});\n}\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 5 * 60 * 1000) {\n        flow.set(\"cookie_clicker_state\", \"idle\")\n        return null;\n    }\n}\n\n\nreturn {\n    payload: {\n        x: 900,\n        y: 1090\n    }\n};",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\nif (lastHandOfFate) {\n    const diff = (new Date()) - lastHandOfFate;\n}\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 5 * 60 * 1000) {\n        flow.set(\"cookie_clicker_state\", \"idle\")\n        return null;\n    }\n}\n\n\nreturn {\n    payload: {\n        x: 895,\n        y: 230\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 700,
-        "y": 600,
+        "x": 680,
+        "y": 1300,
         "wires": [
             [
+                "59d7efff603f7629",
                 "4a0267f0f443486a",
-                "aa48b956f274aa14",
-                "d09ada59b2398114"
+                "bcbe282f991c1f0d"
             ]
         ]
     },
@@ -2665,28 +2080,9 @@
         "to": "",
         "reg": false,
         "x": 920,
-        "y": 600,
+        "y": 1340,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "aa48b956f274aa14",
-        "type": "function",
-        "z": "5b3b16f7b12de95a",
-        "name": "set HOF TTS",
-        "func": "return {\n    payload: `tempting the hand of fate`\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1210,
-        "y": 180,
-        "wires": [
-            [
-                "3db1e1b770048671"
-            ]
         ]
     },
     {
@@ -2694,17 +2090,2097 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "hand of fate is available",
-        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    node.status({text: hofDiff / 1000});\n    if (hofDiff <= 5 * 60 * 1000) {\n        return null;\n    }\n}\n\nreturn msg;",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 7 * 60 * 1000) {\n        return null;\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 970,
-        "y": 480,
+        "x": 1050,
+        "y": 540,
         "wires": [
             [
                 "d9ca6579edf19e7b"
+            ]
+        ]
+    },
+    {
+        "id": "1d4b5171f0af4fea",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "Hand of Fate",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 7 * 60 * 1000) {\n        node.status({fill: 'red', text: hofDiff / 1000});\n    } else {\n        node.status({fill: 'green', text: hofDiff / 1000});\n    }\n} else {\n    node.status({fill: 'green'});\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de92c7b2302f4458",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 1200,
+        "wires": [
+            [
+                "4c324128b8f398e8"
+            ]
+        ]
+    },
+    {
+        "id": "4c324128b8f398e8",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "last_hand_of_fate",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aaa42866ac54eb84",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "cookies?",
+        "func": "const payload = msg.payload;\n\nif (payload.data.length > 0) {\n    node.status({fill: 'green', text: payload.data.length});\n} else {\n    node.status({fill: 'red', text: payload.data.length});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d8aba661d4c087a",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 660,
+        "wires": [
+            [
+                "2d0ca2ab4b4d6177"
+            ],
+            [
+                "cfd97a38e57c9c98"
+            ]
+        ]
+    },
+    {
+        "id": "24e04be2cbcc45b4",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to golden cookie",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "golden_cookie",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33cfe288ca9f4146",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "shopping_spree_state",
+                "pt": "flow",
+                "to": "not_ok",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1500,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d0ca2ab4b4d6177",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to big_cookie",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "342f7ba66ee8b4b1",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to big_cookie",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "big_cookie",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5c2bcd7ce24a20b2",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3b701df788fdf42",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 860,
+        "y": 740,
+        "wires": [
+            [
+                "5c2bcd7ce24a20b2",
+                "8edb89df26a76fee"
+            ]
+        ]
+    },
+    {
+        "id": "7c018bd558d4463c",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "golden cookie location",
+        "func": "const pos = flow.get(\"golden_cookie_position\") || { x: 0, y: 0};\nnode.status({text: `X: ${pos.x} Y: ${pos.y}`});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cfd97a38e57c9c98",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1010,
+        "y": 680,
+        "wires": [
+            [
+                "a20509f002b98de9"
+            ]
+        ]
+    },
+    {
+        "id": "737c830955d1d29a",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 110,
+        "y": 1120,
+        "wires": [
+            [
+                "534b77bb4f622eb5"
+            ]
+        ]
+    },
+    {
+        "id": "534b77bb4f622eb5",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to shopping_spree",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "shopping_spree",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "shopping_spree_state",
+                "pt": "flow",
+                "to": "ok",
+                "tot": "str"
+            },
+            {
+                "t": "delete",
+                "p": "last_shopping_spree",
+                "pt": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59d7efff603f7629",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set HOF TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "tempting the hand of fate!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 1300,
+        "wires": [
+            [
+                "dea13a3016de884d"
+            ]
+        ]
+    },
+    {
+        "id": "99be91037f7c03fb",
+        "type": "play audio",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "voice": "49",
+        "x": 590,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1cbae375d3f7ea9d",
+        "type": "link in",
+        "z": "13065b3553c3ca8f",
+        "name": "play audio",
+        "links": [
+            "a3080a01cc5497db",
+            "dea13a3016de884d",
+            "09553eaec24ff556",
+            "7f048d725b0e5e4e",
+            "5562a4da8a82975d"
+        ],
+        "x": 55,
+        "y": 520,
+        "wires": [
+            [
+                "35c5065c42945ed9"
+            ]
+        ]
+    },
+    {
+        "id": "a3080a01cc5497db",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 1155,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "dea13a3016de884d",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 1075,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "09553eaec24ff556",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 1335,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "a5e3e8df7a1e1cd0",
+        "type": "link in",
+        "z": "13065b3553c3ca8f",
+        "name": "mouse movement",
+        "links": [
+            "3567c421a6d0e11e",
+            "8edb89df26a76fee",
+            "c88ba120c1c18341",
+            "bcbe282f991c1f0d",
+            "e8467bbee93c8e9a"
+        ],
+        "x": 55,
+        "y": 660,
+        "wires": [
+            [
+                "e1d1f0dcbf991ab3"
+            ]
+        ]
+    },
+    {
+        "id": "e1d1f0dcbf991ab3",
+        "type": "function",
+        "z": "13065b3553c3ca8f",
+        "name": "set movement ",
+        "func": "\nreturn {\n    payload: {\n          current_position: null,\n          target_position: {\n              x: msg.payload.x,\n              y: msg.payload.y,\n          },\n          movement_type: 0,\n          movement_speed: 4,\n          movement_scale_x: 1,\n          movement_scale_y: 1,\n          movement_delay_ms: 0,\n          pre_move_actions: \"\",\n          post_move_actions: msg.payload.post_move_actions || \"{lclick}\",\n        }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 660,
+        "wires": [
+            [
+                "f2cb5412fcc204b5"
+            ]
+        ]
+    },
+    {
+        "id": "f2cb5412fcc204b5",
+        "type": "delay",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 410,
+        "y": 660,
+        "wires": [
+            [
+                "ff0952739be8e587"
+            ]
+        ]
+    },
+    {
+        "id": "ff0952739be8e587",
+        "type": "move-mouse-to",
+        "z": "13065b3553c3ca8f",
+        "targetPositionX": "",
+        "targetPositionY": "",
+        "preMoveActions": "",
+        "postMoveActions": "{lclick}",
+        "movementSpeed": "3",
+        "movementScaleX": "1.4",
+        "movementScaleY": "1.4",
+        "movementDelayMs": "",
+        "x": 600,
+        "y": 660,
+        "wires": [
+            [
+                "fe1edd641cebed8b"
+            ]
+        ]
+    },
+    {
+        "id": "fe1edd641cebed8b",
+        "type": "mqtt out",
+        "z": "13065b3553c3ca8f",
+        "name": "Beholder Nexus",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0b70dd4da53f0867",
+        "x": 940,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "3567c421a6d0e11e",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "a5e3e8df7a1e1cd0"
+        ],
+        "x": 1095,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "8edb89df26a76fee",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "a5e3e8df7a1e1cd0"
+        ],
+        "x": 995,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bcbe282f991c1f0d",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "move mouse",
+        "links": [
+            "a5e3e8df7a1e1cd0"
+        ],
+        "x": 855,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "c88ba120c1c18341",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "a5e3e8df7a1e1cd0"
+        ],
+        "x": 1395,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "0121a751ecba47db",
+        "type": "random",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "low": "-2",
+        "high": "10",
+        "inte": "true",
+        "property": "payload",
+        "x": 1000,
+        "y": 1160,
+        "wires": [
+            [
+                "99dcf84b2b1e86c8",
+                "ac8819d740727ef6",
+                "387cf9e65c966b8b"
+            ]
+        ]
+    },
+    {
+        "id": "99dcf84b2b1e86c8",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "move to random store item",
+        "func": "const cookieClickerProcess = flow.get(\"cookie_clicker_process\");\nif (!cookieClickerProcess) {\n    return;\n}\n\nif (msg.payload < 0) {\n    return {\n        payload: {\n            x: cookieClickerProcess.windowPosition.width - 300,\n            y: cookieClickerProcess.windowPosition.y + 200\n        }\n    }\n}\n\nreturn {\n    payload: {\n        x: cookieClickerProcess.windowPosition.width - 300,\n        y: cookieClickerProcess.windowPosition.y + 300 + (msg.payload * 62),\n    },\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 1160,
+        "wires": [
+            [
+                "c88ba120c1c18341"
+            ]
+        ]
+    },
+    {
+        "id": "ec2b272a3616f52f",
+        "type": "inject",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "hello, world",
+        "payloadType": "str",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "8bf5c395f0a324e9"
+            ]
+        ]
+    },
+    {
+        "id": "8bf5c395f0a324e9",
+        "type": "delay",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "99be91037f7c03fb"
+            ]
+        ]
+    },
+    {
+        "id": "7f048d725b0e5e4e",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 915,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b58cbb9a393ac0a2",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "== 1 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "oh look, it's a golden cookie!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 180,
+        "wires": [
+            [
+                "7f048d725b0e5e4e"
+            ]
+        ]
+    },
+    {
+        "id": "35c5065c42945ed9",
+        "type": "rbe",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 170,
+        "y": 520,
+        "wires": [
+            [
+                "8bf5c395f0a324e9"
+            ]
+        ]
+    },
+    {
+        "id": "56d761847bdb4769",
+        "type": "send-mouse-click",
+        "z": "6a61b64910c046bc",
+        "button": "lclick",
+        "click_direction": 0,
+        "duration": null,
+        "x": 310,
+        "y": 340,
+        "wires": [
+            [
+                "bde0df30871a605e"
+            ]
+        ]
+    },
+    {
+        "id": "461c135910b8a662",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "56d761847bdb4769"
+            ]
+        ]
+    },
+    {
+        "id": "713f68f2fdfa79ed",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set detected golden cookies",
+        "rules": [
+            {
+                "t": "set",
+                "p": "detected_golden_cookies",
+                "pt": "flow",
+                "to": "payload.data",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 260,
+        "wires": [
+            [
+                "e2dc2f77c43523ff"
+            ]
+        ]
+    },
+    {
+        "id": "fd06cc09f8b0d126",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "create wrinkler detection request",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2Fwrinkler\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.72,\n          scaleIncrement: 1.2,\n          rotationBins: 40,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1540,
+        "wires": [
+            [
+                "b074feee2745ba5c"
+            ]
+        ]
+    },
+    {
+        "id": "9249b3960b38569d",
+        "type": "mqtt in",
+        "z": "5b3b16f7b12de95a",
+        "name": "on detected wrinkler",
+        "topic": "beholder/occipital/+/detected_objects/images%2Fwrinkler",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 1230,
+        "y": 220,
+        "wires": [
+            [
+                "ef302e0686d3d075",
+                "c5447c78de989356",
+                "29debd17e217aef9"
+            ]
+        ]
+    },
+    {
+        "id": "0197482813f50d33",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "== 0 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "eww, scrape it off",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1710,
+        "y": 180,
+        "wires": [
+            [
+                "5562a4da8a82975d"
+            ]
+        ]
+    },
+    {
+        "id": "5562a4da8a82975d",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 1855,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "61d42032f19efae5",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload.data.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1530,
+        "y": 200,
+        "wires": [
+            [
+                "0197482813f50d33"
+            ],
+            [
+                "1900e2eebda3931a"
+            ]
+        ]
+    },
+    {
+        "id": "ef302e0686d3d075",
+        "type": "rbe",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1410,
+        "y": 220,
+        "wires": [
+            [
+                "61d42032f19efae5"
+            ]
+        ]
+    },
+    {
+        "id": "30f1193c7914a8a4",
+        "type": "rbe",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload.data.length",
+        "topi": "topic",
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "7de08ff234688bc0"
+            ]
+        ]
+    },
+    {
+        "id": "7de08ff234688bc0",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload.data.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "7095d80831f40f1f"
+            ],
+            [
+                "b58cbb9a393ac0a2"
+            ],
+            [
+                "91c52255a5393243"
+            ]
+        ]
+    },
+    {
+        "id": "91c52255a5393243",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "> 1 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "so many cookies!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 220,
+        "wires": [
+            [
+                "7f048d725b0e5e4e"
+            ]
+        ]
+    },
+    {
+        "id": "1900e2eebda3931a",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "> 1 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ugh so many",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1710,
+        "y": 220,
+        "wires": [
+            [
+                "5562a4da8a82975d"
+            ]
+        ]
+    },
+    {
+        "id": "5a4920d06d6eae57",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set detected wrinklers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "detected_wrinklers",
+                "pt": "flow",
+                "to": "payload.data",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1580,
+        "y": 260,
+        "wires": [
+            [
+                "7cdb1dfc88862b56"
+            ]
+        ]
+    },
+    {
+        "id": "6bd8ada57769aa5a",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "wrinkler",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1780,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "447eae51864e9a0c",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "determine wrinkler midpoint",
+        "func": "const polys = flow.get(\"detected_wrinklers\")\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: {\n        x: midpoints[0].x,\n        y: midpoints[0].y,\n        post_move_actions: \"{lclick}{lclick}{lclick}\",\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 1460,
+        "wires": [
+            [
+                "8a894b7e04539cb9",
+                "af0a11e51ba54932"
+            ]
+        ]
+    },
+    {
+        "id": "e8467bbee93c8e9a",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "move mouse",
+        "links": [
+            "a5e3e8df7a1e1cd0"
+        ],
+        "x": 1035,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "af0a11e51ba54932",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "last_hand_of_fate",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 1480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5447c78de989356",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "> 0",
+        "property": "payload.data.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1410,
+        "y": 260,
+        "wires": [
+            [
+                "5a4920d06d6eae57"
+            ]
+        ]
+    },
+    {
+        "id": "8a894b7e04539cb9",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 920,
+        "y": 1440,
+        "wires": [
+            [
+                "e8467bbee93c8e9a"
+            ]
+        ]
+    },
+    {
+        "id": "44b5a6839c7f5ae1",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "since last golden cookie",
+        "func": "const lastGoldenCookie = flow.get(\"last_golden_cookie\");\n\nif (!lastGoldenCookie) {\n    return null;\n}\n\nconst diff = (new Date()) - lastGoldenCookie;\nnode.status({text: diff / 1000});\n\nflow.set(\"since_last_golden_cookie\", diff);\n\nreturn {\n    payload: diff,\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 560,
+        "wires": [
+            [
+                "ac64113cf662a929"
+            ]
+        ]
+    },
+    {
+        "id": "ac64113cf662a929",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "3000",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "30000",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 850,
+        "y": 560,
+        "wires": [
+            [
+                "9387d0e01d441108"
+            ],
+            [
+                "7de61ce12026042a"
+            ]
+        ]
+    },
+    {
+        "id": "73cdb3bb27e53215",
+        "type": "debug",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "04e9368f93cb579f",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "reset cookie clicker window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/move_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            targetPosition: {\n                x: -7,\n                y: 0,\n                width: 1934,\n                height: 1567,\n            },\n            repaint: true\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 2160,
+        "wires": [
+            [
+                "a452ecc746b49b31"
+            ]
+        ]
+    },
+    {
+        "id": "a92ada2391dd3042",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 530,
+        "y": 2160,
+        "wires": [
+            [
+                "04e9368f93cb579f"
+            ]
+        ]
+    },
+    {
+        "id": "f9248f9fa72bc73f",
+        "type": "mqtt in",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "topic": "beholder/psionix/+/move_window",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "ec0798c50e445d70"
+            ]
+        ]
+    },
+    {
+        "id": "2dfc03e34ccbe26e",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "if not stopped",
+        "func": "const state = flow.get(\"cookie_clicker_state\") || \"stopped\";\n\nif (!state || state === \"stopped\") {\n    return null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1980,
+        "wires": [
+            [
+                "04e9368f93cb579f"
+            ]
+        ]
+    },
+    {
+        "id": "e2dc2f77c43523ff",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "if not stopped",
+        "func": "const state = flow.get(\"cookie_clicker_state\") || \"stopped\";\n\nif (!state || state === \"stopped\") {\n    return null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "24e04be2cbcc45b4"
+            ]
+        ]
+    },
+    {
+        "id": "7cdb1dfc88862b56",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "if not stopped",
+        "func": "const state = flow.get(\"cookie_clicker_state\") || \"stopped\";\n\nif (!state || state === \"stopped\") {\n    return null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1780,
+        "y": 260,
+        "wires": [
+            [
+                "6bd8ada57769aa5a"
+            ]
+        ]
+    },
+    {
+        "id": "fb1758771042a801",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "determine golden cookie midpoint",
+        "func": "const polys = flow.get(\"detected_golden_cookies\")\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: midpoints[0]\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 920,
+        "wires": [
+            [
+                "56263e293593d0e3",
+                "9f70783be0af51d4",
+                "ee783ca4bdfbf798"
+            ]
+        ]
+    },
+    {
+        "id": "56263e293593d0e3",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 970,
+        "y": 900,
+        "wires": [
+            [
+                "3567c421a6d0e11e"
+            ]
+        ]
+    },
+    {
+        "id": "29debd17e217aef9",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "wrinklers?",
+        "func": "const payload = msg.payload;\n\nif (payload.data.length > 0) {\n    node.status({fill: 'green', text: payload.data.length});\n} else {\n    node.status({fill: 'red', text: payload.data.length});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f70783be0af51d4",
+        "type": "rbe",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 950,
+        "y": 980,
+        "wires": [
+            [
+                "d03982fe055c45b7"
+            ]
+        ]
+    },
+    {
+        "id": "b41b4c5eb954408c",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "e571c036900a72f1"
+            ]
+        ]
+    },
+    {
+        "id": "e571c036900a72f1",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "simulate cookies",
+        "func": "\nreturn {\n    payload: {\n    data: [\n        {\n            \"points\":[\n                    {\"x\":324,\"y\":1294},\n                    {\"x\":421,\"y\":1330},\n                    {\"x\":385,\"y\":1428},\n                    {\"x\":287,\"y\":1391}\n                ],\n                \"imageCacheKey\":null\n            \n        }\n        ]\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 360,
+        "wires": [
+            [
+                "eae5f482832ae37c",
+                "30f1193c7914a8a4"
+            ]
+        ]
+    },
+    {
+        "id": "ee783ca4bdfbf798",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "750",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 970,
+        "y": 940,
+        "wires": [
+            [
+                "e39d080b5092207c"
+            ]
+        ]
+    },
+    {
+        "id": "72e302a3cb4b7f6d",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "simulate cookies 2",
+        "func": "\nreturn {\n    payload: {\n    data: [\n        {\n            \"points\":[\n                    {\"x\":324,\"y\":1294},\n                    {\"x\":421,\"y\":1330},\n                    {\"x\":385,\"y\":1428},\n                    {\"x\":287,\"y\":1391}\n                ],\n                \"imageCacheKey\":null\n            \n        }\n        ]\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c9f0fcb89e3f0b2",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "72e302a3cb4b7f6d"
+            ]
+        ]
+    },
+    {
+        "id": "b14c20027b067b58",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "last_shopping_spree",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1100,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "84fd0606909232e7",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "Shopping Spree",
+        "func": "const lastShoppingSpree = flow.get(\"last_shopping_spree\");\nconst shoppingSpreeState = flow.get(\"shopping_spree_state\");\n\nconst shoppingRate = 5 * 60 * 1000; // 2 minutes\n\nif (lastShoppingSpree) {\n    const ssDiff = ((new Date()) - lastShoppingSpree);\n    const statusText = `${ssDiff / 1000} - ${shoppingSpreeState}`;\n    \n    if (shoppingSpreeState === \"shopping\") {\n        node.status({fill: 'blue', text: statusText});\n        return;\n    }\n\n    if (ssDiff <= shoppingRate) {\n        node.status({fill: 'red', text: statusText});\n        flow.set(\"shopping_spree_state\", \"too_soon\");\n    } else {\n        node.status({fill: 'green', text: statusText});\n        flow.set(\"shopping_spree_state\", \"ok\");\n    }\n} else {\n    node.status({fill: 'green'});\n    flow.set(\"shopping_spree_state\", \"ok\");\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b133d14f08304048",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "shopping state",
+        "property": "shopping_spree_state",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ok",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "shopping",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 660,
+        "y": 1100,
+        "wires": [
+            [
+                "4485aebd18d852d2",
+                "b7d557c5a9675a88"
+            ],
+            [
+                "6e06170a82cb622e"
+            ],
+            [
+                "7f4901461e5957e7"
+            ]
+        ]
+    },
+    {
+        "id": "6e06170a82cb622e",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 830,
+        "y": 1160,
+        "wires": [
+            [
+                "0121a751ecba47db"
+            ]
+        ]
+    },
+    {
+        "id": "7f4901461e5957e7",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to idle",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cookie_clicker_state",
+                "pt": "flow",
+                "to": "idle",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7d557c5a9675a88",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "set state to shopping",
+        "rules": [
+            {
+                "t": "set",
+                "p": "shopping_spree_state",
+                "pt": "flow",
+                "to": "shopping",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 1080,
+        "wires": [
+            [
+                "b14c20027b067b58"
+            ]
+        ]
+    },
+    {
+        "id": "387cf9e65c966b8b",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "8",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 1180,
+        "y": 1200,
+        "wires": [
+            [
+                "6681d1a43e7b4562"
+            ]
+        ]
+    },
+    {
+        "id": "6681d1a43e7b4562",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "8",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 1340,
+        "y": 1200,
+        "wires": [
+            [
+                "33cfe288ca9f4146"
+            ]
+        ]
+    },
+    {
+        "id": "dd786e4d487621fc",
+        "type": "mqtt out",
+        "z": "5b3b16f7b12de95a",
+        "name": "Beholder Nexus",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0b70dd4da53f0867",
+        "x": 1400,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "dfcf6a8bd2c59eb9",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "shopping_spree_state",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ok",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1250,
+        "y": 580,
+        "wires": [
+            [
+                "0b117ae57c8296b2"
+            ]
+        ]
+    },
+    {
+        "id": "45c147a3cec44e28",
+        "type": "mqtt out",
+        "z": "6a61b64910c046bc",
+        "name": "Beholder Nexus",
+        "topic": "",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0b70dd4da53f0867",
+        "x": 1460,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f9ae469d32527bc9",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "maximize window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Maximize\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 440,
+        "wires": [
+            [
+                "45c147a3cec44e28"
+            ]
+        ]
+    },
+    {
+        "id": "84883bbb67104d6e",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1090,
+        "y": 440,
+        "wires": [
+            [
+                "f9ae469d32527bc9"
+            ]
+        ]
+    },
+    {
+        "id": "2538917b5ba0052f",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "reset cookie clicker window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/move_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            targetPosition: {\n                x: -7,\n                y: 0,\n                width: 1934,\n                height: 1567,\n            },\n            repaint: true\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 660,
+        "wires": [
+            [
+                "45c147a3cec44e28"
+            ]
+        ]
+    },
+    {
+        "id": "b6650b3032ef36db",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1030,
+        "y": 660,
+        "wires": [
+            [
+                "2538917b5ba0052f"
+            ]
+        ]
+    },
+    {
+        "id": "1e08a7d138f47f90",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "minimize window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Minimize\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 480,
+        "wires": [
+            [
+                "45c147a3cec44e28"
+            ]
+        ]
+    },
+    {
+        "id": "fd43de340239a04e",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1090,
+        "y": 480,
+        "wires": [
+            [
+                "1e08a7d138f47f90"
+            ]
+        ]
+    },
+    {
+        "id": "9397400cb350b099",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "normalize window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Normal\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62f4b162eae5c1fd",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1090,
+        "y": 520,
+        "wires": [
+            [
+                "9397400cb350b099"
+            ]
+        ]
+    },
+    {
+        "id": "47300e956b5bb546",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "show window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Show\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 560,
+        "wires": [
+            [
+                "45c147a3cec44e28"
+            ]
+        ]
+    },
+    {
+        "id": "8d1f1048b59d8866",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1090,
+        "y": 560,
+        "wires": [
+            [
+                "47300e956b5bb546"
+            ]
+        ]
+    },
+    {
+        "id": "6afad57fcca6be79",
+        "type": "function",
+        "z": "6a61b64910c046bc",
+        "name": "Restore window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Restore\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 600,
+        "wires": [
+            [
+                "45c147a3cec44e28"
+            ]
+        ]
+    },
+    {
+        "id": "e70b25e1c9ac2d68",
+        "type": "inject",
+        "z": "6a61b64910c046bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 1090,
+        "y": 600,
+        "wires": [
+            [
+                "6afad57fcca6be79"
             ]
         ]
     }
