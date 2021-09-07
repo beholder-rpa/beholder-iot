@@ -98,6 +98,11 @@ services:
       - traefik.tcp.routers.beholder_nexus_mqtt.rule=HostSNI(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.tcp.routers.beholder_nexus_mqtt.entrypoints=mqtt
       - traefik.tcp.services.beholder_nexus_mqtt.loadbalancer.server.port=1883
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx_ctl", "status"]
+      interval: 5s
+      timeout: 25s
+      retries: 5
   ###############################################
   # Beholder Stalk
   beholder-stalk:
@@ -192,6 +197,11 @@ services:
     volumes:
       - ./beholder-postgres/initdb/:/docker-entrypoint-initdb.d/:ro
       - postgres_data:/var/lib/postgresql/data:rw
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   ###############################################
   # Beholder Prefrontal Redis
   beholder-prefrontal:
@@ -225,6 +235,7 @@ services:
     container_name: beholder-traefik
     restart: always
     command:
+      - "--ping=true"
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"
       - "--api.dashboard=true"
@@ -247,7 +258,11 @@ services:
       - ./beholder-traefik/certs:/etc/traefik/certs/:ro
       - ./beholder-traefik/conf:/etc/traefik/conf/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck"]
+      interval: 30s
+      timeout: 3s
+      retries: 30
 networks:
   frontend:
   backend:
