@@ -259,8 +259,8 @@ services:
       - ./beholder-traefik/conf:/etc/traefik/conf/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     healthcheck:
-      test: ["CMD", "traefik", "healthcheck"]
-      interval: 30s
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
       timeout: 3s
       retries: 30
 networks:
