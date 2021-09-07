@@ -16,6 +16,7 @@
     private readonly ILogger<MouseController> _logger;
 
     private Point _lastMovementPosition = new Point();
+    private DateTime _lastMovementPositionTime;
 
     public MouseController(Mouse mouse, IBeholderMqttClient client, ILogger<MouseController> logger)
     {
@@ -95,9 +96,10 @@
       var lastMovementPosition = _lastMovementPosition;
       if (lastMovementPosition != null &&
           lastMovementPosition.X == message.Data.CurrentPosition.X &&
-          lastMovementPosition.Y == message.Data.CurrentPosition.Y)
+          lastMovementPosition.Y == message.Data.CurrentPosition.Y &&
+          DateTime.Now.Subtract(_lastMovementPositionTime) <= TimeSpan.FromSeconds(5))
       {
-        _logger.LogWarning($"Previously moved from {lastMovementPosition}. Skipping.");
+        _logger.LogWarning($"Previously moved from {lastMovementPosition} within the past 5 seconds. Skipping.");
         return Task.CompletedTask;
       }
 
@@ -118,6 +120,7 @@
           X = message.Data.CurrentPosition.X,
           Y = message.Data.CurrentPosition.Y,
         };
+        _lastMovementPositionTime = DateTime.Now;
       }
       return Task.CompletedTask;
     }
