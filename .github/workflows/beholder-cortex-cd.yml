@@ -98,8 +98,8 @@ jobs:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          build-args:
-            - "FONTAWESOME_NPM_AUTH_TOKEN=${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}"
+          build-args:  |
+            FONTAWESOME_NPM_AUTH_TOKEN=${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
@@ -110,6 +110,8 @@ jobs:
         with:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile.arm32v7
+          build-args:  |
+            FONTAWESOME_NPM_AUTH_TOKEN=${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
           push: true
           tags: ${{ steps.docker_meta_arm32v7.outputs.tags }}
           labels: ${{ steps.docker_meta_arm32v7.outputs.labels }}
@@ -120,6 +122,8 @@ jobs:
         with:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile.arm64
+          build-args:  |
+            FONTAWESOME_NPM_AUTH_TOKEN=${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}
           push: true
           tags: ${{ steps.docker_meta_arm64.outputs.tags }}
           labels: ${{ steps.docker_meta_arm64.outputs.labels }}
