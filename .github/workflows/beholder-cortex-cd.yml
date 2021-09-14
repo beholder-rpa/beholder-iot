@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./beholder-cortex
-      FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
 
     defaults:
       run:
@@ -99,6 +98,8 @@ jobs:
           context: ${{ env.working-directory }}
           file:  ${{ env.working-directory }}/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
+          build-args:
+            - "FONTAWESOME_NPM_AUTH_TOKEN=${{secrets.FONTAWESOME_NPM_AUTH_TOKEN}}"
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
