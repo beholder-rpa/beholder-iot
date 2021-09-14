@@ -9,6 +9,7 @@ import {
   faStream,
   faSatelliteDish,
 } from '@fortawesome/free-solid-svg-icons';
+import { faPopcorn } from '@fortawesome/pro-duotone-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface Navigation {
@@ -94,6 +95,12 @@ const navigation: Navigation[] = [
         title: 'Grafana',
         icon: <FontAwesomeIcon icon={faStream} />,
         url: 'https://grafana.{{ host }}',
+        target: '_blank',
+      },
+      {
+        title: 'Minio',
+        icon: <FontAwesomeIcon icon={faPopcorn} />,
+        url: 'https://minio.{{ host }}',
         target: '_blank',
       },
     ],

@@ -6,7 +6,7 @@ WORKDIR /srv/app
 
 RUN yarn global add pm2
 
-# COPY ./.npmrc ./
+COPY ./.npmrc ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
 

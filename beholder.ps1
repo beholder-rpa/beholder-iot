@@ -46,6 +46,7 @@ if ($environment -eq "arm32v7" -or $environment -eq "arm64") {
   $env:BEHOLDER_CEREBRUM_HOSTNAME = "cerebrum.$hostName"
   $env:BEHOLDER_TRAEFIK_HOSTNAME = "traefik.$hostName"
   $env:BEHOLDER_NEXUS_HOSTNAME = "nexus.$hostName"
+  $env:BEHOLDER_MINIO_HOSTNAME = "minio.$hostName"
   $env:BEHOLDER_GRAFANA_HOSTNAME = "grafana.$hostName"
   $env:BEHOLDER_JAEGER_HOSTNAME = "jaeger.$hostName"
 }
@@ -78,14 +79,15 @@ switch ($command)
     }
     'up'
     {
+      $env = "--env-file ./.env"
       # Write out null values for the hidg files
       if ($environment -eq "dev") {
+        $env = "--env-file ./.env.local"
         $null > ./usb-dev/hidg0
         $null > ./usb-dev/hidg1
         $null > ./usb-dev/hidg2
       }
-
-      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") up -d"
+      $dockerComposeCommand = "& docker-compose -f $($dockerComposeFiles -join " -f ") $env up -d"
       Invoke-Expression $dockerComposeCommand
     }
     'down'
