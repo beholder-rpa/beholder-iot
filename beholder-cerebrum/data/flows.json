@@ -21,39 +21,6 @@
         "info": ""
     },
     {
-        "id": "4d289f8513cee82f",
-        "type": "subflow",
-        "name": "determine if good cookie",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 40,
-                "y": 140,
-                "wires": []
-            }
-        ],
-        "out": [
-            {
-                "x": 800,
-                "y": 100,
-                "wires": []
-            },
-            {
-                "x": 800,
-                "y": 180,
-                "wires": []
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99",
-        "outputLabels": [
-            "duplicate cookie",
-            "good cookie"
-        ]
-    },
-    {
         "id": "0b70dd4da53f0867",
         "type": "mqtt-broker",
         "name": "Beholder Nexus",
@@ -584,7 +551,7 @@
         "expiry": "",
         "broker": "0b70dd4da53f0867",
         "x": 1640,
-        "y": 1780,
+        "y": 1820,
         "wires": []
     },
     {
@@ -610,7 +577,7 @@
         "modifiers": "^+",
         "key": "{Oemtilde}",
         "x": 900,
-        "y": 1740,
+        "y": 1780,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -625,7 +592,7 @@
         "modifiers": "^+",
         "key": "{Oemtilde}",
         "x": 890,
-        "y": 1800,
+        "y": 1840,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -647,7 +614,7 @@
         "pointerImageStreamSettingsMaxFps": "0.5",
         "watchPointerPosition": "true",
         "x": 880,
-        "y": 1900,
+        "y": 1940,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -660,7 +627,7 @@
         "z": "5b3b16f7b12de95a",
         "hostname": "",
         "x": 880,
-        "y": 1960,
+        "y": 2000,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -679,7 +646,7 @@
         "focusRegionHeight": "480",
         "focusRegionMaxFps": "0.15",
         "x": 1000,
-        "y": 1640,
+        "y": 1680,
         "wires": [
             [
                 "a452ecc746b49b31"
@@ -716,7 +683,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 730,
-        "y": 1700,
+        "y": 1740,
         "wires": [
             [
                 "bb1f72790d7d12db"
@@ -744,7 +711,7 @@
         "repair": false,
         "outputs": 2,
         "x": 250,
-        "y": 1740,
+        "y": 1780,
         "wires": [
             [
                 "ba7436256873acd9"
@@ -764,7 +731,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 710,
-        "y": 1800,
+        "y": 1840,
         "wires": [
             [
                 "d47744512b474040"
@@ -783,7 +750,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 710,
-        "y": 1860,
+        "y": 1900,
         "wires": [
             [
                 "54677c7e9faec3c3"
@@ -802,7 +769,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 690,
-        "y": 2000,
+        "y": 2040,
         "wires": [
             [
                 "a13940027781617e"
@@ -814,14 +781,14 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "create focus region request for active process window",
-        "func": "const payload = msg.payload;\nflow.set(\"cookie_clicker_process\", payload.data)\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width - 350,\n            height: payload.data.windowPosition.height,\n            maxFps: 0.25\n        }\n    }\n};",
+        "func": "const payload = msg.payload;\nflow.set(\"cookie_clicker_process\", payload.data)\n\nreturn {\n    payload: {\n        name: \"default\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y,\n            width: payload.data.windowPosition.width - 350,\n            height: payload.data.windowPosition.height,\n            updateRateMs: 250\n        }\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 1640,
+        "y": 1680,
         "wires": [
             [
                 "21d416d2262f1804"
@@ -926,7 +893,7 @@
         "rap": true,
         "rh": 0,
         "x": 150,
-        "y": 1640,
+        "y": 1680,
         "wires": [
             [
                 "99130e21a2a56664"
@@ -982,19 +949,18 @@
         "type": "mqtt in",
         "z": "5b3b16f7b12de95a",
         "name": "",
-        "topic": "beholder/eye/+/region/+",
+        "topic": "beholder/eye/+/region/default",
         "qos": "1",
         "datatype": "json",
         "broker": "0b70dd4da53f0867",
         "nl": false,
         "rap": true,
         "rh": 0,
-        "x": 150,
+        "x": 160,
         "y": 1580,
         "wires": [
             [
-                "bcf433b5e9bab1fd",
-                "fd06cc09f8b0d126"
+                "bcf433b5e9bab1fd"
             ]
         ]
     },
@@ -1442,12 +1408,13 @@
         "property": "payload.data.processName",
         "topi": "topic",
         "x": 350,
-        "y": 1640,
+        "y": 1680,
         "wires": [
             [
                 "f9b6966bc8513856",
                 "7781cb1bfe5ed28d",
-                "2dfc03e34ccbe26e"
+                "2dfc03e34ccbe26e",
+                "3682828fea8ab6fd"
             ]
         ]
     },
@@ -1513,7 +1480,7 @@
         "to": "",
         "reg": false,
         "x": 430,
-        "y": 1740,
+        "y": 1780,
         "wires": [
             [
                 "bb1f72790d7d12db",
@@ -1952,7 +1919,7 @@
         "z": "5b3b16f7b12de95a",
         "name": "",
         "low": "1",
-        "high": "75",
+        "high": "2000",
         "inte": "true",
         "property": "payload",
         "x": 1000,
@@ -1993,7 +1960,7 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "set purchase TTS",
-        "func": "const items = [\n    'Cursor',\n    'Grandma',\n    'Farm',\n    'Mine',\n    'Factory',\n    'Bank',\n    'Temple',\n    'Wizard Tower',\n    'Shipment',\n    'Alchemy Lab',\n    'Portal',\n    'Time Machine',\n    'Antimatter Condenser',\n    'Prism',\n    'Chancemaker',\n    'Fractal Engine'\n];\n\nif (msg.payload < 0) {\n    return {\n        payload: `bought a fancy item`,\n    }\n}\n\nreturn {\n    payload: `bought a ${items[msg.payload]}`,\n}",
+        "func": "const items = [\n    'Cursor',\n    'Grandma',\n    'Farm',\n    'Mine',\n    'Factory',\n    'Bank',\n    'Temple',\n    'Wizard Tower',\n    'Shipment',\n    'Alchemy Lab',\n    'Portal',\n    'Time Machine',\n    'Antimatter Condenser',\n    'Prism',\n    'Chancemaker',\n    'Fractal Engine',\n    \"Javascript console\",\n    \"Idleverse\"\n];\n\nif (msg.payload < 0) {\n    return {\n        payload: `bought a fancy item`,\n    }\n}\n\nreturn {\n    payload: `bought a ${items[msg.payload]}`,\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2037,7 +2004,7 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "move to hand of fate",
-        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\nif (lastHandOfFate) {\n    const diff = (new Date()) - lastHandOfFate;\n}\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 5 * 60 * 1000) {\n        flow.set(\"cookie_clicker_state\", \"idle\")\n        return null;\n    }\n}\n\n\nreturn {\n    payload: {\n        x: 895,\n        y: 230\n    }\n};",
+        "func": "const lastHandOfFate = flow.get(\"last_hand_of_fate\");\nif (lastHandOfFate) {\n    const diff = (new Date()) - lastHandOfFate;\n}\n\nif (lastHandOfFate) {\n    const hofDiff = (new Date()) - lastHandOfFate;\n    if (hofDiff <= 7 * 60 * 1000) {\n        flow.set(\"cookie_clicker_state\", \"idle\")\n        return null;\n    }\n}\n\n\nreturn {\n    payload: {\n        x: 895,\n        y: 230\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2167,14 +2134,14 @@
         "id": "aaa42866ac54eb84",
         "type": "function",
         "z": "5b3b16f7b12de95a",
-        "name": "cookies?",
+        "name": "golden cookies?",
         "func": "const payload = msg.payload;\n\nif (payload.data.length > 0) {\n    node.status({fill: 'green', text: payload.data.length});\n} else {\n    node.status({fill: 'red', text: payload.data.length});\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
+        "x": 320,
         "y": 160,
         "wires": [
             []
@@ -2350,14 +2317,14 @@
         "timeout": "1",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "2",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
         "allowrate": false,
-        "x": 860,
+        "x": 850,
         "y": 740,
         "wires": [
             [
@@ -2512,7 +2479,8 @@
             "dea13a3016de884d",
             "09553eaec24ff556",
             "7f048d725b0e5e4e",
-            "5562a4da8a82975d"
+            "5562a4da8a82975d",
+            "590322f6254633aa"
         ],
         "x": 55,
         "y": 520,
@@ -2713,7 +2681,7 @@
         "z": "5b3b16f7b12de95a",
         "name": "",
         "low": "-2",
-        "high": "10",
+        "high": "17",
         "inte": "true",
         "property": "payload",
         "x": 1000,
@@ -2919,7 +2887,7 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "create wrinkler detection request",
-        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2Fwrinkler\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.72,\n          scaleIncrement: 1.2,\n          rotationBins: 40,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2Fwrinkler\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.76,\n          scaleIncrement: 1.0,\n          rotationBins: 40,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3032,12 +3000,12 @@
         "type": "rbe",
         "z": "5b3b16f7b12de95a",
         "name": "",
-        "func": "rbe",
+        "func": "rbei",
         "gap": "",
         "start": "",
         "inout": "out",
         "septopics": false,
-        "property": "payload",
+        "property": "payload.data.length",
         "topi": "topic",
         "x": 1410,
         "y": 220,
@@ -3052,7 +3020,7 @@
         "type": "rbe",
         "z": "5b3b16f7b12de95a",
         "name": "",
-        "func": "rbe",
+        "func": "rbei",
         "gap": "",
         "start": "",
         "inout": "out",
@@ -3145,7 +3113,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "ugh so many",
+                "to": "so many wrinklers. gross.",
                 "tot": "str"
             }
         ],
@@ -3193,7 +3161,7 @@
         "id": "6bd8ada57769aa5a",
         "type": "change",
         "z": "5b3b16f7b12de95a",
-        "name": "",
+        "name": "set state to wrinkler",
         "rules": [
             {
                 "t": "set",
@@ -3208,7 +3176,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1780,
+        "x": 1750,
         "y": 320,
         "wires": [
             []
@@ -3219,18 +3187,18 @@
         "type": "function",
         "z": "5b3b16f7b12de95a",
         "name": "determine wrinkler midpoint",
-        "func": "const polys = flow.get(\"detected_wrinklers\")\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: {\n        x: midpoints[0].x,\n        y: midpoints[0].y,\n        post_move_actions: \"{lclick}{lclick}{lclick}\",\n    }\n};",
+        "func": "const polys = flow.get(\"detected_wrinklers\")\nconst activeProcess = global.get(\"beholder_active_process\");\n\nif (!polys || polys.length === 0) {\n    return null;\n}\n\nif (!activeProcess) {\n    return null;\n}\n\nlet midpoints = [];\n\npolys.forEach((poly) => {\n    var mid = {\n        x: 0,\n        y: 0,\n    };\n\n    poly.points.forEach((point) => {\n        mid.x += point.x + activeProcess.windowPosition.x;\n        mid.y += point.y + activeProcess.windowPosition.y + 290;\n    });\n    mid.x = Math.floor(mid.x / poly.points.length);\n    mid.y = Math.floor(mid.y / poly.points.length);\n    midpoints.push(mid);\n});\n\nnode.status({text: `X: ${midpoints[0].x} Y: ${midpoints[0].y}`});\n\nreturn {\n    payload: {\n        x: midpoints[0].x,\n        y: midpoints[0].y,\n        post_move_actions: \"{lclick}{lclick}{lclick}{lclick}\",\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 700,
-        "y": 1460,
+        "y": 1420,
         "wires": [
             [
                 "8a894b7e04539cb9",
-                "af0a11e51ba54932"
+                "9f0db2819d159188"
             ]
         ]
     },
@@ -3243,7 +3211,7 @@
             "a5e3e8df7a1e1cd0"
         ],
         "x": 1035,
-        "y": 1440,
+        "y": 1400,
         "wires": []
     },
     {
@@ -3272,8 +3240,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 920,
-        "y": 1480,
+        "x": 1240,
+        "y": 1440,
         "wires": [
             []
         ]
@@ -3320,7 +3288,7 @@
         "drop": true,
         "allowrate": false,
         "x": 920,
-        "y": 1440,
+        "y": 1400,
         "wires": [
             [
                 "e8467bbee93c8e9a"
@@ -3380,22 +3348,6 @@
         ]
     },
     {
-        "id": "73cdb3bb27e53215",
-        "type": "debug",
-        "z": "13065b3553c3ca8f",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 400,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "04e9368f93cb579f",
         "type": "function",
         "z": "5b3b16f7b12de95a",
@@ -3406,7 +3358,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
+        "x": 1100,
         "y": 2160,
         "wires": [
             [
@@ -3426,10 +3378,10 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 530,
-        "y": 2160,
+        "y": 2200,
         "wires": [
             [
-                "04e9368f93cb579f"
+                "b8a02dc1d7c68464"
             ]
         ]
     },
@@ -3465,10 +3417,10 @@
         "finalize": "",
         "libs": [],
         "x": 450,
-        "y": 1980,
+        "y": 2020,
         "wires": [
             [
-                "04e9368f93cb579f"
+                "b8a02dc1d7c68464"
             ]
         ]
     },
@@ -4183,5 +4135,348 @@
                 "6afad57fcca6be79"
             ]
         ]
+    },
+    {
+        "id": "b8a02dc1d7c68464",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "Restore window",
+        "func": "const beholderServices = global.get('beholder_services');\nlet hostName = \"\";\nif (beholderServices && beholderServices.daemon) {\n    hostName = beholderServices.daemon[0];\n}\n\nif (!hostName) {\n    node.error('No daemon hostname found');\n    return;\n}\n\nreturn {\n    topic: `beholder/psionix/${hostName}/show_window`,\n    payload: {\n        datacontenttype: \"application/json\",\n        specversion: \"0.1\",\n        data: {\n            processName: \"Cookie Clicker\",\n            command: \"Restore\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 2160,
+        "wires": [
+            [
+                "a452ecc746b49b31",
+                "c522549a7885921e"
+            ]
+        ]
+    },
+    {
+        "id": "c522549a7885921e",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 900,
+        "y": 2160,
+        "wires": [
+            [
+                "04e9368f93cb579f"
+            ]
+        ]
+    },
+    {
+        "id": "0fba20ebde0fa28b",
+        "type": "inject",
+        "z": "5b3b16f7b12de95a",
+        "name": "loop",
+        "props": [],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 130,
+        "y": 2160,
+        "wires": [
+            [
+                "b8a02dc1d7c68464"
+            ]
+        ]
+    },
+    {
+        "id": "6141fa170dc1383c",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "create krumblor detection request",
+        "func": "\nreturn {\n    payload: {\n        queryImagePrefrontalKey: \"images%2Fkrumblor\",\n        targetImagePrefrontalKey: msg.payload.data.prefrontalImageKey,\n        matchMaskSettings: {\n          ratioThreshold: 0.72,\n          scaleIncrement: 2.4,\n          rotationBins: 40,\n        },\n        outputImagePrefrontalKey: null,\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1500,
+        "wires": [
+            [
+                "b074feee2745ba5c"
+            ]
+        ]
+    },
+    {
+        "id": "7c9c994893f736a1",
+        "type": "mqtt in",
+        "z": "5b3b16f7b12de95a",
+        "name": "on detected krumblor",
+        "topic": "beholder/occipital/+/detected_objects/images%2Fkrumblor",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 1140,
+        "y": 380,
+        "wires": [
+            [
+                "149fad70712e599e",
+                "116f874821b08eec"
+            ]
+        ]
+    },
+    {
+        "id": "149fad70712e599e",
+        "type": "rbe",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload.data.length",
+        "topi": "topic",
+        "x": 1330,
+        "y": 380,
+        "wires": [
+            [
+                "4f0a833d073149cb"
+            ]
+        ]
+    },
+    {
+        "id": "4f0a833d073149cb",
+        "type": "switch",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "property": "payload.data.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1450,
+        "y": 380,
+        "wires": [
+            [
+                "68984d7a5f586bc3"
+            ],
+            [
+                "670f091eaebbe2fb"
+            ]
+        ]
+    },
+    {
+        "id": "670f091eaebbe2fb",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "> 0 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "krumblor has blessed us with his presence",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1610,
+        "y": 400,
+        "wires": [
+            [
+                "590322f6254633aa"
+            ]
+        ]
+    },
+    {
+        "id": "68984d7a5f586bc3",
+        "type": "change",
+        "z": "5b3b16f7b12de95a",
+        "name": "<= 0 - set TTS msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "krumblor has left us",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1610,
+        "y": 360,
+        "wires": [
+            [
+                "590322f6254633aa"
+            ]
+        ]
+    },
+    {
+        "id": "590322f6254633aa",
+        "type": "link out",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "links": [
+            "1cbae375d3f7ea9d"
+        ],
+        "x": 1755,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4220775b8e14d975",
+        "type": "mqtt in",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "topic": "beholder/eye/+/region/cookie",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "0b70dd4da53f0867",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 160,
+        "y": 1540,
+        "wires": [
+            [
+                "fd06cc09f8b0d126",
+                "6141fa170dc1383c"
+            ]
+        ]
+    },
+    {
+        "id": "3682828fea8ab6fd",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "create focus region request for cookie",
+        "func": "const payload = msg.payload;\nflow.set(\"cookie_clicker_process\", payload.data)\n\nreturn {\n    payload: {\n        name: \"cookie\",\n        kind: \"image\",\n        bitmapSettings: {\n            x: payload.data.windowPosition.x,\n            y: payload.data.windowPosition.y + 290,\n            width: 575,\n            height: 750,\n            updateRateMs: 10000\n        }\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1640,
+        "wires": [
+            [
+                "21d416d2262f1804"
+            ]
+        ]
+    },
+    {
+        "id": "116f874821b08eec",
+        "type": "function",
+        "z": "5b3b16f7b12de95a",
+        "name": "krumblor?",
+        "func": "const payload = msg.payload;\n\nif (payload.data.length > 0) {\n    node.status({fill: 'green', text: payload.data.length});\n} else {\n    node.status({fill: 'red', text: payload.data.length});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f0db2819d159188",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 920,
+        "y": 1440,
+        "wires": [
+            [
+                "b49d7b6a308c9aef"
+            ]
+        ]
+    },
+    {
+        "id": "b49d7b6a308c9aef",
+        "type": "delay",
+        "z": "5b3b16f7b12de95a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 1080,
+        "y": 1440,
+        "wires": [
+            [
+                "af0a11e51ba54932"
+            ]
+        ]
+    },
+    {
+        "id": "73cdb3bb27e53215",
+        "type": "debug",
+        "z": "13065b3553c3ca8f",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 380,
+        "wires": []
     }
 ]
