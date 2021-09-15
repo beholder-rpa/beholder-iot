@@ -238,14 +238,19 @@ services:
     command: ["server", "/data", "--console-address", ":9001"]
     restart: always
     environment:
-      MINIO_ROOT_USER: beholder
-      MINIO_ROOT_PASSWORD: beholder
+      - MINIO_ROOT_USER=beholder
+      - MINIO_ROOT_PASSWORD=beholder
       # Enable notifications via MQTT
-      MINIO_NOTIFY_MQTT_ENABLE: 'true'
-      MINIO_NOTIFY_MQTT_BROKER: tcp://beholder-nexus:1883
-      MINIO_NOTIFY_MQTT_TOPIC: beholder/minio
+      - MINIO_NOTIFY_MQTT_ENABLE=on
+      - MINIO_NOTIFY_MQTT_BROKER=tcp://beholder-nexus:1883
+      - MINIO_NOTIFY_MQTT_TOPIC=beholder/minio
+      - MINIO_NOTIFY_MQTT_QOS=1
+      - MINIO_NOTIFY_MQTT_KEEP_ALIVE_INTERVAL=30s
+      - MINIO_NOTIFY_MQTT_RECONNECT_INTERVAL=15s
     networks:
       - backend
+    depends_on:
+      - beholder-nexus
     volumes:
       - minio_data:/data
     labels: 
