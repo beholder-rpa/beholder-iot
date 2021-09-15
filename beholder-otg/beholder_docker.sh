@@ -8,6 +8,7 @@ then
     sudo systemctl enable --now avahi-alias@"cerebrum.$HOSTNAME".service
     sudo systemctl enable --now avahi-alias@"nexus.$HOSTNAME".service
     sudo systemctl enable --now avahi-alias@"grafana.$HOSTNAME".service
+    sudo systemctl enable --now avahi-alias@"minio.$HOSTNAME".service
 
     pushd /home/beholder/beholder/
     git reset origin --hard
