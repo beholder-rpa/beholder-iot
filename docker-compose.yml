@@ -62,7 +62,7 @@ services:
       - beholder-nexus
     labels:
       - traefik.enable=true
-      # Proxy to authenticated content
+      # Proxy Node-RED UI
       - traefik.http.routers.beholder_cerebrum.rule=Host(`${BEHOLDER_CEREBRUM_HOSTNAME}`)
       - traefik.http.routers.beholder_cerebrum.entrypoints=websecure
       - traefik.http.routers.beholder_cerebrum.tls=true
@@ -91,7 +91,7 @@ services:
       - backend
     labels:
       - traefik.enable=true
-      # Proxy to authenticated content
+      # Proxy emqx dashboard
       - traefik.http.routers.beholder_nexus.rule=Host(`${BEHOLDER_NEXUS_HOSTNAME}`)
       - traefik.http.routers.beholder_nexus.entrypoints=websecure
       - traefik.http.routers.beholder_nexus.tls=true
@@ -152,7 +152,7 @@ services:
       - beholder-nexus
     labels:
       - traefik.enable=true
-      # Proxy to authenticated content
+      # Proxy epidermis services
       - traefik.http.routers.beholder_epidermis.rule=Host(`${BEHOLDER_CORTEX_HOSTNAME}`) && PathPrefix(`/api/epidermis`)
       - traefik.http.routers.beholder_epidermis.entrypoints=websecure
       - traefik.http.routers.beholder_epidermis.tls=true
@@ -173,35 +173,6 @@ services:
       - beholder-epidermis
       - beholder-nexus
     network_mode: "service:beholder-epidermis"
-  # Minio
-  beholder-minio:
-    image: "minio/minio"
-    container_name: beholder-minio
-    command: ["server", "/data", "--console-address", ":9001"]
-    restart: always
-    environment:
-      MINIO_ROOT_USER: beholder
-      MINIO_ROOT_PASSWORD: beholder
-      # Enable notifications via MQTT
-      MINIO_NOTIFY_MQTT_ENABLE: 'true'
-      MINIO_NOTIFY_MQTT_BROKER: tcp://beholder-nexus:1883
-      MINIO_NOTIFY_MQTT_TOPIC: beholder/minio
-    networks:
-      - backend
-    volumes:
-      - minio_data:/data
-    labels: 
-      - traefik.enable=true
-      # Proxy to authenticated content
-      - traefik.http.routers.beholder_minio.rule=Host(`${BEHOLDER_MINIO_HOSTNAME}`)
-      - traefik.http.routers.beholder_minio.entrypoints=websecure
-      - traefik.http.routers.beholder_minio.tls=true
-      - traefik.http.services.beholder_minio.loadbalancer.server.port=9001
-    healthcheck:
-      test: ["CMD", "curl", "http://localhost:9000/minio/health/live"]
-      interval: 10s
-      timeout: 3s
-      retries: 30
   ###############################################
   # Beholder Grafana
   beholder-grafana:
@@ -257,6 +228,40 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 1s
+      timeout: 3s
+      retries: 30
+  ###############################################
+  # Beholder minio
+  beholder-minio:
+    image: "minio/minio"
+    container_name: beholder-minio
+    command: ["server", "/data", "--console-address", ":9001"]
+    restart: always
+    environment:
+      MINIO_ROOT_USER: beholder
+      MINIO_ROOT_PASSWORD: beholder
+      # Enable notifications via MQTT
+      MINIO_NOTIFY_MQTT_ENABLE: 'true'
+      MINIO_NOTIFY_MQTT_BROKER: tcp://beholder-nexus:1883
+      MINIO_NOTIFY_MQTT_TOPIC: beholder/minio
+    networks:
+      - backend
+    volumes:
+      - minio_data:/data
+    labels: 
+      - traefik.enable=true
+      # Proxy minio console
+      - traefik.http.routers.beholder_minio.rule=Host(`${BEHOLDER_MINIO_HOSTNAME}`)
+      - traefik.http.routers.beholder_minio.entrypoints=websecure
+      - traefik.http.routers.beholder_minio.tls=true
+      - traefik.http.services.beholder_minio.loadbalancer.server.port=9001
+      # Proxy minio port
+      - traefik.tcp.routers.beholder_minio.rule=HostSNI(`${BEHOLDER_NEXUS_HOSTNAME}`)
+      - traefik.tcp.routers.beholder_minio.entrypoints=minio
+      - traefik.tcp.services.beholder_minio.loadbalancer.server.port=9000
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:9000/minio/health/live"]
+      interval: 10s
       timeout: 3s
       retries: 30
   ###############################################
