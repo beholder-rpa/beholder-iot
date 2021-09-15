@@ -29,6 +29,7 @@ then
     sudo systemctl disable --now avahi-alias@"cerebrum.$HOSTNAME".service
     sudo systemctl disable --now avahi-alias@"nexus.$HOSTNAME".service
     sudo systemctl disable --now avahi-alias@"grafana.$HOSTNAME".service
+    sudo systemctl disable --now avahi-alias@"minio.$HOSTNAME".service
 fi
 
 echo "# Completed Beholder IoT Docker script."
