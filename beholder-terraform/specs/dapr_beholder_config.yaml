@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: beholder-config
+spec:
+  mtls:
+    enabled: false
+    allowedClockSkew: 15m
+    workloadCertTTL: 24h
+  metrics:
+    enabled: true
+  #tracing:
+    # enabled: false
+    # samplingRate: "1"
+    # expandParams: true
+    # includeBody: true
+    # zipkin:
+    #   endpointAddress: "http://otel-collector.default.svc.cluster.local:9411/api/v2/spans"

@@ -11,6 +11,12 @@ spec:
     metadata:
       labels:
         app: beholder-cortex
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "cortex"
+        dapr.io/app-port: 3000
+        dapr.io/http-max-request-size: "16"
+        dapr.io/config: "beholder-config"
     spec:
       containers:
       - name: cortex
