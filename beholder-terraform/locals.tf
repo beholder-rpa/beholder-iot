@@ -1,6 +1,6 @@
 locals {
   beholder_from_email = "beholder@${var.hostname}"
-  
+
   ###########
   # Hostnames
 
@@ -10,6 +10,7 @@ locals {
 
   whoami_hostname = "whoami.${var.hostname}"
   dapr_dashboard_hostname = "dapr.${var.hostname}"
+  grafana_hostname = "grafana.${var.hostname}"
   traefik_dashboard_hostname = "traefik.${var.hostname}"
   webmail_hostname = "mail.${var.hostname}"
 

@@ -30,3 +30,20 @@ resource "helm_release" "prometheus" {
     kubernetes_namespace.monitoring
   ]
 }
+
+### Provision promethus configuration
+data "kubectl_path_documents" "prometheus" {
+  pattern = "${path.module}/specs/prometheus_*.yaml"
+
+  vars = {
+    grafana_hostname = local.grafana_hostname
+  }
+}
+
+resource "kubectl_manifest" "prometheus" {
+  count     = length(data.kubectl_path_documents.prometheus.documents)
+  yaml_body = element(data.kubectl_path_documents.prometheus.documents, count.index)
+  depends_on = [
+    helm_release.prometheus
+  ]
+}
