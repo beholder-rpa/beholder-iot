@@ -2,7 +2,7 @@ locals {
   ###########
   # Hostnames
 
-  cortex_hostname = "cortex.${var.hostname}"
+  cortex_hostname = "${var.hostname}"
   nexus_hostname = "nexus.${var.hostname}"
 
   whoami_hostname = "whoami.${var.hostname}"

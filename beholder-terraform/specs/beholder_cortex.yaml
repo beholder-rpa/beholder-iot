@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beholder-cortex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beholder-cortex
+  template:
+    metadata:
+      labels:
+        app: beholder-cortex
+    spec:
+      containers:
+      - name: cortex
+        image: beholderrpa/iot-cortex-arm64:master
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: dashboard
+        livenessProbe:
+          httpGet:
+            path: /api/healthz
+            port: 3000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Liveness
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/healthz
+            port: 3000
+            httpHeaders:
+            - name: X-Kubernetes-Probe
+              value: Readiness
+        # resources:
+        #   limits:
+        #     memory: "1Gi"
+        #     cpu: "0.1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beholder-cortex
+spec:
+  ports:
+  - name: app
+    targetPort: 3000
+    port: 80
+  selector:
+    app: beholder-cortex
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cortex-app
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${cortex_hostname}`)
+      kind: Rule
+      services:
+      - name: beholder-cortex
+        passHostHeader: true
+        port: 80
+  tls: {}
