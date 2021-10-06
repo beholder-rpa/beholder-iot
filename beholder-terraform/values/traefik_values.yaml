@@ -14,10 +14,10 @@ hostNetwork: true
 
 ports:
   web:
-    port: 80
+    port: 8000
     redirectTo: websecure
   websecure:
-    port: 443
+    port: 8443
 
 securityContext:
   capabilities:

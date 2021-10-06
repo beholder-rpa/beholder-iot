@@ -4,7 +4,8 @@ metadata:
   labels:
     app: kube-prometheus-stack
     release: prometheus
-  name: traefik 
+  name: traefik
+  namespace: monitoring
 spec:
   groups:
   - name: traefik
