@@ -1,0 +1,5 @@
+# https://github.com/grafana/helm-charts/blob/main/charts/loki-stack/values.yaml
+
+loki:
+  persistence:
+    enabled: true

@@ -1,7 +1,7 @@
 ### Provision Traefik
 // https://github.com/traefik/traefik-helm-chart
 resource "helm_release" "traefik_ingress" {
-  name       = "traefik-ingress"
+  name       = "traefik"
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
   version    = "10.3.6"
