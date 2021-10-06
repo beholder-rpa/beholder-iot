@@ -3,6 +3,7 @@ locals {
   # Hostnames
 
   cortex_hostname = "${var.hostname}"
+  cerebrum_hostname = "cerebrum.${var.hostname}"
   nexus_hostname = "nexus.${var.hostname}"
 
   whoami_hostname = "whoami.${var.hostname}"

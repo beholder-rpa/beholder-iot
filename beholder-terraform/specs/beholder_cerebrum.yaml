@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beholder-cerebrum
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beholder-cerebrum
+  template:
+    metadata:
+      labels:
+        app: beholder-cerebrum
+    spec:
+      containers:
+      - name: cerebrum
+        image: beholderrpa/iot-cerebrum-v1:master
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1880
+          name: app
+        # resources:
+        #   limits:
+        #     memory: "1Gi"
+        #     cpu: "0.1"
+        volumeMounts:
+        - mountPath: /data
+          name: cerebrum-data
+      volumes:
+      - name: cerebrum-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beholder-cerebrum
+spec:
+  ports:
+  - name: app
+    targetPort: 1880
+    port: 80
+  selector:
+    app: beholder-cerebrum
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cerebrum
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${cerebrum_hostname}`)
+      kind: Rule
+      services:
+      - name: beholder-cerebrum
+        passHostHeader: true
+        port: 80
+  tls: {}
