@@ -1,0 +1,32 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dapr-dashboard-http-to-https-redirect
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${dapr_dashboard_hostname}`)
+      kind: Rule
+      middlewares:
+      - name: http-to-https
+      services:
+      - name: dapr-dashboard
+        passHostHeader: true
+        port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dapr-dashboard-route
+spec:
+  entryPoints:
+    - websecure
+  tls: {}
+  routes:
+    - match: Host(`${dapr_dashboard_hostname}`)
+      kind: Rule
+      services:
+      - name: dapr-dashboard
+        passHostHeader: true
+        port: 8080

@@ -1,0 +1,16 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: prefrontal-pubsub
+spec:
+  type: pubsub.redis
+  version: v1
+  metadata:
+  - name: redisHost
+    value: beholder-prefrontal:6379
+  - name: redisPassword
+    value: ""
+  - name: consumerID
+    value: "prefrontal"
+  - name: enableTLS
+    value: false

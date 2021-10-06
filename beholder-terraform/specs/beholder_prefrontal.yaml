@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beholder-prefrontal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beholder-prefrontal
+  template:
+    metadata:
+      labels:
+        app: beholder-prefrontal
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6379
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          timeoutSeconds: 300
+          periodSeconds: 30
+          failureThreshold: 3
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.1"
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beholder-prefrontal
+spec:
+  ports:
+  - name: redis
+    targetPort: 6379
+    port: 6379
+  selector:
+    app: beholder-prefrontal
