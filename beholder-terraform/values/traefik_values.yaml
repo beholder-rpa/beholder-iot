@@ -2,6 +2,7 @@
 
 deplyment:
   replicas: 1
+  
 dashboard:
   enabled: true
 

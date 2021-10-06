@@ -1,4 +1,3 @@
-
 resource "helm_release" "mailhog" {
   name       = "mailhog"
   repository = "https://codecentric.github.io/helm-charts"

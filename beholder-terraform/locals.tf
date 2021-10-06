@@ -1,4 +1,6 @@
 locals {
+  beholder_from_email = "beholder@${var.hostname}"
+  
   ###########
   # Hostnames
 
