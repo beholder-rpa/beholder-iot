@@ -2,6 +2,9 @@ locals {
   ###########
   # Hostnames
 
+  cortex_hostname = "cortex.${var.hostname}"
+  nexus_hostname = "nexus.${var.hostname}"
+
   whoami_hostname = "whoami.${var.hostname}"
   dapr_dashboard_hostname = "dapr.${var.hostname}"
   traefik_dashboard_hostname = "traefik.${var.hostname}"

@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beholder-nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beholder-nexus
+  template:
+    metadata:
+      labels:
+        app: beholder-nexus
+    spec:
+      containers:
+      - name: emqx
+        image: emqx/emqx:4.3.8
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 18083
+          name: dashboard
+        - containerPort: 11883
+          name: emqx
+        - containerPort: 1883
+          name: mqtt
+        - containerPort: 8883
+          name: mqtt-ssl
+        - containerPort: 8083
+          name: mqtt-ws
+        - containerPort: 8084
+          name: mqtt-wss
+        livenessProbe:
+          exec:
+            command:
+            - /opt/emqx/bin/emqx_ctl
+            - status
+          initialDelaySeconds: 5
+          timeoutSeconds: 25
+          periodSeconds: 30
+          failureThreshold: 5
+        # resources:
+        #   limits:
+        #     memory: "1Gi"
+        #     cpu: "0.1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beholder-nexus
+spec:
+  ports:
+  - name: dashboard
+    targetPort: 18083
+    port: 80
+  - name: mqtt-ws
+    targetPort: 8083
+    port: 8083
+  - name: mqtt
+    targetPort: 1883
+    port: 1883
+  selector:
+    app: beholder-nexus
+---
+# strip nexus
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: beholder-nexus-mqtt-ws-stripprefixregex
+  namespace: default
+spec:
+  stripPrefixRegex:
+    regex:
+      - "/nexus/"
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-dashboard
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${nexus_hostname}`)
+      kind: Rule
+      services:
+      - name: beholder-nexus
+        passHostHeader: true
+        port: 80
+  tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nexus-mqtt-ws
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${cortex_hostname}`) && PathPrefix(`/nexus`)
+      middlewares:
+      - name: beholder-nexus-mqtt-ws-stripprefixregex
+        namespace: default
+      kind: Rule
+      services:
+      - name: beholder-nexus
+        passHostHeader: true
+        port: 8083
+  tls: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: nexus-mqtt
+  namespace: default
+spec:
+  entryPoints:
+    - mqtt
+  routes:
+    - match: HostSNI(`${nexus_hostname}`)
+      kind: Rule
+      services:
+      - name: beholder-nexus
+        port: 8083
