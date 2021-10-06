@@ -9,6 +9,7 @@ locals {
   whoami_hostname = "whoami.${var.hostname}"
   dapr_dashboard_hostname = "dapr.${var.hostname}"
   traefik_dashboard_hostname = "traefik.${var.hostname}"
+  webmail_hostname = "mail.${var.hostname}"
 
   traefik_additional_arguments = [
     "--ping=true",

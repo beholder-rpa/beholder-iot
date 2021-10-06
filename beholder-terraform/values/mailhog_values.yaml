@@ -1,0 +1,6 @@
+# https://github.com/codecentric/helm-charts/blob/master/charts/mailhog/values.yaml
+
+image:
+  repository: cd2team/mailhog
+  tag: latest
+  pullPolicy: Always
